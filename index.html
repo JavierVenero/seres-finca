@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SERES · Finca Viva</title>
+  <style>
+    :root {
+      --bg: #efe9dd;
+      --paper: #f7f2e8;
+      --ink: #2b2a24;
+      --muted: #6e6a5f;
+      --green: #58714c;
+      --green-2: #728d64;
+      --moss: #8ea07a;
+      --soil: #8a6d51;
+      --gold: #c8a96a;
+      --line: rgba(43,42,36,.12);
+      --shadow: 0 12px 30px rgba(53, 45, 31, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.45), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(88,113,76,.08), transparent 35%),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    .app {
+      min-height: 100%;
+      display: grid;
+      grid-template-columns: 300px 1fr 360px;
+      gap: 16px;
+      padding: 16px;
+    }
+
+    .panel {
+      background: rgba(247,242,232,.9);
+      border: 1px solid rgba(255,255,255,.6);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 4px 4px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .leaf {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #dce8d1, #9cb38c);
+      display: grid;
+      place-items: center;
+      color: var(--green);
+      font-size: 18px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .humans {
+      background: linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.3));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 12px;
+    }
+
+    .humans h3, .section-title {
+      margin: 0 0 8px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .human-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #8ea07a, #58714c);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      border: 2px solid rgba(255,255,255,.75);
+      box-shadow: 0 4px 10px rgba(88,113,76,.2);
+    }
+
+    .avatar.j {
+      background: linear-gradient(135deg, #b88b66, #8a6d51);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.55);
+      color: var(--ink);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .chip.active, .chip:hover {
+      background: var(--green);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .cards {
+      display: grid;
+      gap: 10px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .being-card {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.6);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+
+    .being-card:hover, .being-card.active {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(88,113,76,.1);
+      border-color: rgba(88,113,76,.3);
+    }
+
+    .being-content {
+      padding: 10px;
+    }
+
+    .being-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .being-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .being-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #d9ead0, #b7c9a8);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .being-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .being-name { font-weight: 700; font-size: 14px; }
+    .being-status {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .main {
+      display: grid;
+      grid-template-rows: 260px 1fr;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      color: #f8f5ef;
+      background:
+        linear-gradient(180deg, rgba(12,16,12,.1), rgba(12,16,12,.6)),
+        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80') center/cover;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.15), transparent 20%),
+        radial-gradient(circle at 80% 30%, rgba(255,255,255,.08), transparent 15%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
+      background: linear-gradient(90deg, rgba(0,0,0,.2), rgba(0,0,0,.02));
+    }
+
+    .hero-copy { max-width: 600px; }
+
+    .hero h2 {
+      margin: 0 0 8px;
+      font-size: 46px;
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-shadow: 0 3px 10px rgba(0,0,0,.3);
+    }
+
+    .hero p {
+      max-width: 580px;
+      color: rgba(248,245,239,.95);
+      font-size: 16px;
+      line-height: 1.4;
+      margin: 0;
+      text-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+
+    .hero-topline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .weather-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(8px);
+      min-width: 280px;
+      box-shadow: 0 8px 16px rgba(0,0,0,.15);
+    }
+
+    .weather-chip strong {
+      display: block;
+      font-size: 20px;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .weather-chip span {
+      display: block;
+      color: rgba(255,255,255,.85);
+      font-size: 12px;
+      line-height: 1.3;
+      margin-top: 2px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.15);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 14px;
+      min-width: 140px;
+      box-shadow: 0 8px 16px rgba(0,0,0,.15);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 2px;
+      line-height: 1;
+      text-shadow: 0 2px 6px rgba(0,0,0,.2);
+    }
+
+    .stat span {
+      font-size: 12px;
+      color: rgba(255,255,255,.9);
+    }
+
+    .ecosystem {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .map-panel, .timeline-panel {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .map-wrap {
+      margin-top: 10px;
+      position: relative;
+      flex: 1;
+      min-height: 360px;
+      border-radius: 20px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.08)),
+        linear-gradient(135deg, #dce7cf, #c2d2b1 55%, #aabf93);
+      border: 1px solid var(--line);
+    }
+
+    .terrain-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,.22), transparent 16%),
+        radial-gradient(circle at 80% 14%, rgba(255,255,255,.18), transparent 14%),
+        repeating-linear-gradient(165deg, rgba(71,88,57,.08) 0, rgba(71,88,57,.08) 2px, transparent 2px, transparent 22px);
+      opacity: .75;
+    }
+
+    .parcel {
+      position: absolute;
+      border: 2px dashed rgba(43,42,36,.35);
+      border-radius: 24px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 10px;
+      font-family: Georgia, serif;
+      font-size: 24px;
+      color: rgba(43,42,36,.72);
+    }
+
+    .parcel.e { left: 56%; top: 8%; width: 34%; height: 43%; background: rgba(179, 168, 214, 0.15); }
+    .parcel.f { left: 46%; top: 28%; width: 22%; height: 21%; background: rgba(122, 176, 216, 0.15); }
+    .parcel.g { left: 12%; top: 36%; width: 57%; height: 50%; background: rgba(132, 181, 120, 0.15); border-radius: 30px; }
+
+    .house {
+      position: absolute;
+      left: 52%; top: 34%; width: 90px; height: 56px;
+      background: linear-gradient(180deg, #9f8467, #80644a);
+      border: 2px solid rgba(43,42,36,.25);
+      border-radius: 8px;
+      transform: rotate(-6deg);
+      box-shadow: 0 14px 20px rgba(58,46,32,.18);
+    }
+
+    .house::before {
+      content: "";
+      position: absolute;
+      left: 10px; top: -12px; width: 70px; height: 16px;
+      background: linear-gradient(180deg, #6b5440, #4f3c2d);
+      border-radius: 6px 6px 2px 2px;
+      transform: skewX(-22deg);
+    }
+
+    .pond {
+      position: absolute;
+      left: 46%; top: 64%; width: 96px; height: 60px;
+      border-radius: 48% 52% 44% 56% / 48% 40% 60% 52%;
+      background: radial-gradient(circle at 40% 30%, #81b6ba, #446a72 70%, #325057);
+      box-shadow: inset 0 0 0 6px rgba(255,255,255,.14), 0 10px 16px rgba(50,80,87,.18);
+    }
+
+    .path {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .path svg { width: 100%; height: 100%; }
+
+    .node {
+      position: absolute;
+      min-width: 90px;
+      max-width: 120px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.6);
+      background: rgba(255,255,255,.8);
+      box-shadow: 0 8px 14px rgba(43,42,36,.08);
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+
+    .node:hover, .node.active {
+      transform: translateY(-2px);
+      background: #fff;
+      box-shadow: 0 12px 20px rgba(43,42,36,.12);
+    }
+
+    .node .n-title { font-weight: 700; font-size: 13px; }
+    .node .n-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    .nisp { left: 68%; top: 10%; }
+    .agua { left: 62%; top: 40%; }
+    .moral { left: 24%; top: 48%; }
+    .toma { left: 71%; top: 51%; }
+    .estanque { left: 36%; top: 72%; }
+    .mario { left: 12%; top: 18%; }
+    .jani { left: 32%; top: 26%; }
+
+    .timeline-list {
+      margin-top: 10px;
+      display: grid;
+      gap: 10px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .event {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(255,255,255,.55);
+    }
+
+    .event-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .event-head strong { font-size: 14px; }
+
+    .tag {
+      font-size: 11px;
+      color: #fff;
+      background: var(--green-2);
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+
+    .event p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.4;
+      font-size: 13px;
+    }
+
+    .chat {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .chat-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .chat-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-title .being-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+    }
+
+    .chat-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+      flex: 1;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.2), transparent),
+        repeating-linear-gradient(180deg, rgba(43,42,36,.02) 0, rgba(43,42,36,.02) 1px, transparent 1px, transparent 32px);
+    }
+
+    .msg {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 18px;
+      line-height: 1.4;
+      font-size: 14px;
+      box-shadow: 0 6px 12px rgba(43,42,36,.05);
+      width: fit-content;
+    }
+
+    .msg.system {
+      background: rgba(88,113,76,.1);
+      color: var(--green);
+      border: 1px solid rgba(88,113,76,.15);
+      margin: 0 auto;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .msg.being {
+      background: #fff;
+      border: 1px solid rgba(43,42,36,.08);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .msg.human {
+      background: linear-gradient(135deg, #6c875e, #58714c);
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .msg small {
+      display: block;
+      margin-top: 4px;
+      opacity: .75;
+      font-size: 11px;
+    }
+
+    .chat-input {
+      border-top: 1px solid var(--line);
+      padding: 12px 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+    }
+
+    input, button {
+      font: inherit;
+      border: none;
+      outline: none;
+      border-radius: 14px;
+    }
+
+    input {
+      padding: 12px 14px;
+      background: rgba(255,255,255,.8);
+      border: 1px solid var(--line);
+      font-size: 14px;
+    }
+
+    button {
+      padding: 12px 16px;
+      background: var(--green);
+      color: #fff;
+      cursor: pointer;
+      transition: .2s ease;
+      font-weight: 500;
+      box-shadow: 0 6px 12px rgba(88,113,76,.15);
+    }
+
+    button:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    .hint {
+      font-size: 11px;
+      color: var(--muted);
+      padding: 0 16px 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 1280px) {
+      .app { grid-template-columns: 260px 1fr; }
+      .chat { grid-column: 1 / -1; min-height: 500px; }
+    }
+
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; padding: 10px; }
+      .ecosystem { grid-template-columns: 1fr; }
+      .main { grid-template-rows: auto auto; }
+      .map-wrap { min-height: 320px; }
+      .hero-topline { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .weather-chip { min-width: 0; width: 100%; }
+      .hero h2 { font-size: 36px; }
+      .hero p { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="panel sidebar">
+      <div class="brand">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="leaf">🌿</div>
+          <div>
+            <h1>SERES</h1>
+            <div class="small">Finca viva · universo orgánico</div>
+          </div>
+        </div>
+        <div class="small" style="background:var(--line);padding:2px 6px;border-radius:6px;">beta</div>
+      </div>
+
+      <section class="humans">
+        <h3>Cuidadores</h3>
+        <div class="human-row" style="margin-bottom:8px;">
+          <div class="avatar">M</div>
+          <div>
+            <div style="font-size:14px;"><strong>Mario</strong></div>
+            <div class="small">Observa, riega, poda</div>
+          </div>
+        </div>
+        <div class="human-row">
+          <div class="avatar j">J</div>
+          <div>
+            <div style="font-size:14px;"><strong>Jani</strong></div>
+            <div class="small">Escucha y organiza</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">Capas del ecosistema</div>
+        <div class="filters">
+          <button class="chip active">Todos</button>
+          <button class="chip">Estrato Alto</button>
+          <button class="chip">Sintropía</button>
+          <button class="chip">Agua</button>
+        </div>
+      </section>
+
+      <section style="min-height:0;display:flex;flex-direction:column;gap:8px;">
+        <div class="section-title">Seres destacados hoy</div>
+        <div class="cards" id="cards"></div>
+      </section>
+    </aside>
+
+    <main class="main">
+      <section class="hero panel">
+        <div class="hero-inner">
+          <div class="hero-topline">
+            <div class="hero-copy">
+              <h2>SERES · la finca habla</h2>
+              <p>Un gemelo digital donde los seres del Desaguadero comunican sus ritmos, necesidades biológicas y respuestas al clima de Gran Canaria.</p>
+            </div>
+            <div class="weather-chip" id="weatherChip">
+              <div style="font-size:26px;">⛅</div>
+              <div>
+                <strong id="weatherMain">24°C · nubes y claros</strong>
+                <span id="weatherSub">Santa María de Guía · Viento Alisio moderado</span>
+              </div>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat"><strong>7</strong><span>Seres conectados</span></div>
+            <div class="stat"><strong>3</strong><span>Terrazas · E, F, G</span></div>
+            <div class="stat"><strong>1</strong><span>Estanque bioclimático</span></div>
+            <div class="stat"><strong id="monthLabel">Marzo</strong><span>Brotación y floración</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ecosystem">
+        <div class="panel map-panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+            <div>
+              <div class="section-title">Cartografía Sintrópica</div>
+              <div class="small">Diseño topográfico inspirado en los planos</div>
+            </div>
+            <div class="small" style="color:var(--green);font-weight:600;">Interactivo</div>
+          </div>
+          <div class="map-wrap" id="mapWrap">
+            <div class="terrain-lines"></div>
+            <div class="parcel e">E</div>
+            <div class="parcel f">F</div>
+            <div class="parcel g">G</div>
+            <div class="house" title="Casa en lote F"></div>
+            <div class="pond" title="Estanque"></div>
+            <div class="path">
+              <svg viewBox="0 0 1000 700" preserveAspectRatio="none">
+                <path d="M120,180 C220,200 310,250 430,300 C500,330 560,335 615,360 C710,402 760,470 790,535" fill="none" stroke="rgba(92,79,59,.35)" stroke-width="8" stroke-linecap="round" stroke-dasharray="12 10"/>
+                <path d="M620,360 C670,320 725,260 795,180" fill="none" stroke="rgba(88,113,76,.32)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 10"/>
+                <path d="M610,420 C560,500 515,545 460,585" fill="none" stroke="rgba(63,109,119,.28)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 10"/>
+              </svg>
+            </div>
+
+            <div class="node mario" data-being="mario">
+              <div class="n-title">Mario</div>
+              <div class="n-sub">Ingeniero del suelo</div>
+            </div>
+            <div class="node jani" data-being="jani">
+              <div class="n-title">Jani</div>
+              <div class="n-sub">Armonía del sistema</div>
+            </div>
+            <div class="node nisp" data-being="nispero">
+              <div class="n-title">Níspero</div>
+              <div class="n-sub">Eriobotrya japonica</div>
+            </div>
+            <div class="node agua" data-being="aguacatero">
+              <div class="n-title">Aguacatero</div>
+              <div class="n-sub">Persea americana</div>
+            </div>
+            <div class="node moral" data-being="moral">
+              <div class="n-title">Moral</div>
+              <div class="n-sub">Morus nigra</div>
+            </div>
+            <div class="node toma" data-being="tomatero">
+              <div class="n-title">Tomatero</div>
+              <div class="n-sub">Solanum lycopersicum</div>
+            </div>
+            <div class="node estanque" data-being="estanque">
+              <div class="n-title">Estanque</div>
+              <div class="n-sub">Depuradora biológica</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel timeline-panel">
+          <div class="section-title">Pulso Biológico</div>
+          <div class="timeline-list" id="timeline"></div>
+        </div>
+      </section>
+    </main>
+
+    <section class="panel chat">
+      <div class="chat-header">
+        <div class="chat-title">
+          <div class="being-icon" id="chatIcon"></div>
+          <div>
+            <div id="chatName" style="font-weight:700;font-size:16px;">Aguacatero</div>
+            <div id="chatSubtitle" class="small">Conciencia de raíz y hoja</div>
+          </div>
+        </div>
+        <div class="small" id="chatStatus" style="color:var(--green);font-weight:500;">Sincronizado</div>
+      </div>
+
+      <div class="chat-body" id="chatBody"></div>
+
+      <div class="chat-input">
+        <input id="messageInput" type="text" autocomplete="off" placeholder="Escribe al ser vivo... Ej: ¿Cómo llevas el suelo?" />
+        <button id="sendBtn">Enviar</button>
+      </div>
+      <div class="hint">El motor biológico adapta la conversación al carácter de cada planta.</div>
+    </section>
+  </div>
+
+  <script>
+    // --- 1. BASE DE DATOS BIO-LÓGICA ---
+    const fincaState = {
+      beings: {
+        aguacatero: {
+          icon: '🥑',
+          photo: 'https://images.unsplash.com/photo-1601039641847-7857b994d704?auto=format&fit=crop&w=500&q=80',
+          name: 'Aguacatero',
+          subtitle: 'Persea americana · Variedad Hass/Fuerte',
+          status: 'Manteniendo el follaje nuevo, pero con las raíces alerta por la humedad del suelo.',
+          summary: 'Sensible al viento fuerte y a la asfixia radicular (Phytophthora).',
+          timelineTag: 'Atención suelo',
+          timelineText: 'El suelo volcánico drena bien, pero vigilar humedad en zona baja.',
+          bio: { needs: 'Drenaje excelente, protección contra vientos secos.' },
+          messages: [
+            { type: 'system', text: 'Conexión biológica establecida. El aguacatero analiza su entorno radicular.' },
+            { type: 'being', text: 'Mario, noto el suelo de mi terraza un poco apelmazado. Ya sabes que si el agua se estanca más de 48 horas mis raíces finas sufren por asfixia.', by: 'Aguacatero', time: '10:00' },
+            { type: 'human', text: 'Ayer llovió fuerte. ¿Quieres que pique un poco la tierra alrededor?', by: 'Mario', time: '10:15' }
+          ]
+        },
+        nispero: {
+          icon: '🍐',
+          photo: 'https://images.unsplash.com/photo-1615485925873-9dff9b78ab70?auto=format&fit=crop&w=500&q=80',
+          name: 'Níspero',
+          subtitle: 'Eriobotrya japonica · Frutal de invierno',
+          status: 'Cargando reservas para mantener la floración a buen ritmo.',
+          summary: 'Rústico y duro. Agradece potasio en época de engorde.',
+          timelineTag: 'Abono potásico',
+          timelineText: 'Requiere ceniza o consuelda para endulzar el fruto.',
+          bio: { needs: 'Sol directo, algo de abono potásico.' },
+          messages: [
+            { type: 'system', text: 'Ciclo fenológico: Desarrollo de fruto.' },
+            { type: 'being', text: 'A diferencia del aguacatero, a mí el frío ligero me activa. Estoy cuajando fruta. Un aporte de té de plátano o consuelda me daría el potasio que necesito ahora.', by: 'Níspero', time: 'Ayer' }
+          ]
+        },
+        moral: {
+          icon: '🫐',
+          photo: 'https://images.unsplash.com/photo-1628773822503-930a7eaecf80?auto=format&fit=crop&w=500&q=80',
+          name: 'Moral',
+          subtitle: 'Morus nigra · Dosel sombreador',
+          status: 'Empujando savia nueva. Expandiendo copa sin parar.',
+          summary: 'Generador masivo de biomasa para el estrato sintrópico.',
+          timelineTag: 'Poda verde',
+          timelineText: 'Aprovechar sus hojas para alimentar el suelo de otras terrazas.',
+          bio: { needs: 'Podas de formación para no invadir las terrazas vecinas.' },
+          messages: [
+            { type: 'being', text: 'Si necesitas biomasa para acolchar el suelo del huerto, puedes podarme. Reboto con mucha fuerza.', by: 'Moral', time: '09:00' }
+          ]
+        },
+        tomatero: {
+          icon: '🍅',
+          photo: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&w=500&q=80',
+          name: 'Tomatero',
+          subtitle: 'Solanum lycopersicum · Huerto biointensivo',
+          status: 'Gastando muchísima energía en cuajar el fruto y trepar.',
+          summary: 'Exigente en calcio y luz solar directa.',
+          timelineTag: 'Entutorar',
+          timelineText: 'Las ramas tocan el suelo. Riesgo de infección fúngica inminente.',
+          bio: { needs: 'Soporte físico, riego radicular constante.' },
+          messages: [
+            { type: 'being', text: 'Jani, Mario... estoy tocando la tierra húmeda con las hojas bajas. Con este calor y la humedad del estanque cerca, el mildiu me va a atacar. ¡Entutorado urgente!', by: 'Tomatero', time: '08:30' }
+          ]
+        },
+        estanque: {
+          icon: '💧',
+          photo: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=500&q=80',
+          name: 'Estanque',
+          subtitle: 'Biotopo acuático regulador',
+          status: 'Las plantas oxigenadoras están trabajando bien. Agua templada.',
+          summary: 'Regula la temperatura local y atrae fauna auxiliar (ranas, libélulas).',
+          timelineTag: 'Equilibrio PH',
+          timelineText: 'Las raíces de las plantas de ribera están filtrando correctamente los nitratos.',
+          bio: { needs: 'Equilibrio entre luz y sombra, no retirar demasiadas plantas de ribera.' },
+          messages: [
+            { type: 'being', text: 'Las plantas oxigenadoras de los bordes están haciendo su trabajo. El nivel del agua ha bajado 2cm por evaporación térmica.', by: 'Estanque', time: 'Ayer' }
+          ]
+        },
+        mario: {
+          icon: '🧑',
+          photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80',
+          name: 'Mario',
+          subtitle: 'Humano cuidador · Acción y diseño',
+          status: 'Revisando planos y ajustando los riegos de las terrazas.',
+          summary: 'Ejecuta las tareas físicas leyendo los indicadores biológicos.',
+          timelineTag: 'Gestión Agua',
+          timelineText: 'Prioridad: asegurar que las zanjas de infiltración funcionan.',
+          bio: { needs: 'Descanso y buena alimentación.' },
+          messages: [
+            { type: 'system', text: 'Diario de campo de Mario.' },
+            { type: 'being', text: 'Anotado lo del tomatero y el aguacatero. Esta tarde subo a la terraza con rafia para atar y un punzón para revisar el drenaje.', by: 'Mario', time: '11:00' }
+          ]
+        },
+        jani: {
+          icon: '👩',
+          photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80',
+          name: 'Jani',
+          subtitle: 'Humana cuidadora · Observación holística',
+          status: 'Tomando notas del progreso de las nuevas plantaciones.',
+          summary: 'Mantiene la visión de conjunto del ecosistema.',
+          timelineTag: 'Observación',
+          timelineText: 'Evaluando la sinergia entre el viento alisio y el cortavientos natural.',
+          bio: { needs: 'Paseos de observación por la finca.' },
+          messages: [
+            { type: 'being', text: 'He notado que la barrera de tagasaste está frenando bien el viento norte. Los aguacateros están mucho más resguardados ahora.', by: 'Jani', time: '09:45' }
+          ]
+        }
+      },
+      featuredOrder: ['aguacatero', 'nispero', 'tomatero', 'moral', 'estanque'],
+      currentContext: 'aguacatero',
+      weather: { temp: null, desc: null, humidity: null }
+    };
+
+    // --- 2. MOTOR DE DIÁLOGO ORGÁNICO ---
+    class FincaEngine {
+      constructor(state) {
+        this.state = state;
+      }
+
+      getBeing(key) { return this.state.beings[key]; }
+      getCurrentBeing() { return this.getBeing(this.state.currentContext); }
+
+      setCurrentContext(key) {
+        if (this.state.beings[key]) {
+          this.state.currentContext = key;
+        }
+      }
+
+      generateResponse(message, beingKey) {
+        // Normalizamos el texto para ignorar tildes y pasarlo a minúsculas
+        const text = message.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        const being = this.getBeing(beingKey);
+        const temp = this.state.weather.temp || 24;
+
+        if (beingKey === 'mario' || beingKey === 'jani') {
+             return `Te leo alto y claro. Lo apunto para la próxima vuelta por las terrazas.`;
+        }
+
+        // --- Respuestas con personalidad por especie ---
+        if (text.includes('como estas') || text.includes('que tal') || text.includes('como vas')) {
+            if (beingKey === 'aguacatero') return `Con este clima de ${temp}°C me defiendo, pero ya sabes que soy un poco sibarita con las raíces. ${being.status}`;
+            if (beingKey === 'nispero') return `Bastante a gusto, la verdad. Aquí en mi rincón se está muy bien. ${being.status}`;
+            if (beingKey === 'moral') return `¡Rebosante de energía! No paro de sacar hojas nuevas. ${being.status}`;
+            if (beingKey === 'tomatero') return `¡Acelerado! Voy a toda máquina, pero necesito ayuda para no caerme al suelo. ${being.status}`;
+            if (beingKey === 'estanque') return `Fluyendo y respirando despacio. ${being.status}`;
+        }
+
+        if (text.includes('suelo') || text.includes('tierra') || text.includes('agua') || text.includes('riego') || text.includes('sed')) {
+            if (beingKey === 'aguacatero') return `Uf, el agua justa, por favor. Si me encharco, me ahogo. Comprueba que la tierra drena bien antes de regarme.`;
+            if (beingKey === 'tomatero') return `Agua directa a las raíces, siempre. Como me mojes las hojas con humedad ambiente, el mildiu me hace polvo.`;
+            if (beingKey === 'nispero') return `Yo tengo las raíces profundas. Dame agua si ves que aprieta mucho la sequía, si no, aguanto como un campeón.`;
+            if (beingKey === 'moral') return `Bebo lo que haga falta para seguir estirándome, no tengo muchas manías con la tierra.`;
+            if (beingKey === 'estanque') return `Mi nivel de agua va bajando un poco por la evaporación, pero es el ciclo natural. Mientras me dejes la vegetación de orilla, todo bien.`;
+        }
+
+        if (text.includes('poda') || text.includes('cortar') || text.includes('hojas') || text.includes('chupones')) {
+            if (beingKey === 'moral') return `¡Pódame sin piedad! Me viene genial y así usas mis hojas para hacer un buen acolchado a los demás.`;
+            if (beingKey === 'aguacatero') return `Mucho cuidado con las tijeras. Si me dejas desnudo de golpe, el sol me quemará las ramas jóvenes.`;
+            if (beingKey === 'nispero') return `Solo un poco de peluquería por la parte baja para que corra el aire, no me toques lo de arriba.`;
+            if (beingKey === 'tomatero') return `Quítame los chupones ya, que me están robando toda la fuerza para engordar los tomates.`;
+        }
+
+        if (text.includes('ayuda') || text.includes('necesitas') || text.includes('hago')) {
+             return `Para serte sincero, mi prioridad natural ahora mismo es esta: ${being.bio.needs.toLowerCase()}`;
+        }
+
+        // --- Respuestas comodín orgánicas ---
+        const fallbacks = [
+            `Te escucho. Sigo a mi ritmo, adaptándome a lo que trae el día.`,
+            `Entendido. Aquí sigo, afianzando raíces y haciendo mis cosas de planta.`,
+            `Tomo nota. La vida en la terraza sigue su curso normal.`
+        ];
+        return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+    }
+
+    addMessage(humanMessage) {
+        const being = this.getCurrentBeing();
+        const timeStr = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+        
+        being.messages.push({ type: 'human', text: humanMessage, by: 'Tú', time: timeStr });
+        const reply = this.generateResponse(humanMessage, this.state.currentContext);
+        
+        setTimeout(() => {
+            being.messages.push({ type: 'being', text: reply, by: being.name, time: timeStr });
+            window.dispatchEvent(new Event('new-message'));
+        }, 600);
+      }
+
+      async updateWeather() {
+        try {
+          const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.139&longitude=-15.632&current=temperature_2m,relative_humidity_2m,weather_code&timezone=auto');
+          const data = await res.json();
+          const current = data.current;
+          this.state.weather = {
+            temp: Math.round(current.temperature_2m),
+            humidity: Math.round(current.relative_humidity_2m)
+          };
+        } catch (e) {
+          console.log("Meteo offline, usando fallback.");
+          this.state.weather = { temp: 24, humidity: 65 };
+        }
+      }
+    }
+
+    // --- 3. CONTROLADOR DOM ---
+    const engine = new FincaEngine(fincaState);
+
+    const DOM = {
+        cards: document.getElementById('cards'),
+        timeline: document.getElementById('timeline'),
+        chatBody: document.getElementById('chatBody'),
+        chatName: document.getElementById('chatName'),
+        chatSubtitle: document.getElementById('chatSubtitle'),
+        chatIcon: document.getElementById('chatIcon'),
+        input: document.getElementById('messageInput'),
+        sendBtn: document.getElementById('sendBtn'),
+        weatherMain: document.getElementById('weatherMain'),
+        weatherSub: document.getElementById('weatherSub'),
+        monthLabel: document.getElementById('monthLabel')
+    };
+
+    function renderCards() {
+      DOM.cards.innerHTML = engine.state.featuredOrder.map(key => {
+        const b = engine.getBeing(key);
+        return `
+          <div class="being-card ${key === engine.state.currentContext ? 'active' : ''}" data-being="${key}">
+            <div class="being-content">
+              <div class="being-top">
+                <div class="being-title">
+                  <div class="being-icon"><img src="${b.photo}" alt="${b.name}" /></div>
+                  <div>
+                    <div class="being-name">${b.name}</div>
+                    <div class="small">${b.subtitle.split('·')[0]}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="being-status">${b.summary}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.querySelectorAll('[data-being]').forEach(el => {
+        el.addEventListener('click', () => handleContextChange(el.dataset.being));
+      });
+    }
+
+    function renderTimeline() {
+      DOM.timeline.innerHTML = engine.state.featuredOrder.map(key => {
+        const b = engine.getBeing(key);
+        return `
+          <article class="event">
+            <div class="event-head">
+              <strong>${b.icon} ${b.name}</strong>
+              <span class="tag">${b.timelineTag}</span>
+            </div>
+            <p>${b.timelineText}</p>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderChat() {
+      const b = engine.getCurrentBeing();
+      DOM.chatName.textContent = b.name;
+      DOM.chatSubtitle.textContent = b.subtitle;
+      DOM.chatIcon.innerHTML = `<img src="${b.photo}" alt="${b.name}" />`;
+      DOM.chatBody.innerHTML = b.messages.map(msg => `
+        <div class="msg ${msg.type}">
+          ${msg.type === 'being' ? `<strong>${msg.by}:</strong> ` : ''}${msg.text}
+          ${msg.by && msg.type !== 'system' ? `<small>${msg.by} · ${msg.time}</small>` : ''}
+        </div>
+      `).join('');
+      DOM.chatBody.scrollTop = DOM.chatBody.scrollHeight;
+    }
+
+    function renderWeather() {
+        if(engine.state.weather.temp) {
+            DOM.weatherMain.textContent = `${engine.state.weather.temp}°C · Analizando`;
+            DOM.weatherSub.textContent = `Gran Canaria · ${engine.state.weather.humidity}% humedad · Vientos Alisios`;
+        }
+    }
+
+    function handleContextChange(key) {
+      engine.setCurrentContext(key);
+      renderCards();
+      document.querySelectorAll('.node').forEach(n => n.classList.toggle('active', n.dataset.being === key));
+      renderChat();
+    }
+
+    function handleSendMessage() {
+      const value = DOM.input.value.trim();
+      if (!value) return;
+      engine.addMessage(value);
+      DOM.input.value = '';
+      renderChat();
+    }
+
+    function initializeApp() {
+        const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+        if (DOM.monthLabel) DOM.monthLabel.textContent = months[new Date().getMonth()];
+
+        engine.updateWeather().then(renderWeather);
+        
+        DOM.sendBtn.addEventListener('click', handleSendMessage);
+        DOM.input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') handleSendMessage();
+        });
+
+        window.addEventListener('new-message', renderChat);
+
+        handleContextChange(engine.state.currentContext);
+        renderTimeline();
+    }
+
+    initializeApp();
+  </script>
+</body>
+</html>
