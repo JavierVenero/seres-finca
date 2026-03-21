@@ -18,8 +18,6 @@
       --blue: #2d8cff;
       --blue-2: #2276d2;
       --blue-soft: #dceeff;
-      --sky: #8cd3ff;
-      --soil: #7a5b42;
       --line: rgba(21,48,41,.1);
       --shadow: 0 14px 36px rgba(22, 74, 92, 0.14);
       --radius-xl: 26px;
@@ -558,25 +556,25 @@
       min-height: 0;
       border-radius: 20px;
       overflow: hidden;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.08)),
-        linear-gradient(135deg, #ddf6ea, #cfe8fb 56%, #c5efdb);
       border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(8,18,10,.08), rgba(8,18,10,.18)),
+        url('cartografia-finca.jpg') center/cover;
     }
 
     .terrain-lines {
       position: absolute;
       inset: 0;
-      background-image:
-        radial-gradient(circle at 10% 20%, rgba(255,255,255,.22), transparent 16%),
-        radial-gradient(circle at 80% 14%, rgba(255,255,255,.18), transparent 14%),
-        repeating-linear-gradient(165deg, rgba(71,88,57,.08) 0, rgba(71,88,57,.08) 2px, transparent 2px, transparent 22px);
-      opacity: .75;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+        repeating-linear-gradient(165deg, rgba(255,255,255,.06) 0, rgba(255,255,255,.06) 2px, transparent 2px, transparent 26px);
+      opacity: .55;
+      pointer-events: none;
     }
 
     .parcel {
       position: absolute;
-      border: 2px dashed rgba(21,48,41,.25);
+      border: 2px dashed rgba(255,255,255,.55);
       border-radius: 24px;
       display: flex;
       align-items: flex-start;
@@ -584,11 +582,13 @@
       padding: 10px;
       font-family: Georgia, serif;
       font-size: 24px;
-      color: rgba(21,48,41,.64);
+      color: rgba(255,255,255,.95);
+      text-shadow: 0 2px 6px rgba(0,0,0,.26);
+      backdrop-filter: blur(2px);
     }
 
-    .parcel.e { left: 56%; top: 8%; width: 34%; height: 43%; background: rgba(120, 154, 255, 0.10); }
-    .parcel.f { left: 46%; top: 28%; width: 22%; height: 21%; background: rgba(34, 186, 182, 0.10); }
+    .parcel.e { left: 56%; top: 8%; width: 34%; height: 43%; background: rgba(120, 154, 255, 0.12); }
+    .parcel.f { left: 46%; top: 28%; width: 22%; height: 21%; background: rgba(34, 186, 182, 0.12); }
     .parcel.g { left: 12%; top: 36%; width: 57%; height: 50%; background: rgba(46, 196, 113, 0.10); border-radius: 30px; }
 
     .house {
@@ -632,9 +632,9 @@
       max-width: 124px;
       padding: 8px 10px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.7);
-      background: rgba(255,255,255,.84);
-      box-shadow: 0 8px 14px rgba(43,42,36,.08);
+      border: 1px solid rgba(255,255,255,.82);
+      background: rgba(255,255,255,.88);
+      box-shadow: 0 8px 14px rgba(43,42,36,.12);
       cursor: pointer;
       transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
     }
@@ -642,7 +642,7 @@
     .node:hover, .node.active {
       transform: translateY(-2px);
       background: #fff;
-      box-shadow: 0 12px 20px rgba(43,42,36,.12);
+      box-shadow: 0 12px 20px rgba(43,42,36,.18);
     }
 
     .node .n-title { font-weight: 800; font-size: 13px; }
@@ -654,7 +654,7 @@
     .toma { left: 71%; top: 51%; }
     .estanque { left: 36%; top: 72%; }
     .mario { left: 12%; top: 18%; }
-    .jani { left: 32%; top: 26%; }
+    .yani { left: 32%; top: 26%; }
 
     .timeline-list {
       display: grid;
@@ -806,9 +806,10 @@
       border-top: 1px solid var(--line);
       padding: 12px 16px;
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       gap: 8px;
       flex-shrink: 0;
+      align-items: center;
     }
 
     input, button {
@@ -819,6 +820,8 @@
     }
 
     input {
+      min-width: 0;
+      width: 100%;
       padding: 12px 14px;
       background: rgba(255,255,255,.88);
       border: 1px solid var(--line);
@@ -826,13 +829,15 @@
     }
 
     button {
-      padding: 12px 16px;
+      min-width: 86px;
+      padding: 12px 14px;
       background: linear-gradient(135deg, var(--green), var(--blue));
       color: #fff;
       cursor: pointer;
       transition: .2s ease;
       font-weight: 700;
       box-shadow: 0 8px 16px rgba(22,155,98,.18);
+      white-space: nowrap;
     }
 
     button:hover {
@@ -893,6 +898,14 @@
 
       .main-nav {
         grid-template-columns: 1fr 1fr;
+      }
+
+      .chat-input {
+        grid-template-columns: 1fr;
+      }
+
+      button {
+        width: 100%;
       }
     }
   </style>
@@ -967,9 +980,9 @@
                   </div>
                 </div>
                 <div class="care-card">
-                  <div class="avatar j">J</div>
+                  <div class="avatar j">Y</div>
                   <div>
-                    <strong style="font-size:14px;">Jani</strong>
+                    <strong style="font-size:14px;">Yani</strong>
                     <div class="mini-text">Escucha y armoniza</div>
                   </div>
                 </div>
@@ -1037,7 +1050,7 @@
             <div class="section-head">
               <div>
                 <h3 class="section-title">Cartografía sintrópica</h3>
-                <div class="section-sub">Diseño topográfico inspirado en los planos</div>
+                <div class="section-sub">Imagen aérea base de la finca</div>
               </div>
               <div class="soft-badge">Interactivo</div>
             </div>
@@ -1051,9 +1064,9 @@
               <div class="pond" title="Estanque"></div>
               <div class="path">
                 <svg viewBox="0 0 1000 700" preserveAspectRatio="none">
-                  <path d="M120,180 C220,200 310,250 430,300 C500,330 560,335 615,360 C710,402 760,470 790,535" fill="none" stroke="rgba(92,79,59,.35)" stroke-width="8" stroke-linecap="round" stroke-dasharray="12 10"/>
-                  <path d="M620,360 C670,320 725,260 795,180" fill="none" stroke="rgba(22,155,98,.28)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 10"/>
-                  <path d="M610,420 C560,500 515,545 460,585" fill="none" stroke="rgba(45,140,255,.24)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 10"/>
+                  <path d="M120,180 C220,200 310,250 430,300 C500,330 560,335 615,360 C710,402 760,470 790,535" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="8" stroke-linecap="round" stroke-dasharray="12 10"/>
+                  <path d="M620,360 C670,320 725,260 795,180" fill="none" stroke="rgba(22,255,152,.42)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 10"/>
+                  <path d="M610,420 C560,500 515,545 460,585" fill="none" stroke="rgba(112,200,255,.44)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 10"/>
                 </svg>
               </div>
 
@@ -1061,8 +1074,8 @@
                 <div class="n-title">Mario</div>
                 <div class="n-sub">Ingeniero del suelo</div>
               </div>
-              <div class="node jani" data-being="jani">
-                <div class="n-title">Jani</div>
+              <div class="node yani" data-being="yani">
+                <div class="n-title">Yani</div>
                 <div class="n-sub">Armonía del sistema</div>
               </div>
               <div class="node nisp" data-being="nispero">
@@ -1142,7 +1155,7 @@
           name: 'Aguacatero',
           subtitle: 'Persea americana · Variedad Hass/Fuerte',
           status: 'Manteniendo el follaje nuevo, pero con las raíces alerta por la humedad del suelo.',
-          summary: 'Sensible al viento fuerte y a la asfixia radicular (Phytophthora).',
+          summary: 'Sensible al viento fuerte y a la asfixia radicular.',
           timelineTag: 'Atención suelo',
           timelineText: 'El suelo volcánico drena bien, pero vigilar humedad en zona baja.',
           bio: { needs: 'Drenaje excelente, protección contra vientos secos.' },
@@ -1154,17 +1167,17 @@
         },
         nispero: {
           icon: '🍐',
-          photo: 'https://images.unsplash.com/photo-1615485925873-9dff9b78ab70?auto=format&fit=crop&w=500&q=80',
+          photo: 'nispero.jpg',
           name: 'Níspero',
           subtitle: 'Eriobotrya japonica · Frutal de invierno',
-          status: 'Cargando reservas para mantener la floración a buen ritmo.',
+          status: 'Cargando reservas para mantener la floración y el cuajado a buen ritmo.',
           summary: 'Rústico y duro. Agradece potasio en época de engorde.',
           timelineTag: 'Abono potásico',
           timelineText: 'Requiere ceniza o consuelda para endulzar el fruto.',
           bio: { needs: 'Sol directo, algo de abono potásico.' },
           messages: [
-            { type: 'system', text: 'Ciclo fenológico: Desarrollo de fruto.' },
-            { type: 'being', text: 'A diferencia del aguacatero, a mí el frío ligero me activa. Estoy cuajando fruta. Un aporte de té de plátano o consuelda me daría el potasio que necesito ahora.', by: 'Níspero', time: 'Ayer' }
+            { type: 'system', text: 'Ciclo fenológico: desarrollo de fruto.' },
+            { type: 'being', text: 'A diferencia del aguacatero, a mí el fresco suave me activa. Estoy cuajando fruta. Un aporte de té de plátano o consuelda me vendría perfecto ahora.', by: 'Níspero', time: 'Ayer' }
           ]
         },
         moral: {
@@ -1172,11 +1185,11 @@
           photo: 'https://images.unsplash.com/photo-1628773822503-930a7eaecf80?auto=format&fit=crop&w=500&q=80',
           name: 'Moral',
           subtitle: 'Morus nigra · Dosel sombreador',
-          status: 'Empujando savia nueva. Expandiendo copa sin parar.',
+          status: 'Empujando savia nueva y expandiendo copa sin parar.',
           summary: 'Generador masivo de biomasa para el estrato sintrópico.',
           timelineTag: 'Poda verde',
           timelineText: 'Aprovechar sus hojas para alimentar el suelo de otras terrazas.',
-          bio: { needs: 'Podas de formación para no invadir las terrazas vecinas.' },
+          bio: { needs: 'Podas de formación para no invadir terrazas vecinas.' },
           messages: [
             { type: 'being', text: 'Si necesitas biomasa para acolchar el suelo del huerto, puedes podarme. Reboto con mucha fuerza.', by: 'Moral', time: '09:00' }
           ]
@@ -1186,13 +1199,13 @@
           photo: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&w=500&q=80',
           name: 'Tomatero',
           subtitle: 'Solanum lycopersicum · Huerto biointensivo',
-          status: 'Gastando muchísima energía en cuajar el fruto y trepar.',
+          status: 'Gastando muchísima energía en cuajar fruto y trepar.',
           summary: 'Exigente en calcio y luz solar directa.',
           timelineTag: 'Entutorar',
           timelineText: 'Las ramas tocan el suelo. Riesgo de infección fúngica inminente.',
           bio: { needs: 'Soporte físico, riego radicular constante.' },
           messages: [
-            { type: 'being', text: 'Jani, Mario... estoy tocando la tierra húmeda con las hojas bajas. Con este calor y la humedad del estanque cerca, el mildiu me va a atacar. ¡Entutorado urgente!', by: 'Tomatero', time: '08:30' }
+            { type: 'being', text: 'Yani, Mario... estoy tocando la tierra húmeda con las hojas bajas. Con este calor y la humedad del estanque cerca, el mildiu me va a atacar. Entutorado urgente.', by: 'Tomatero', time: '08:30' }
           ]
         },
         estanque: {
@@ -1201,12 +1214,12 @@
           name: 'Estanque',
           subtitle: 'Biotopo acuático regulador',
           status: 'Las plantas oxigenadoras están trabajando bien. Agua templada.',
-          summary: 'Regula la temperatura local y atrae fauna auxiliar (ranas, libélulas).',
-          timelineTag: 'Equilibrio PH',
-          timelineText: 'Las raíces de las plantas de ribera están filtrando correctamente los nitratos.',
+          summary: 'Regula la temperatura local y atrae fauna auxiliar.',
+          timelineTag: 'Equilibrio',
+          timelineText: 'Las raíces de ribera están filtrando correctamente los nitratos.',
           bio: { needs: 'Equilibrio entre luz y sombra, no retirar demasiadas plantas de ribera.' },
           messages: [
-            { type: 'being', text: 'Las plantas oxigenadoras de los bordes están haciendo su trabajo. El nivel del agua ha bajado 2cm por evaporación térmica.', by: 'Estanque', time: 'Ayer' }
+            { type: 'being', text: 'Las plantas oxigenadoras de los bordes están haciendo su trabajo. El nivel del agua ha bajado algo por evaporación térmica.', by: 'Estanque', time: 'Ayer' }
           ]
         },
         mario: {
@@ -1216,7 +1229,7 @@
           subtitle: 'Humano cuidador · Acción y diseño',
           status: 'Revisando planos y ajustando los riegos de las terrazas.',
           summary: 'Ejecuta las tareas físicas leyendo los indicadores biológicos.',
-          timelineTag: 'Gestión Agua',
+          timelineTag: 'Gestión agua',
           timelineText: 'Prioridad: asegurar que las zanjas de infiltración funcionan.',
           bio: { needs: 'Descanso y buena alimentación.' },
           messages: [
@@ -1224,10 +1237,10 @@
             { type: 'being', text: 'Anotado lo del tomatero y el aguacatero. Esta tarde subo a la terraza con rafia para atar y un punzón para revisar el drenaje.', by: 'Mario', time: '11:00' }
           ]
         },
-        jani: {
+        yani: {
           icon: '👩',
           photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80',
-          name: 'Jani',
+          name: 'Yani',
           subtitle: 'Humana cuidadora · Observación holística',
           status: 'Tomando notas del progreso de las nuevas plantaciones.',
           summary: 'Mantiene la visión de conjunto del ecosistema.',
@@ -1235,7 +1248,7 @@
           timelineText: 'Evaluando la sinergia entre el viento alisio y el cortavientos natural.',
           bio: { needs: 'Paseos de observación por la finca.' },
           messages: [
-            { type: 'being', text: 'He notado que la barrera de tagasaste está frenando bien el viento norte. Los aguacateros están mucho más resguardados ahora.', by: 'Jani', time: '09:45' }
+            { type: 'being', text: 'He notado que la barrera de tagasaste está frenando bien el viento norte. Los aguacateros están mucho más resguardados ahora.', by: 'Yani', time: '09:45' }
           ]
         }
       },
@@ -1261,7 +1274,7 @@
         const being = this.getBeing(beingKey);
         const temp = this.state.weather.temp || 24;
 
-        if (beingKey === 'mario' || beingKey === 'jani') {
+        if (beingKey === 'mario' || beingKey === 'yani') {
           return 'Te leo alto y claro. Lo apunto para la próxima vuelta por las terrazas.';
         }
 
@@ -1278,7 +1291,7 @@
           if (beingKey === 'tomatero') return 'Agua a raíz y sin mojar hoja. Con humedad alta, cualquier exceso me complica.';
           if (beingKey === 'nispero') return 'Yo aguanto bien, pero si me das potasio en buen momento te respondo con fruta mejor.';
           if (beingKey === 'moral') return 'Bebo lo que haga falta para seguir produciendo biomasa.';
-          if (beingKey === 'estanque') return 'Mi nivel baja un poco por evaporación, pero sigo equilibrando humedad y vida auxiliar.';
+          if (beingKey === 'estanque') return 'Mi nivel baja algo por evaporación, pero sigo equilibrando humedad y vida auxiliar.';
         }
 
         if (text.includes('poda') || text.includes('cortar') || text.includes('hojas') || text.includes('chupones')) {
