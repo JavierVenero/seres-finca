@@ -5,535 +5,808 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Finca Viva · Seres del Universo Sintrópico</title>
   <style>
-    :root {
-      --bg: #f4f9f7;
-      --bg2: #ffffff;
-      --paper: rgba(255, 255, 255, 0.96);
-      --paper-strong: #ffffff;
-      --ink: #0f172a;
-      --muted: #64748b;
-      --green: #10b981;
-      --green-2: #059669;
-      --blue: #3b82f6;
-      --blue-2: #2563eb;
-      --cyan: #06b6d4;
-      --line: #e2e8f0;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      --radius-xl: 20px;
-      --radius-lg: 16px;
-      --radius-md: 12px;
+    :root{
+      --bg:#e7efe8;
+      --bg2:#d9e8de;
+      --card:rgba(255,255,255,.94);
+      --card2:rgba(248,250,248,.98);
+      --ink:#183128;
+      --muted:#5c7168;
+      --green1:#0f8a57;
+      --green2:#0a6b45;
+      --green3:#184d36;
+      --blue1:#1e72d4;
+      --olive:#758f2f;
+      --line:rgba(24,49,40,.12);
+      --shadow:0 10px 26px rgba(20,43,34,.10);
+      --r-xl:24px;
+      --r-lg:18px;
+      --r-md:14px;
     }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
-      color: var(--ink);
-      background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%);
-      overflow: hidden;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.55), transparent 24%),
+        linear-gradient(180deg,var(--bg2) 0%,var(--bg) 58%,#eef4ef 100%);
     }
 
-    .app {
-      height: 100vh;
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .app{
+      max-width:1200px;
+      margin:0 auto;
+      padding:14px;
+      display:grid;
+      gap:12px;
     }
 
-    .top-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--paper-strong);
-      padding: 10px 20px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      flex-shrink: 0;
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
     }
 
-    .logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #a7f3d0, #34d399);
-      font-size: 18px;
+    .logo{
+      width:50px;
+      height:50px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      font-size:24px;
+      background:linear-gradient(135deg,#c7f2d9,#84daa9);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.8);
+      flex-shrink:0;
     }
 
-    .brand-title {
-      margin: 0;
-      font-family: Georgia, serif;
-      font-size: 22px;
-      line-height: 1;
-      color: var(--ink);
+    .brand-title{
+      margin:0;
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:38px;
+      line-height:.95;
+      letter-spacing:-0.03em;
     }
 
-    .brand-subtitle {
-      margin-top: 2px;
-      color: var(--muted);
-      font-size: 11px;
+    .brand-subtitle{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.2;
     }
 
-    .header-stats {
-      display: flex;
-      align-items: center;
-      gap: 16px;
+    .pill-top{
+      padding:9px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(255,255,255,.82);
+      color:var(--green2);
+      font-size:12px;
+      font-weight:800;
+      box-shadow:var(--shadow);
+      white-space:nowrap;
     }
 
-    .h-stat {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
-      padding: 6px 12px;
-      background: #f8fafc;
-      border-radius: 8px;
-      border: 1px solid var(--line);
+    .panel{
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.78);
+      backdrop-filter:blur(12px);
+      border-radius:var(--r-xl);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      min-width:0;
     }
 
-    .h-stat span.val { color: var(--ink); font-weight: 800; }
-
-    .beings-strip {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      flex-shrink: 0;
-    }
-    
-    .beings-strip::-webkit-scrollbar { height: 4px; }
-    .beings-strip::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-
-    .mini-card {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 12px;
-      background: var(--paper-strong);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      min-width: 180px;
-      transition: all 0.2s;
+    .hero{
+      position:relative;
+      min-height:132px;
+      background:
+        linear-gradient(180deg,rgba(9,18,11,.12),rgba(9,18,11,.38)),
+        url('cartografia-finca.jpg') center center / cover;
     }
 
-    .mini-card:hover {
-      border-color: var(--blue);
-      transform: translateY(-1px);
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(90deg,rgba(8,29,22,.54),rgba(8,29,22,.18) 58%,rgba(8,29,22,.10));
+      pointer-events:none;
     }
 
-    .mini-card.active {
-      background: #f0fdf4;
-      border-color: var(--green);
-      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.1);
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      padding:14px 16px;
+      color:#f7fff9;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:12px;
+      align-items:start;
     }
 
-    .mini-card img {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      object-fit: cover;
+    .hero-copy h2{
+      margin:0 0 4px;
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:34px;
+      line-height:.95;
+      letter-spacing:-0.03em;
+      text-shadow:0 4px 14px rgba(0,0,0,.24);
     }
 
-    .mini-card-info {
-      display: flex;
-      flex-direction: column;
+    .hero-copy p{
+      margin:0;
+      font-size:13px;
+      line-height:1.3;
+      max-width:700px;
+      color:rgba(247,255,249,.94);
     }
 
-    .mini-name { font-size: 13px; font-weight: 800; }
-    .mini-status { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
-    .workspace {
-      display: flex;
-      gap: 12px;
-      flex: 1;
-      min-height: 0;
+    .hero-aside{
+      display:grid;
+      gap:8px;
+      min-width:240px;
     }
 
-    .panel {
-      background: var(--paper-strong);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      min-height: 0;
-      overflow: hidden;
+    .weather-card,
+    .mini-stats{
+      padding:10px 12px;
+      border-radius:16px;
+      background:rgba(255,255,255,.15);
+      border:1px solid rgba(255,255,255,.20);
+      backdrop-filter:blur(8px);
     }
 
-    .workspace-left { flex: 1.2; }
-    .workspace-right { flex: 0.8; max-width: 400px; }
-
-    .panel-header {
-      padding: 14px 20px 0;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-shrink: 0;
+    .weather-row{
+      display:flex;
+      align-items:center;
+      gap:10px;
     }
 
-    .tab-row {
-      display: flex;
-      gap: 16px;
+    .weather-icon{font-size:24px}
+
+    .weather-main{
+      font-size:18px;
+      font-weight:800;
+      line-height:1.05;
     }
 
-    .tab-btn {
-      background: none;
-      border: none;
-      padding: 0 0 10px 0;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--muted);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
+    .weather-sub{
+      margin-top:2px;
+      font-size:11px;
+      line-height:1.25;
+      color:rgba(255,255,255,.9);
     }
 
-    .tab-btn.active {
-      color: var(--blue);
-      border-bottom-color: var(--blue);
+    .mini-stats{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:8px;
     }
 
-    .panel-body {
-      padding: 20px;
-      overflow-y: auto;
-      flex: 1;
-      min-height: 0;
+    .mini-stat strong{
+      display:block;
+      font-size:18px;
+      line-height:1;
+      margin-bottom:2px;
     }
 
-    .screen { display: none; }
-    .screen.active { display: block; }
-
-    .selected-top {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 16px;
+    .mini-stat span{
+      display:block;
+      font-size:10.5px;
+      line-height:1.2;
+      color:rgba(255,255,255,.92);
     }
 
-    .selected-photo img {
-      width: 80px;
-      height: 80px;
-      border-radius: 16px;
-      object-fit: cover;
-      box-shadow: var(--shadow);
+    .main{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 340px;
+      gap:12px;
+      align-items:start;
     }
 
-    .selected-name { font-size: 24px; font-weight: 800; line-height: 1.1; }
-    .selected-sub { margin-top: 4px; color: var(--muted); font-size: 13px; }
-    
-    .selected-status {
-      padding: 14px;
-      border-radius: 12px;
-      background: #eff6ff;
-      border-left: 4px solid var(--blue);
-      font-size: 14px;
-      line-height: 1.5;
-      margin-bottom: 16px;
+    .left-col,
+    .right-col{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-width:0;
     }
 
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 12px;
+    .section-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
     }
 
-    .mini-panel {
-      padding: 14px;
-      border-radius: 12px;
-      background: #f8fafc;
-      border: 1px solid var(--line);
+    .section-title{
+      margin:0;
+      font-size:16px;
+      font-weight:800;
+      color:var(--ink);
     }
 
-    .mini-panel strong {
-      display: block;
-      font-size: 11px;
-      color: var(--blue-2);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      font-weight: 800;
+    .section-sub{
+      margin-top:2px;
+      font-size:12px;
+      color:var(--muted);
     }
 
-    .mini-panel span { font-size: 13px; line-height: 1.4; }
-
-    .map-wrap {
-      position: relative;
-      width: 100%;
-      height: 380px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--line);
-      background: url('cartografia-finca.jpg') center/cover;
-      background-color: var(--green);
-      overflow: hidden;
+    .soft-badge{
+      padding:6px 10px;
+      border-radius:999px;
+      background:linear-gradient(135deg,rgba(15,138,87,.12),rgba(31,116,216,.12));
+      color:var(--green2);
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
     }
 
-    .zone-label {
-      position: absolute;
-      padding: 6px 10px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.9);
-      font-size: 11px;
-      font-weight: 800;
-    }
-    .z-casa { right: 15%; top: 12%; }
-    .z-huerto { right: 13%; top: 34%; }
-    .z-estanque { left: 46%; bottom: 16%; }
-    .z-biomasa { left: 12%; bottom: 24%; }
-
-    .node {
-      position: absolute;
-      padding: 6px 10px;
-      border-radius: 10px;
-      border: 2px solid #fff;
-      background: rgba(255,255,255,0.95);
-      cursor: pointer;
-      box-shadow: var(--shadow);
-    }
-    .node.active { background: var(--blue); color: white; border-color: var(--blue); }
-    .node .n-title { font-size: 11px; font-weight: 800; }
-    
-    .nisp { right: 24%; top: 24%; }
-    .agua { right: 26%; top: 52%; }
-    .moral { left: 24%; top: 60%; }
-    .toma { right: 14%; top: 66%; }
-    .estanque { left: 44%; bottom: 10%; }
-    .mario { left: 12%; top: 22%; }
-    .yani { left: 30%; top: 34%; }
-
-    .timeline-list { display: grid; gap: 10px; }
-    .event { padding: 12px; background: #f8fafc; border-radius: 12px; border: 1px solid var(--line); }
-    .event-head { display: flex; justify-content: space-between; font-weight: 800; font-size: 13px; }
-    .event p { margin: 6px 0 0; font-size: 12px; color: var(--muted); }
-
-    .chat-top {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--line);
-      background: #f8fafc;
-      flex-shrink: 0;
-    }
-    
-    .chat-top img { width: 32px; height: 32px; border-radius: 8px; }
-    .chat-top-info { flex: 1; }
-    .chat-top-name { font-size: 14px; font-weight: 800; }
-    .chat-status-dot { color: var(--green); font-size: 11px; font-weight: 800; }
-
-    .chat-body {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      overflow-y: auto;
-      flex: 1;
-      background: var(--paper-strong);
+    .compact-grid{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:10px;
     }
 
-    .msg {
-      max-width: 90%;
-      padding: 10px 14px;
-      border-radius: 14px;
-      font-size: 13px;
-      line-height: 1.4;
-      width: fit-content;
-    }
-    .msg.system { background: #dcfce7; color: var(--green-2); margin: 0 auto; font-size: 11px; font-weight: 600; text-align: center; }
-    .msg.being { background: #f1f5f9; align-self: flex-start; border-bottom-left-radius: 4px; }
-    .msg.human { background: var(--blue); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
-    .msg small { display: block; margin-top: 4px; opacity: 0.7; font-size: 10px; }
-
-    .chat-controls {
-      padding: 12px;
-      border-top: 1px solid var(--line);
-      background: #f8fafc;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .being-card{
+      border:1px solid var(--line);
+      background:var(--card2);
+      border-radius:18px;
+      padding:10px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      cursor:pointer;
+      transition:.15s ease;
+      min-width:0;
+      min-height:142px;
     }
 
-    .speaker-select {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .speaker-select span { font-size: 11px; font-weight: 700; color: var(--muted); }
-    .spk-btn {
-      border: 1px solid var(--line);
-      background: #fff;
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .spk-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
-
-    .chat-input {
-      display: flex;
-      gap: 8px;
-    }
-    .chat-input input {
-      flex: 1;
-      padding: 10px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      font-size: 13px;
-      outline: none;
-    }
-    .chat-input input:focus { border-color: var(--blue); }
-    .chat-input button {
-      padding: 0 16px;
-      border-radius: 8px;
-      background: var(--blue);
-      color: #fff;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
+    .being-card:hover,
+    .being-card.active{
+      transform:translateY(-1px);
+      border-color:rgba(15,138,87,.32);
+      box-shadow:0 8px 18px rgba(20,43,34,.08);
     }
 
-    @media (max-width: 900px) {
-      body { overflow: auto; }
-      .app { height: auto; min-height: 100vh; }
-      .top-header { flex-wrap: wrap; gap: 10px; justify-content: center; }
-      .workspace { flex-direction: column; }
-      .workspace-right { max-width: 100%; min-height: 500px; }
+    .being-head{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      min-width:0;
+    }
+
+    .being-photo{
+      width:42px;
+      height:42px;
+      border-radius:13px;
+      overflow:hidden;
+      flex-shrink:0;
+      background:#d7e8d9;
+    }
+
+    .being-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .being-name{
+      font-size:14px;
+      font-weight:800;
+      line-height:1.1;
+    }
+
+    .being-sub{
+      margin-top:2px;
+      font-size:10.5px;
+      line-height:1.2;
+      color:var(--muted);
+    }
+
+    .season-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      width:fit-content;
+      max-width:100%;
+      padding:4px 8px;
+      border-radius:999px;
+      background:linear-gradient(135deg,rgba(15,138,87,.12),rgba(113,139,45,.16));
+      color:var(--green3);
+      font-size:10.5px;
+      font-weight:800;
+    }
+
+    .being-message{
+      font-size:12.5px;
+      line-height:1.3;
+      color:var(--ink);
+    }
+
+    .detail-panel .panel-inner,
+    .chat-panel .panel-inner{
+      padding:14px;
+    }
+
+    .selected-card{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .selected-top{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .selected-photo{
+      width:64px;
+      height:64px;
+      border-radius:18px;
+      overflow:hidden;
+      flex-shrink:0;
+      box-shadow:0 8px 18px rgba(20,43,34,.10);
+    }
+
+    .selected-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .selected-name{
+      font-size:21px;
+      font-weight:800;
+      line-height:1.05;
+    }
+
+    .selected-sub{
+      margin-top:4px;
+      font-size:13px;
+      line-height:1.25;
+      color:var(--muted);
+    }
+
+    .selected-status{
+      padding:12px 14px;
+      border-radius:18px;
+      background:linear-gradient(135deg,rgba(15,138,87,.09),rgba(31,116,216,.09));
+      border:1px solid rgba(31,116,216,.12);
+      font-size:14px;
+      line-height:1.4;
+      color:var(--ink);
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+    }
+
+    .mini-panel{
+      padding:12px;
+      border-radius:16px;
+      background:rgba(255,255,255,.74);
+      border:1px solid var(--line);
+      min-width:0;
+    }
+
+    .mini-panel strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:12px;
+      font-weight:800;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .mini-panel span{
+      font-size:13px;
+      line-height:1.35;
+      color:var(--ink);
+    }
+
+    .chat-panel{
+      position:sticky;
+      top:14px;
+    }
+
+    .chat-wrap{
+      display:flex;
+      flex-direction:column;
+      min-height:560px;
+      max-height:calc(100vh - 28px);
+    }
+
+    .chat-header{
+      padding:10px 12px 8px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      flex-shrink:0;
+    }
+
+    .chat-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      min-width:0;
+    }
+
+    .chat-title{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-width:0;
+    }
+
+    .chat-title .being-photo{
+      width:40px;
+      height:40px;
+      border-radius:12px;
+    }
+
+    .chat-name{
+      font-size:14px;
+      font-weight:800;
+      line-height:1.1;
+    }
+
+    .chat-sub{
+      margin-top:2px;
+      font-size:11px;
+      line-height:1.2;
+      color:var(--muted);
+    }
+
+    .chat-status{
+      font-size:11px;
+      font-weight:800;
+      color:var(--green2);
+      white-space:nowrap;
+      flex-shrink:0;
+    }
+
+    .speaker-row{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+
+    .speaker-label{
+      font-size:11px;
+      font-weight:800;
+      color:var(--muted);
+    }
+
+    .speaker-btn{
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      border-radius:999px;
+      padding:6px 9px;
+      font:inherit;
+      font-size:11px;
+      font-weight:800;
+      cursor:pointer;
+      transition:.15s ease;
+    }
+
+    .speaker-btn.active{
+      background:linear-gradient(135deg,var(--green1),var(--blue1));
+      color:#fff;
+      border-color:transparent;
+    }
+
+    .chat-body{
+      flex:1;
+      min-height:260px;
+      overflow-y:auto;
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.14),transparent),
+        repeating-linear-gradient(180deg,rgba(43,42,36,.02) 0,rgba(43,42,36,.02) 1px,transparent 1px,transparent 30px);
+    }
+
+    .msg{
+      max-width:92%;
+      width:fit-content;
+      padding:10px 12px;
+      border-radius:16px;
+      font-size:13px;
+      line-height:1.4;
+      box-shadow:0 5px 10px rgba(20,43,34,.05);
+    }
+
+    .msg.system{
+      align-self:center;
+      background:rgba(15,138,87,.10);
+      border:1px solid rgba(15,138,87,.14);
+      color:var(--green2);
+      text-align:center;
+      font-size:12px;
+    }
+
+    .msg.being{
+      align-self:flex-start;
+      background:#fff;
+      border:1px solid rgba(24,49,40,.08);
+      border-bottom-left-radius:4px;
+    }
+
+    .msg.human{
+      align-self:flex-end;
+      background:linear-gradient(135deg,var(--green1),var(--blue1));
+      color:#fff;
+      border-bottom-right-radius:4px;
+    }
+
+    .msg small{
+      display:block;
+      margin-top:4px;
+      font-size:10px;
+      opacity:.78;
+    }
+
+    .chat-input{
+      padding:10px 12px;
+      border-top:1px solid var(--line);
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:8px;
+      flex-shrink:0;
+      align-items:center;
+    }
+
+    input,.send-btn{
+      font:inherit;
+      border-radius:14px;
+      outline:none;
+    }
+
+    input{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.95);
+      padding:11px 12px;
+      font-size:13px;
+      color:var(--ink);
+      min-width:0;
+      width:100%;
+    }
+
+    .send-btn{
+      border:none;
+      padding:11px 13px;
+      min-width:78px;
+      background:linear-gradient(135deg,var(--green1),var(--blue1));
+      color:#fff;
+      font-size:13px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 8px 16px rgba(15,138,87,.18);
+    }
+
+    .hint{
+      padding:0 12px 10px;
+      text-align:center;
+      color:var(--muted);
+      font-size:10.5px;
+      flex-shrink:0;
+    }
+
+    @media (max-width:1150px){
+      .compact-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+      }
+    }
+
+    @media (max-width:1080px){
+      .main{
+        grid-template-columns:1fr;
+      }
+
+      .chat-panel{
+        position:relative;
+        top:auto;
+      }
+
+      .chat-wrap{
+        max-height:none;
+        min-height:500px;
+      }
+    }
+
+    @media (max-width:900px){
+      .hero-inner{
+        grid-template-columns:1fr;
+      }
+
+      .hero-copy h2{
+        font-size:32px;
+      }
+
+      .compact-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+
+      .info-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:640px){
+      .app{padding:10px}
+      .topbar{flex-direction:column;align-items:flex-start}
+      .brand-title{font-size:32px}
+      .hero-copy h2{font-size:28px}
+      .compact-grid{grid-template-columns:1fr}
+      .chat-input{grid-template-columns:1fr}
+      .send-btn{width:100%}
     }
   </style>
 </head>
 <body>
   <div class="app">
-    
-    <!-- 1. Cabecera Dashboard -->
-    <header class="top-header">
+    <div class="topbar">
       <div class="brand">
         <div class="logo">🌿</div>
         <div>
           <h1 class="brand-title">Finca Viva</h1>
-          <div class="brand-subtitle">Seres del Universo Sintrópico</div>
+          <div class="brand-subtitle">Seres del Universo Sintrópico · Finca acompañada por Mario y Yani</div>
         </div>
       </div>
-      <div class="header-stats">
-        <div class="h-stat">⛅ <span class="val" id="weatherMain">24°C</span></div>
-        <div class="h-stat">🌿 <span class="val">7 Seres</span></div>
-        <div class="h-stat">💬 <span class="val">App viva</span></div>
-        <div class="h-stat">📅 <span class="val" id="monthLabel">Marzo</span></div>
-      </div>
-    </header>
+      <div class="pill-top">Versión de trabajo</div>
+    </div>
 
-    <!-- 2. Navegación Visual Horizontal -->
-    <nav class="beings-strip" id="cardsStrip"></nav>
-
-    <!-- 3. Espacio de trabajo (Cero scroll de página) -->
-    <main class="workspace">
-      
-      <!-- Izquierda: Ficha, Mapa, Pulso -->
-      <section class="panel workspace-left">
-        <div class="panel-header">
-          <div class="tab-row">
-            <button class="tab-btn active" data-target="ficha">Ficha Viva</button>
-            <button class="tab-btn" data-target="mapa">Mapa Espacial</button>
-            <button class="tab-btn" data-target="pulso">Pulso Global</button>
-          </div>
+    <section class="panel hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <h2>La Finca habla contigo</h2>
+          <p>Un espacio donde los seres del lugar comunican su estado, su función sintrópica y sus necesidades reales en diálogo vivo con Mario, Yani o Invitad@.</p>
         </div>
-        
-        <div class="panel-body">
-          <!-- Pantalla: Ficha -->
-          <div class="screen active" id="view-ficha">
-            <div class="selected-top">
-              <div class="selected-photo" id="selPhoto"></div>
+
+        <div class="hero-aside">
+          <div class="weather-card">
+            <div class="weather-row">
+              <div class="weather-icon">⛅</div>
               <div>
-                <div class="selected-name" id="selName">Aguacatero</div>
-                <div class="selected-sub" id="selSub"></div>
+                <div class="weather-main" id="weatherMain">24°C · Analizando</div>
+                <div class="weather-sub" id="weatherSub">Gran Canaria · humedad alta · vientos alisios</div>
               </div>
             </div>
-            <div class="selected-status" id="selStatus"></div>
-            <div class="info-grid">
+          </div>
+
+          <div class="mini-stats">
+            <div class="mini-stat">
+              <strong id="beingsCount">5</strong>
+              <span>Seres</span>
+            </div>
+            <div class="mini-stat">
+              <strong>3</strong>
+              <span>Voces</span>
+            </div>
+            <div class="mini-stat">
+              <strong id="monthLabel">Marzo</strong>
+              <span>Pulso</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="main">
+      <div class="left-col">
+        <section class="panel">
+          <div class="panel-inner">
+            <div class="section-head">
+              <div>
+                <h3 class="section-title">Seres destacados</h3>
+                <div class="section-sub">Todos visibles aquí. Al pulsar uno, se abre su ficha y su conversación.</div>
+              </div>
+              <div class="soft-badge">Lectura rápida</div>
+            </div>
+
+            <div class="compact-grid" id="cards"></div>
+          </div>
+        </section>
+
+        <section class="panel detail-panel">
+          <div class="panel-inner">
+            <div class="section-head">
+              <div>
+                <h3 class="section-title">Habla con los seres</h3>
+                <div class="section-sub">Ficha viva del ser seleccionado</div>
+              </div>
+              <div class="soft-badge" id="selectedBadge">Activo</div>
+            </div>
+
+            <div class="selected-card">
+              <div class="selected-top">
+                <div class="selected-photo" id="selectedPhoto"></div>
+                <div>
+                  <div class="selected-name" id="selectedName">Aguacatero</div>
+                  <div class="selected-sub" id="selectedSubtitle"></div>
+                </div>
+              </div>
+
+              <div class="selected-status" id="selectedStatus"></div>
+
+              <div class="info-grid">
+                <div class="mini-panel">
+                  <strong>Necesidad principal</strong>
+                  <span id="selectedNeed"></span>
+                </div>
+                <div class="mini-panel">
+                  <strong>Resumen del día</strong>
+                  <span id="selectedSummary"></span>
+                </div>
+              </div>
+
               <div class="mini-panel">
-                <strong>Necesidad actual</strong>
-                <span id="selNeed"></span>
-              </div>
-              <div class="mini-panel">
-                <strong>Resumen del día</strong>
-                <span id="selSumm"></span>
+                <strong>Función sintrópica</strong>
+                <span id="selectedFunction"></span>
               </div>
             </div>
-            <div class="mini-panel">
-              <strong>Función en el sistema</strong>
-              <span id="selFunc"></span>
+          </div>
+        </section>
+      </div>
+
+      <aside class="right-col">
+        <section class="panel chat-panel">
+          <div class="panel-inner chat-wrap">
+            <div class="chat-header">
+              <div class="chat-top">
+                <div class="chat-title">
+                  <div class="being-photo" id="chatIcon"></div>
+                  <div>
+                    <div class="chat-name" id="chatName">Aguacatero</div>
+                    <div class="chat-sub" id="chatSubtitle"></div>
+                  </div>
+                </div>
+                <div class="chat-status">Sincronizado</div>
+              </div>
+
+              <div class="speaker-row">
+                <span class="speaker-label">Como</span>
+                <button class="speaker-btn active" data-speaker="Mario">Mario</button>
+                <button class="speaker-btn" data-speaker="Yani">Yani</button>
+                <button class="speaker-btn" data-speaker="Invitad@">Invitad@</button>
+              </div>
             </div>
-          </div>
 
-          <!-- Pantalla: Mapa -->
-          <div class="screen" id="view-mapa">
-            <div class="map-wrap">
-              <div class="zone-label z-casa">Casa y núcleo</div>
-              <div class="zone-label z-huerto">Huerto cercanía</div>
-              <div class="zone-label z-estanque">Agua viva</div>
-              <div class="zone-label z-biomasa">Masa vegetal</div>
+            <div class="chat-body" id="chatBody"></div>
 
-              <div class="node mario" data-node="mario"><div class="n-title">Mario</div></div>
-              <div class="node yani" data-node="yani"><div class="n-title">Yani</div></div>
-              <div class="node nisp" data-node="nispero"><div class="n-title">Níspero</div></div>
-              <div class="node agua" data-node="aguacatero"><div class="n-title">Aguacatero</div></div>
-              <div class="node moral" data-node="moral"><div class="n-title">Moral</div></div>
-              <div class="node toma" data-node="tomatero"><div class="n-title">Tomatero</div></div>
-              <div class="node estanque" data-node="estanque"><div class="n-title">Estanque</div></div>
+            <div class="chat-input">
+              <input id="messageInput" type="text" autocomplete="off" placeholder="Escribe al ser vivo..." />
+              <button class="send-btn" id="sendBtn">Enviar</button>
             </div>
+            <div class="hint">La ficha y el chat cambian juntos al seleccionar un ser.</div>
           </div>
-
-          <!-- Pantalla: Pulso -->
-          <div class="screen" id="view-pulso">
-            <div class="timeline-list" id="timelineList"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Derecha: Chat -->
-      <section class="panel workspace-right">
-        <div class="chat-top">
-          <div id="chatIcon"></div>
-          <div class="chat-top-info">
-            <div class="chat-top-name" id="chatName">Aguacatero</div>
-            <div class="chat-status-dot">• Sincronizado</div>
-          </div>
-        </div>
-
-        <div class="chat-body" id="chatBody"></div>
-
-        <div class="chat-controls">
-          <div class="speaker-select">
-            <span>Voz activa:</span>
-            <button class="spk-btn active" data-spk="Mario">Mario</button>
-            <button class="spk-btn" data-spk="Yani">Yani</button>
-            <button class="spk-btn" data-spk="Invitad@">Invitad@</button>
-          </div>
-          <div class="chat-input">
-            <input id="chatIn" type="text" autocomplete="off" placeholder="Habla al sistema..." />
-            <button id="chatBtn">Enviar</button>
-          </div>
-        </div>
-      </section>
-
-    </main>
+        </section>
+      </aside>
+    </div>
   </div>
 
   <script>
@@ -545,220 +818,552 @@
       beings: {
         aguacatero: {
           photo: 'https://images.unsplash.com/photo-1601039641847-7857b994d704?auto=format&fit=crop&w=500&q=80',
-          name: 'Aguacatero', subtitle: 'Persea americana', seasonIcon: '💧',
-          status: 'Manteniendo follaje nuevo, raíz alerta por humedad.',
-          summary: 'Sensible al viento fuerte y asfixia radicular.',
-          function: 'Estructura de estrato medio-alto y producción.',
-          timelineText: 'Vigilar humedad en zona baja del suelo.',
-          bio: { needs: 'Drenaje excelente' },
-          messages: [{ type: 'system', text: 'Conexión radicular activa.' }]
+          name: 'Aguacatero',
+          subtitle: 'Persea americana · Variedad Hass/Fuerte',
+          season: 'Raíz alerta',
+          seasonIcon: '💧',
+          cardText: 'Conviene revisar drenaje y suelo antes de añadir más agua.',
+          status: 'Manteniendo el follaje nuevo, pero con las raíces alerta por la humedad del suelo.',
+          summary: 'Sensible al viento fuerte y a la asfixia radicular.',
+          function: 'Árbol de producción principal. Aporta alimento, sombra parcial y estructura de estrato medio-alto dentro del sistema.',
+          timelineTag: 'Atención suelo',
+          bio: { needs: 'Drenaje excelente, protección contra vientos secos.' }
         },
+
         nispero: {
-          photo: 'https://images.unsplash.com/photo-1601039641847-7857b994d704?auto=format&fit=crop&w=500&q=80',
-          name: 'Níspero', subtitle: 'Eriobotrya japonica', seasonIcon: '🌼',
-          status: 'Cargando reservas para engorde de fruto.',
-          summary: 'Rústico. Agradece potasio.',
-          function: 'Frutal temprano, alimento y estabilidad.',
-          timelineText: 'Requiere ceniza o consuelda para potasio.',
-          bio: { needs: 'Abono potásico' },
-          messages: [{ type: 'system', text: 'Fase de engorde de fruto.' }]
+          photo: 'nispero.jpg',
+          name: 'Níspero',
+          subtitle: 'Eriobotrya japonica · Frutal de invierno',
+          season: 'Momento potásico',
+          seasonIcon: '🌼',
+          cardText: 'Buen momento para apoyar fruto y consolidar el árbol.',
+          status: 'Cargando reservas para mantener la floración y el cuajado a buen ritmo.',
+          summary: 'Rústico y duro. Agradece potasio en época de engorde.',
+          function: 'Frutal de estrato medio con cosecha temprana. Da alimento y estabilidad productiva en época fresca.',
+          timelineTag: 'Abono potásico',
+          bio: { needs: 'Sol directo, algo de abono potásico.' }
         },
-        moral: {
-          photo: 'https://images.unsplash.com/photo-1628773822503-930a7eaecf80?auto=format&fit=crop&w=500&q=80',
-          name: 'Moral', subtitle: 'Morus nigra', seasonIcon: '🌿',
-          status: 'Empujando savia nueva sin parar.',
-          summary: 'Generador masivo de biomasa.',
-          function: 'Sombra y materia orgánica para el suelo.',
-          timelineText: 'Podar para acolchar otras zonas.',
-          bio: { needs: 'Podas de formación' },
-          messages: [{ type: 'system', text: 'Bombeo de savia alto.' }]
-        },
+
         tomatero: {
           photo: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&w=500&q=80',
-          name: 'Tomatero', subtitle: 'Solanum lycopersicum', seasonIcon: '🍅',
-          status: 'Gastando energía en trepar y cuajar.',
-          summary: 'Exigente en calcio y luz.',
-          function: 'Rendimiento rápido e indicador del huerto.',
-          timelineText: 'Riesgo fúngico si toca suelo.',
-          bio: { needs: 'Entutorado y riego' },
-          messages: [{ type: 'system', text: 'Crecimiento vegetativo acelerado.' }]
+          name: 'Tomatero',
+          subtitle: 'Solanum lycopersicum · Huerto biointensivo',
+          season: 'Producción intensa',
+          seasonIcon: '🍅',
+          cardText: 'Está fuerte, pero pide estructura y control de humedad en hoja.',
+          status: 'Gastando muchísima energía en cuajar fruto y trepar.',
+          summary: 'Exigente en calcio y luz solar directa.',
+          function: 'Cultivo rápido de alto rendimiento. Aporta alimento inmediato y lectura clara del estado del huerto.',
+          timelineTag: 'Entutorar',
+          bio: { needs: 'Soporte físico, riego radicular constante.' }
         },
+
+        moral: {
+          photo: 'https://images.unsplash.com/photo-1628773822503-930a7eaecf80?auto=format&fit=crop&w=500&q=80',
+          name: 'Moral',
+          subtitle: 'Morus nigra · Dosel sombreador',
+          season: 'Biomasa fuerte',
+          seasonIcon: '🌿',
+          cardText: 'Está empujando bien y puede apoyar mucho al sistema.',
+          status: 'Empujando savia nueva y expandiendo copa sin parar.',
+          summary: 'Generador masivo de biomasa para el estrato sintrópico.',
+          function: 'Produce biomasa, sombra y materia orgánica útil para la evolución del sistema.',
+          timelineTag: 'Poda verde',
+          bio: { needs: 'Podas de formación y espacio para desarrollarse con orden.' }
+        },
+
         estanque: {
           photo: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=500&q=80',
-          name: 'Estanque', subtitle: 'Biotopo', seasonIcon: '💦',
-          status: 'Plantas oxigenando correctamente.',
-          summary: 'Regula temperatura y humedad.',
-          function: 'Reserva hídrica del sistema.',
-          timelineText: 'Raíces filtrando nitratos.',
-          bio: { needs: 'Equilibrio luz/sombra' },
-          messages: [{ type: 'system', text: 'Nivel hídrico estable.' }]
-        },
-        mario: {
-          photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80',
-          name: 'Mario', subtitle: 'Cuidador', seasonIcon: '🛠️',
-          status: 'Ajustando riegos.',
-          summary: 'Ejecutor físico.',
-          function: 'Traduce diseño en acción.',
-          timelineText: 'Repasar canales de agua.',
-          bio: { needs: 'Lectura atenta' },
-          messages: [{ type: 'system', text: 'Nodo humano operativo.' }]
-        },
-        yani: {
-          photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80',
-          name: 'Yani', subtitle: 'Cuidadora', seasonIcon: '👁️',
-          status: 'Observando interacciones.',
-          summary: 'Visión global.',
-          function: 'Lectura holística.',
-          timelineText: 'Evaluando viento.',
-          bio: { needs: 'Paseo perimetral' },
-          messages: [{ type: 'system', text: 'Nodo humano operativo.' }]
+          name: 'Estanque',
+          subtitle: 'Biotopo acuático regulador',
+          season: 'Equilibrio hídrico',
+          seasonIcon: '💦',
+          cardText: 'Sostiene humedad y equilibrio general del sistema.',
+          status: 'Las plantas oxigenadoras están trabajando bien. Agua templada.',
+          summary: 'Regula la temperatura local y atrae fauna auxiliar.',
+          function: 'Reserva de agua, moderador térmico y nodo de biodiversidad dentro del sistema vivo.',
+          timelineTag: 'Equilibrio',
+          bio: { needs: 'Equilibrio entre luz y sombra, sin limpieza excesiva.' }
         }
-      },
-      order: ['aguacatero', 'nispero', 'tomatero', 'moral', 'estanque', 'mario', 'yani']
+      }
     };
 
-    class Engine {
-      constructor(state) { this.state = state; }
-      getB(k) { return this.state.beings[k]; }
-      curr() { return this.getB(this.state.currentContext); }
-      
-      genReply(msg, key) {
-        const text = msg.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-        const b = this.getB(key);
-        
-        if (text.includes('como estas') || text.includes('estado')) return `Sigo mi curso. ${b.status}`;
-        if (text.includes('lluvi') || text.includes('viento')) return 'Si viene temporal, asegura mi estructura básica y revisa el drenaje en mi zona.';
-        if (text.includes('agua') || text.includes('rieg') || text.includes('suelo')) return 'El equilibrio en la raíz lo es todo. Comprueba el nivel de humedad.';
-        if (text.includes('poda') || text.includes('cortar')) return 'Intervenir está bien si respetas mi ciclo de savia.';
-        if (text.includes('refier') || text.includes('por que')) return `Me refiero a que mi equilibrio depende de mi biología. Ahora mismo requiero: ${b.bio.needs}.`;
-        if (text.includes('necesit') || text.includes('ayud')) return `Mi necesidad central ahora es: ${b.bio.needs}.`;
-        
-        return 'Sigo asimilando el entorno. Continuamos el ciclo.';
+    class FincaEngine {
+      constructor(state) {
+        this.state = state;
+        this.lastTopicByBeingAndSpeaker = {};
+        this.threads = this.buildInitialThreads();
       }
 
-      addMsg(txt) {
-        const b = this.curr();
-        const time = new Date().toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'});
-        b.messages.push({ type: 'human', text: txt, by: this.state.currentSpeaker, time });
-        
+      buildInitialThreads() {
+        return {
+          aguacatero: {
+            Mario: [
+              { type: 'system', text: 'Conexión biológica establecida. El aguacatero analiza su entorno radicular.' },
+              { type: 'being', text: 'Mario, noto el suelo de mi entorno un poco apelmazado. Si el agua se estanca demasiado, mis raíces finas lo notan enseguida.', by: 'Aguacatero', time: '10:00' },
+              { type: 'human', text: 'Ayer llovió fuerte. Luego te reviso el drenaje.', by: 'Mario', time: '10:15' }
+            ],
+            Yani: [
+              { type: 'system', text: 'Canal de Yani abierto con el Aguacatero.' },
+              { type: 'being', text: 'Yani, contigo me fijo más en equilibrio general. Si me ves algo tenso de hoja, no siempre es sed: a veces es raíz incómoda.', by: 'Aguacatero', time: 'Ayer' }
+            ],
+            'Invitad@': [
+              { type: 'system', text: 'Canal de Invitad@ abierto con el Aguacatero.' },
+              { type: 'being', text: 'Si acabas de llegar, quédate con esta idea: conmigo importa más cómo respira el suelo que regar por costumbre.', by: 'Aguacatero', time: 'Hoy' }
+            ]
+          },
+
+          nispero: {
+            Mario: [
+              { type: 'system', text: 'Canal de Mario abierto con el Níspero.' },
+              { type: 'being', text: 'Mario, ahora mismo estoy en momento bueno para consolidar fruto sin demasiada intervención.', by: 'Níspero', time: '10:05' }
+            ],
+            Yani: [
+              { type: 'system', text: 'Canal de Yani abierto con el Níspero.' },
+              { type: 'being', text: 'Yani, contigo hablaría más de ritmo y momento. Estoy más en consolidar que en pedir acción fuerte.', by: 'Níspero', time: 'Ayer' }
+            ],
+            'Invitad@': [
+              { type: 'system', text: 'Canal de Invitad@ abierto con el Níspero.' },
+              { type: 'being', text: 'Soy un frutal bastante sereno. Si me entiendes en tiempo y nutrición, respondo bien.', by: 'Níspero', time: 'Hoy' }
+            ]
+          },
+
+          tomatero: {
+            Mario: [
+              { type: 'system', text: 'Canal de Mario abierto con el Tomatero.' },
+              { type: 'being', text: 'Mario, conmigo ahora mismo mandan estructura, aire y agua bien puesta.', by: 'Tomatero', time: '10:08' }
+            ],
+            Yani: [
+              { type: 'system', text: 'Canal de Yani abierto con el Tomatero.' },
+              { type: 'being', text: 'Yani, si me ves demasiado cerrado o húmedo arriba, sospecha. Yo aviso rápido.', by: 'Tomatero', time: 'Ayer' }
+            ],
+            'Invitad@': [
+              { type: 'system', text: 'Canal de Invitad@ abierto con el Tomatero.' },
+              { type: 'being', text: 'Conmigo no hay misterio: luz, ventilación y orden. Sin eso, protesto.', by: 'Tomatero', time: 'Hoy' }
+            ]
+          },
+
+          moral: {
+            Mario: [
+              { type: 'system', text: 'Canal de Mario abierto con el Moral.' },
+              { type: 'being', text: 'Mario, ahora mismo puedo servirte muy bien como generador de biomasa.', by: 'Moral', time: '10:11' }
+            ],
+            Yani: [
+              { type: 'system', text: 'Canal de Yani abierto con el Moral.' },
+              { type: 'being', text: 'Yani, conmigo encaja más una lectura de conjunto: sombra, masa y apoyo al sistema.', by: 'Moral', time: 'Ayer' }
+            ],
+            'Invitad@': [
+              { type: 'system', text: 'Canal de Invitad@ abierto con el Moral.' },
+              { type: 'being', text: 'Yo aporto mucho cuando se me entiende como estructura y biomasa, no solo como árbol suelto.', by: 'Moral', time: 'Hoy' }
+            ]
+          },
+
+          estanque: {
+            Mario: [
+              { type: 'system', text: 'Canal de Mario abierto con el Estanque.' },
+              { type: 'being', text: 'Mario, yo sostengo humedad, vida, temperatura y equilibrio. Conviene leerme así.', by: 'Estanque', time: '10:13' }
+            ],
+            Yani: [
+              { type: 'system', text: 'Canal de Yani abierto con el Estanque.' },
+              { type: 'being', text: 'Yani, tú captas bien que yo no soy solo agua acumulada: también soy relación y ambiente.', by: 'Estanque', time: 'Ayer' }
+            ],
+            'Invitad@': [
+              { type: 'system', text: 'Canal de Invitad@ abierto con el Estanque.' },
+              { type: 'being', text: 'Si me miras bien, verás que mi función no es solo almacenar agua.', by: 'Estanque', time: 'Hoy' }
+            ]
+          }
+        };
+      }
+
+      getBeing(key) {
+        return this.state.beings[key];
+      }
+
+      getCurrentBeing() {
+        return this.getBeing(this.state.currentContext);
+      }
+
+      getCurrentThread() {
+        return this.threads[this.state.currentContext][this.state.currentSpeaker];
+      }
+
+      setCurrentContext(key) {
+        if (this.state.beings[key]) this.state.currentContext = key;
+      }
+
+      setSpeaker(name) {
+        this.state.currentSpeaker = name;
+      }
+
+      normalizeText(text) {
+        return text
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()
+          .trim();
+      }
+
+      hasAny(text, words) {
+        return words.some(word => text.includes(word));
+      }
+
+      detectIntent(text) {
+        if (this.hasAny(text, ["a que te refieres", "que quieres decir", "explicame", "explica", "desarrolla", "algo mas", "y eso", "por que", "porque", "como lo noto", "como se nota", "mas detalles", "ayer me dijiste", "antes dijiste"])) return "followup";
+        if (this.hasAny(text, ["como estas", "que tal", "como vas"])) return "status";
+        if (this.hasAny(text, ["riego", "regar", "agua", "sed"])) return "water";
+        if (this.hasAny(text, ["drenaje", "drenar", "encharc", "charco", "compacta", "compactado"])) return "drainage";
+        if (this.hasAny(text, ["raiz", "raices"])) return "roots";
+        if (this.hasAny(text, ["sol", "sombra", "luz"])) return "light";
+        if (this.hasAny(text, ["viento", "alisio", "aire"])) return "wind";
+        if (this.hasAny(text, ["poda", "podar", "cortar", "hojas", "chupones"])) return "pruning";
+        if (this.hasAny(text, ["abono", "abonar", "potasio", "nitrogeno", "compost", "consuelda", "ceniza"])) return "fertilization";
+        if (this.hasAny(text, ["flor", "floracion", "fruto", "frutos", "cuajado", "aguacates", "tomates"])) return "fruit";
+        if (this.hasAny(text, ["plaga", "hongo", "phytophthora", "fitoftora", "enfermedad", "mildiu"])) return "disease";
+        if (this.hasAny(text, ["necesitas", "que hago", "ayuda", "prioridad"])) return "needs";
+        return "general";
+      }
+
+      getTopicKey(beingKey, speaker) {
+        return `${beingKey}__${speaker}`;
+      }
+
+      setLastTopic(beingKey, speaker, topic) {
+        this.lastTopicByBeingAndSpeaker[this.getTopicKey(beingKey, speaker)] = topic;
+      }
+
+      getLastTopic(beingKey, speaker) {
+        return this.lastTopicByBeingAndSpeaker[this.getTopicKey(beingKey, speaker)] || null;
+      }
+
+      speakerPrefix(speaker) {
+        if (speaker === 'Mario') return '';
+        if (speaker === 'Yani') return 'Contigo voy un poco más al equilibrio general. ';
+        return 'Si vienes de fuera, te lo digo de forma clara. ';
+      }
+
+      avocadoReply(intent, speaker) {
+        const temp = this.state.weather.temp || 24;
+        const humidity = this.state.weather.humidity || 65;
+        const prefix = this.speakerPrefix(speaker);
+
+        const topicReplies = {
+          status: `${prefix}Ahora mismo voy sensible pero razonablemente estable. Con ${temp}°C y una humedad de ${humidity}%, mi punto crítico no es tanto el calor como que mis raíces respiren bien y no se queden en suelo pesado.`,
+          water: `${prefix}Conmigo el riego no va de cantidad bruta, sino de equilibrio. Necesito humedad útil, sí, pero sin que el agua se quede retenida demasiado tiempo. Prefiero un riego que moje bien y luego deje aire en el suelo.`,
+          drainage: `${prefix}Cuando hablo de drenaje libre, me refiero a que el exceso de agua pueda salir y que el suelo no se quede apelmazado alrededor de mis raíces. Si tras regar o llover la tierra sigue muy pesada, se forman charcos o el agua tarda demasiado en desaparecer, eso no me conviene.`,
+          roots: `${prefix}Mis raíces finas son delicadas. No les gusta ni el encharcamiento ni la compactación. Necesitan humedad, pero también oxígeno. Si el suelo se cierra, yo lo noto rápido en el vigor y en las hojas.`,
+          light: `${prefix}Me gusta la luz, pero no una exposición agresiva si estoy estresado por raíz o viento. El equilibrio bueno para mí es sol suficiente, pero con un entorno que no me castigue cuando estoy sensible.`,
+          wind: `${prefix}El viento seco, sobre todo si es constante, me puede tensar bastante. Me deshidrata hoja y me obliga a trabajar más. Si además coincide con una raíz incómoda, me desordeno antes.`,
+          pruning: `${prefix}Con la poda conmigo hay que tener mano. Mejor limpieza y formación que recorte brusco. Si me desnudas demasiado, el sol y el estrés me pasan factura.`,
+          fertilization: `${prefix}No necesito abonado a lo loco. Me va bien materia orgánica bien hecha, algo de equilibrio mineral y un suelo vivo. Si estoy tocado de raíz, antes que abonar fuerte prefiero que me ordenes drenaje, estructura y humedad.`,
+          fruit: `${prefix}Si estoy equilibrado, puedo pensar en floración y fruto con dignidad. Pero si la raíz sufre o el ambiente me aprieta, toda esa energía se resiente.`,
+          disease: `${prefix}Mi miedo serio en suelo mal drenado es el problema de raíz, especialmente lo relacionado con hongos como phytophthora. No hace falta dramatizar, pero sí vigilar.`,
+          needs: `${prefix}Mi prioridad ahora mismo sería esta: que revises si el suelo drena bien, que no haya compactación alrededor y que el agua no se me quede retenida más de la cuenta.`,
+          general: `${prefix}Si me hablas claro, yo te respondo claro: conmigo casi todo pasa por cómo esté el suelo, cómo drene y cómo respire la raíz.`
+        };
+
+        const followUpReplies = {
+          drainage: `${prefix}Dicho más claro: si hoy me riegas o llueve, mañana la tierra puede seguir fresca, pero no debería seguir embarrada ni cerrada. Si el agua se queda haciendo bolsa alrededor, ahí empieza el problema.`,
+          roots: `${prefix}Lo notarías en señales como crecimiento más torpe, hoja menos alegre o sensación de que no tiro fino. Cuando mi raíz sufre, arriba se acaba notando.`,
+          water: `${prefix}No me sirve ni la sequedad extrema ni el suelo constantemente empapado. El punto bueno es humedad estable con salida del exceso.`,
+          wind: `${prefix}Con viento fuerte puedo perder confort rápido, sobre todo si coincido con poco equilibrio hídrico. Por eso agradezco protección y barrera viva.`,
+          pruning: `${prefix}En mi caso menos es más. Antes una poda selectiva que un destrozo con buena intención.`,
+          fertilization: `${prefix}Si la base está mal, abonar no arregla nada. Primero suelo y raíz. Luego nutrición.`,
+          fruit: `${prefix}Sí, puedo darte fruto, pero solo si me mantienes en equilibrio. Si me fuerzas cuando estoy tenso, no respondo igual.`,
+          disease: `${prefix}La prevención conmigo es mucho más inteligente que llegar tarde. Suelo aireado y sin charco: ese es el principio.`,
+          general: `${prefix}Lo importante conmigo es esto: no soy un árbol para llevar por inercia. Si el suelo está bien, yo respondo bastante bien.`
+        };
+
+        if (intent === 'followup') {
+          const lastTopic = this.getLastTopic('aguacatero', speaker) || 'general';
+          return followUpReplies[lastTopic] || followUpReplies.general;
+        }
+
+        this.setLastTopic('aguacatero', speaker, intent);
+        return topicReplies[intent] || topicReplies.general;
+      }
+
+      nisperoReply(intent, speaker) {
+        const prefix = this.speakerPrefix(speaker);
+
+        const replies = {
+          status: `${prefix}Voy bastante sereno. Soy más rústico que el aguacatero y tolero bastante bien el momento fresco si estoy equilibrado.`,
+          water: `${prefix}No me gusta la sequía extrema, pero tampoco necesito tanta delicadeza como otros. Agua sensata y suelo decente, y respondo bien.`,
+          fertilization: `${prefix}Si estoy en fase de fruto, agradezco mucho un apoyo potásico bien pensado. Ahí se nota.`,
+          fruit: `${prefix}Cuando entro en buena dinámica de floración y cuajado, lo ideal es no desordenarme y ayudarme con nutrición oportuna.`,
+          pruning: `${prefix}Conmigo mejor poda ligera, ventilación y orden, no una carnicería.`,
+          needs: `${prefix}Ahora mismo te diría esto: sol, algo de orden y un apoyo potásico si ves que estoy empujando fruto.`,
+          general: `${prefix}Yo suelo responder bien cuando se me entiende como frutal de ritmo sereno: luz, algo de nutrición y poco teatro.`
+        };
+
+        if (intent === 'followup') {
+          const lastTopic = this.getLastTopic('nispero', speaker) || 'general';
+          return {
+            fertilization: `${prefix}Sí, me refiero sobre todo a ayudar al fruto: ceniza bien usada, consuelda o un enfoque parecido pueden tener sentido.`,
+            fruit: `${prefix}Cuando voy bien de flor y cuajado, se me nota en la regularidad y en la seguridad con la que sostengo el fruto.`,
+            general: `${prefix}Conmigo casi siempre es más cuestión de acompañar bien el momento que de intervenir demasiado.`
+          }[lastTopic] || `${prefix}Conmigo lo importante es leer bien el momento del árbol.`;
+        }
+
+        this.setLastTopic('nispero', speaker, intent);
+        return replies[intent] || replies.general;
+      }
+
+      tomateroReply(intent, speaker) {
+        const prefix = this.speakerPrefix(speaker);
+
+        const replies = {
+          status: `${prefix}Voy rápido, como buen tomatero. Si tengo luz, agua bien dirigida y estructura, respondo enseguida. Si no, también protesto enseguida.`,
+          water: `${prefix}Conmigo el agua mejor a raíz y sin mojar hoja. Si me mojas de más arriba y hay humedad, luego vienen los problemas.`,
+          pruning: `${prefix}Sí, conmigo tiene sentido hablar de poda, chupones y orden. Si me dejas salvaje, produzco peor y me aireo peor.`,
+          disease: `${prefix}Mi punto delicado suele ser la humedad mal gestionada, sobre todo en hoja. Mildiu y compañía no vienen invitados: los traemos con mal manejo.`,
+          fruit: `${prefix}Si estoy bien llevado, me concentro en producir. Si estoy desordenado o enfermo, bajo rendimiento y peor calidad.`,
+          needs: `${prefix}Mi prioridad suele ser clara: estructura, aire, riego a raíz y vigilancia del follaje.`,
+          general: `${prefix}Yo no soy sutil: si estoy bien, produzco. Si estoy mal, se me nota rápido.`
+        };
+
+        if (intent === 'followup') {
+          const lastTopic = this.getLastTopic('tomatero', speaker) || 'general';
+          return {
+            pruning: `${prefix}Sí, me refiero a quitar lo que me roba energía o me apelmaza demasiado, para que airee mejor y produzca con más cabeza.`,
+            disease: `${prefix}Cuando hablo de eso, hablo sobre todo de exceso de humedad en hoja y poca ventilación.`,
+            general: `${prefix}Conmigo casi todo es bastante visible: estructura, ventilación y agua bien puesta.`
+          }[lastTopic] || `${prefix}Si me preguntas en corto, yo te respondo en claro.`;
+        }
+
+        this.setLastTopic('tomatero', speaker, intent);
+        return replies[intent] || replies.general;
+      }
+
+      moralReply(intent, speaker) {
+        const prefix = this.speakerPrefix(speaker);
+
+        const replies = {
+          status: `${prefix}Voy con fuerza. Suelo ser generoso cuando tengo espacio y ritmo.`,
+          pruning: `${prefix}Conmigo la poda puede ser muy útil, porque reboto bien y además doy biomasa para el sistema.`,
+          needs: `${prefix}Ahora mismo mi valor está en crecer, dar materia orgánica y apoyar estructura.`,
+          general: `${prefix}Soy de esos seres que, bien llevados, devuelven mucho en sombra, biomasa y presencia.`
+        };
+
+        if (intent === 'followup') {
+          const lastTopic = this.getLastTopic('moral', speaker) || 'general';
+          return {
+            pruning: `${prefix}Sí, conmigo cortar con criterio puede ser una ventaja, no un castigo.`,
+            general: `${prefix}Mi papel es más estructural y de apoyo que de capricho.`
+          }[lastTopic] || `${prefix}Conmigo conviene pensar en función de sistema.`;
+        }
+
+        this.setLastTopic('moral', speaker, intent);
+        return replies[intent] || replies.general;
+      }
+
+      estanqueReply(intent, speaker) {
+        const prefix = this.speakerPrefix(speaker);
+
+        const replies = {
+          status: `${prefix}Voy equilibrando humedad, temperatura y presencia de vida alrededor.`,
+          water: `${prefix}Yo no soy solo agua acumulada; soy regulación, inercia térmica y apoyo a biodiversidad.`,
+          needs: `${prefix}Mi prioridad es el equilibrio: no exceso de limpieza, no abandono total, y buena lectura del conjunto.`,
+          general: `${prefix}Si me entiendes como nodo vivo y no como simple depósito, me entiendes mejor.`
+        };
+
+        if (intent === 'followup') {
+          const lastTopic = this.getLastTopic('estanque', speaker) || 'general';
+          return {
+            water: `${prefix}Sí, me refiero a que influyo en más cosas que el nivel de agua: humedad ambiente, fauna y regulación térmica.`,
+            general: `${prefix}En mí lo importante es equilibrio, no obsesión.`
+          }[lastTopic] || `${prefix}Conmigo menos intervención impulsiva y más lectura del sistema.`;
+        }
+
+        this.setLastTopic('estanque', speaker, intent);
+        return replies[intent] || replies.general;
+      }
+
+      generateResponse(message, beingKey, speaker) {
+        const text = this.normalizeText(message);
+        const intent = this.detectIntent(text);
+
+        if (beingKey === 'aguacatero') return this.avocadoReply(intent, speaker);
+        if (beingKey === 'nispero') return this.nisperoReply(intent, speaker);
+        if (beingKey === 'tomatero') return this.tomateroReply(intent, speaker);
+        if (beingKey === 'moral') return this.moralReply(intent, speaker);
+        if (beingKey === 'estanque') return this.estanqueReply(intent, speaker);
+
+        return 'Te escucho.';
+      }
+
+      addMessage(humanMessage) {
+        const being = this.getCurrentBeing();
+        const speaker = this.state.currentSpeaker;
+        const thread = this.getCurrentThread();
+        const timeStr = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+
+        thread.push({
+          type: 'human',
+          text: humanMessage,
+          by: speaker,
+          time: timeStr
+        });
+
+        const reply = this.generateResponse(humanMessage, this.state.currentContext, speaker);
+
         setTimeout(() => {
-          b.messages.push({ type: 'being', text: this.genReply(txt, this.state.currentContext), by: b.name, time });
-          renderChat();
-        }, 500);
+          thread.push({
+            type: 'being',
+            text: reply,
+            by: being.name,
+            time: timeStr
+          });
+          window.dispatchEvent(new Event('new-message'));
+        }, 320);
+      }
+
+      async updateWeather() {
+        try {
+          const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.139&longitude=-15.632&current=temperature_2m,relative_humidity_2m,weather_code&timezone=auto');
+          const data = await res.json();
+          const current = data.current;
+          this.state.weather = {
+            temp: Math.round(current.temperature_2m),
+            humidity: Math.round(current.relative_humidity_2m)
+          };
+        } catch (e) {
+          this.state.weather = { temp: 24, humidity: 65 };
+        }
       }
     }
 
-    const eng = new Engine(fincaState);
+    const engine = new FincaEngine(fincaState);
 
-    const D = {
-      strip: document.getElementById('cardsStrip'),
-      tabBtns: document.querySelectorAll('.tab-btn'),
-      screens: document.querySelectorAll('.screen'),
-      selPhoto: document.getElementById('selPhoto'),
-      selName: document.getElementById('selName'),
-      selSub: document.getElementById('selSub'),
-      selStatus: document.getElementById('selStatus'),
-      selNeed: document.getElementById('selNeed'),
-      selSumm: document.getElementById('selSumm'),
-      selFunc: document.getElementById('selFunc'),
-      chatIcon: document.getElementById('chatIcon'),
-      chatName: document.getElementById('chatName'),
+    const DOM = {
+      cards: document.getElementById('cards'),
       chatBody: document.getElementById('chatBody'),
-      chatIn: document.getElementById('chatIn'),
-      chatBtn: document.getElementById('chatBtn'),
-      spkBtns: document.querySelectorAll('.spk-btn'),
-      nodes: document.querySelectorAll('.node'),
-      timeList: document.getElementById('timelineList'),
-      monthLabel: document.getElementById('monthLabel')
+      chatName: document.getElementById('chatName'),
+      chatSubtitle: document.getElementById('chatSubtitle'),
+      chatIcon: document.getElementById('chatIcon'),
+      input: document.getElementById('messageInput'),
+      sendBtn: document.getElementById('sendBtn'),
+      weatherMain: document.getElementById('weatherMain'),
+      weatherSub: document.getElementById('weatherSub'),
+      monthLabel: document.getElementById('monthLabel'),
+      beingsCount: document.getElementById('beingsCount'),
+      selectedPhoto: document.getElementById('selectedPhoto'),
+      selectedName: document.getElementById('selectedName'),
+      selectedSubtitle: document.getElementById('selectedSubtitle'),
+      selectedStatus: document.getElementById('selectedStatus'),
+      selectedNeed: document.getElementById('selectedNeed'),
+      selectedSummary: document.getElementById('selectedSummary'),
+      selectedFunction: document.getElementById('selectedFunction'),
+      selectedBadge: document.getElementById('selectedBadge'),
+      speakerBtns: document.querySelectorAll('.speaker-btn')
     };
 
-    function renderStrip() {
-      D.strip.innerHTML = fincaState.order.map(k => {
-        const b = eng.getB(k);
-        const act = k === fincaState.currentContext ? 'active' : '';
+    function renderCards() {
+      DOM.cards.innerHTML = Object.keys(engine.state.beings).map(key => {
+        const b = engine.getBeing(key);
+        const active = key === engine.state.currentContext ? 'active' : '';
         return `
-          <div class="mini-card ${act}" data-key="${k}">
-            <img src="${b.photo}">
-            <div class="mini-card-info">
-              <span class="mini-name">${b.name}</span>
-              <span class="mini-status">${b.seasonIcon} Activo</span>
+          <div class="being-card ${active}" data-being="${key}">
+            <div class="being-head">
+              <div class="being-photo"><img src="${b.photo}" alt="${b.name}" /></div>
+              <div>
+                <div class="being-name">${b.name}</div>
+                <div class="being-sub">${b.subtitle.split('·')[0]}</div>
+              </div>
             </div>
+            <div class="season-pill">${b.seasonIcon} ${b.season}</div>
+            <div class="being-message">${b.cardText}</div>
           </div>
         `;
       }).join('');
-      document.querySelectorAll('.mini-card').forEach(c => c.onclick = () => setContext(c.dataset.key));
+
+      document.querySelectorAll('[data-being]').forEach(el => {
+        el.addEventListener('click', () => handleContextChange(el.dataset.being));
+      });
     }
 
-    function renderView() {
-      const b = eng.curr();
-      D.selPhoto.innerHTML = `<img src="${b.photo}">`;
-      D.selName.textContent = b.name;
-      D.selSub.textContent = b.subtitle;
-      D.selStatus.textContent = b.status;
-      D.selNeed.textContent = b.bio.needs;
-      D.selSumm.textContent = b.summary;
-      D.selFunc.textContent = b.function;
-      D.nodes.forEach(n => n.classList.toggle('active', n.dataset.node === fincaState.currentContext));
+    function renderSelected() {
+      const b = engine.getCurrentBeing();
+      DOM.selectedPhoto.innerHTML = `<img src="${b.photo}" alt="${b.name}" />`;
+      DOM.selectedName.textContent = b.name;
+      DOM.selectedSubtitle.textContent = b.subtitle;
+      DOM.selectedStatus.textContent = b.status;
+      DOM.selectedNeed.textContent = b.bio.needs;
+      DOM.selectedSummary.textContent = b.summary;
+      DOM.selectedFunction.textContent = b.function;
+      DOM.selectedBadge.textContent = b.timelineTag;
     }
 
     function renderChat() {
-      const b = eng.curr();
-      D.chatName.textContent = b.name;
-      D.chatIcon.innerHTML = `<img src="${b.photo}">`;
-      D.chatBody.innerHTML = b.messages.map(m => `
-        <div class="msg ${m.type}">
-          ${m.type==='being'?`<strong>${m.by}:</strong> `:''}${m.text}
-          ${m.by&&m.type!=='system'?`<small>${m.by} · ${m.time}</small>`:''}
+      const b = engine.getCurrentBeing();
+      const thread = engine.getCurrentThread();
+
+      DOM.chatName.textContent = b.name;
+      DOM.chatSubtitle.textContent = `${b.subtitle} · canal ${engine.state.currentSpeaker}`;
+      DOM.chatIcon.innerHTML = `<img src="${b.photo}" alt="${b.name}" />`;
+
+      DOM.chatBody.innerHTML = thread.map(msg => `
+        <div class="msg ${msg.type}">
+          ${msg.type === 'being' ? `<strong>${msg.by}:</strong> ` : ''}${msg.text}
+          ${msg.by && msg.type !== 'system' ? `<small>${msg.by} · ${msg.time}</small>` : ''}
         </div>
       `).join('');
-      D.chatBody.scrollTop = D.chatBody.scrollHeight;
+
+      DOM.chatBody.scrollTop = DOM.chatBody.scrollHeight;
     }
 
-    function renderTimeline() {
-      D.timeList.innerHTML = fincaState.order.map(k => {
-        const b = eng.getB(k);
-        return `<div class="event"><div class="event-head">${b.seasonIcon} ${b.name}</div><p>${b.timelineText}</p></div>`;
-      }).join('');
+    function renderWeather() {
+      if (engine.state.weather.temp) {
+        DOM.weatherMain.textContent = `${engine.state.weather.temp}°C · Analizando`;
+        DOM.weatherSub.textContent = `Gran Canaria · ${engine.state.weather.humidity}% humedad · vientos alisios`;
+      }
     }
 
-    function setContext(k) {
-      fincaState.currentContext = k;
-      renderStrip();
-      renderView();
+    function handleContextChange(key) {
+      engine.setCurrentContext(key);
+      renderCards();
+      renderSelected();
       renderChat();
     }
 
-    function init() {
-      D.monthLabel.textContent = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][new Date().getMonth()];
-      
-      D.tabBtns.forEach(b => b.onclick = () => {
-        D.tabBtns.forEach(x => x.classList.remove('active'));
-        D.screens.forEach(x => x.classList.remove('active'));
-        b.classList.add('active');
-        document.getElementById(`view-${b.dataset.target}`).classList.add('active');
-      });
-
-      D.spkBtns.forEach(b => b.onclick = () => {
-        D.spkBtns.forEach(x => x.classList.remove('active'));
-        b.classList.add('active');
-        fincaState.currentSpeaker = b.dataset.spk;
-      });
-
-      const send = () => { if(D.chatIn.value.trim()){ eng.addMsg(D.chatIn.value); D.chatIn.value=''; }};
-      D.chatBtn.onclick = send;
-      D.chatIn.onkeydown = e => e.key === 'Enter' && send();
-
-      renderStrip();
-      renderView();
+    function handleSendMessage() {
+      const value = DOM.input.value.trim();
+      if (!value) return;
+      engine.addMessage(value);
+      DOM.input.value = '';
       renderChat();
-      renderTimeline();
-
-      fetch('https://api.open-meteo.com/v1/forecast?latitude=28.139&longitude=-15.632&current=temperature_2m')
-        .then(r=>r.json()).then(d=> document.getElementById('weatherMain').textContent = Math.round(d.current.temperature_2m)+'°C')
-        .catch(()=>{});
     }
 
-    init();
+    function initSpeakers() {
+      DOM.speakerBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          DOM.speakerBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          engine.setSpeaker(btn.dataset.speaker);
+          renderChat();
+        });
+      });
+    }
+
+    function initializeApp() {
+      const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+      DOM.monthLabel.textContent = months[new Date().getMonth()];
+      DOM.beingsCount.textContent = Object.keys(engine.state.beings).length;
+
+      engine.updateWeather().then(renderWeather);
+
+      DOM.sendBtn.addEventListener('click', handleSendMessage);
+      DOM.input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleSendMessage();
+      });
+
+      window.addEventListener('new-message', renderChat);
+
+      initSpeakers();
+      renderCards();
+      handleContextChange(engine.state.currentContext);
+    }
+
+    initializeApp();
   </script>
 </body>
 </html>
