@@ -6,54 +6,53 @@
   <title>Finca Viva · Seres del Universo Sintrópico</title>
   <style>
     :root {
-      /* Paleta moderna y vibrante */
-      --bg: #f4f9f7;
-      --bg2: #ffffff;
-      --paper: rgba(255, 255, 255, 0.96);
-      --paper-strong: #ffffff;
-      --ink: #0f172a;
-      --muted: #64748b;
-      --green: #10b981;
-      --green-2: #059669;
-      --blue: #3b82f6;
-      --blue-2: #2563eb;
-      --cyan: #06b6d4;
-      --olive: #84cc16;
-      --line: #e2e8f0;
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      --bg: #e6efe8;
+      --bg-2: #d9e8de;
+      --card: rgba(255,255,255,.92);
+      --card-2: rgba(248,250,248,.98);
+      --ink: #183128;
+      --muted: #5b7168;
+      --green-1: #0f8a57;
+      --green-2: #0a6b45;
+      --green-3: #184d36;
+      --blue-1: #1e72d4;
+      --blue-2: #174f98;
+      --olive: #758f2f;
+      --line: rgba(24,49,40,.12);
+      --shadow: 0 10px 26px rgba(20, 43, 34, .10);
       --radius-xl: 24px;
       --radius-lg: 18px;
       --radius-md: 14px;
     }
 
     * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    html, body { min-height: 100%; }
 
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--ink);
-      background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%);
-      overflow: hidden;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.55), transparent 24%),
+        linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 58%, #eef4ef 100%);
     }
 
     .app {
-      height: 100vh;
-      max-width: 1240px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 16px;
+      padding: 14px;
       display: grid;
+      gap: 12px;
+      min-height: 100vh;
       grid-template-rows: auto auto 1fr;
-      gap: 16px;
-      overflow: hidden;
     }
 
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding: 0 4px;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
     .brand {
@@ -64,50 +63,41 @@
     }
 
     .logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, #a7f3d0, #34d399);
-      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
-      font-size: 22px;
+      font-size: 24px;
+      background: linear-gradient(135deg, #c7f2d9, #84daa9);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
       flex-shrink: 0;
     }
 
     .brand-title {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 32px;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      color: var(--ink);
+      font-size: 38px;
+      line-height: .95;
+      letter-spacing: -0.03em;
     }
 
     .brand-subtitle {
       margin-top: 4px;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.2;
     }
 
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .mini-pill {
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: var(--paper-strong);
-      border: 1px solid var(--line);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    .top-note {
       color: var(--green-2);
       font-size: 12px;
       font-weight: 700;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(255,255,255,.82);
+      padding: 9px 12px;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
       white-space: nowrap;
     }
 
@@ -118,9 +108,17 @@
       overflow: hidden;
       box-shadow: var(--shadow);
       background:
-        linear-gradient(180deg, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0.6)),
+        linear-gradient(180deg, rgba(9,18,11,.10), rgba(9,18,11,.42)),
         url('cartografia-finca.jpg') center center / cover;
-      background-color: var(--green-2); /* Fallback */
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(8,29,22,.60), rgba(8,29,22,.22) 54%, rgba(8,29,22,.18));
+      pointer-events: none;
     }
 
     .hero-inner {
@@ -130,149 +128,136 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 14px;
-      padding: 24px;
-      color: #ffffff;
+      gap: 12px;
+      padding: 18px;
+      color: #f7fff9;
     }
 
     .hero-head {
       display: flex;
-      align-items: flex-start;
       justify-content: space-between;
+      align-items: flex-start;
       gap: 14px;
+      flex-wrap: wrap;
     }
 
     .hero-copy {
-      max-width: 610px;
+      max-width: 620px;
+      min-width: 0;
     }
 
     .hero-copy h2 {
-      margin: 0 0 10px;
+      margin: 0 0 8px;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 46px;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      font-size: 48px;
+      line-height: .92;
+      letter-spacing: -0.03em;
+      text-shadow: 0 4px 14px rgba(0,0,0,.28);
     }
 
     .hero-copy p {
       margin: 0;
-      max-width: 590px;
+      max-width: 610px;
       font-size: 15px;
-      line-height: 1.4;
-      color: rgba(255,255,255,0.9);
-      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      line-height: 1.34;
+      color: rgba(247,255,249,.95);
     }
 
     .weather-card {
-      min-width: 260px;
-      padding: 12px 16px;
+      min-width: 250px;
+      max-width: 310px;
+      padding: 12px 14px;
       border-radius: 18px;
-      background: rgba(15, 23, 42, 0.4);
-      border: 1px solid rgba(255,255,255,0.15);
-      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.22);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.12);
+      flex: 0 0 auto;
     }
 
     .weather-row {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .weather-icon {
-      font-size: 28px;
-    }
+    .weather-icon { font-size: 27px; }
 
     .weather-main {
       font-size: 22px;
       font-weight: 800;
-      line-height: 1.1;
+      line-height: 1.05;
     }
 
     .weather-sub {
       margin-top: 4px;
       font-size: 12px;
-      color: rgba(255,255,255,0.8);
+      line-height: 1.3;
+      color: rgba(255,255,255,.9);
     }
 
     .hero-stats {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 10px;
     }
 
     .hero-stat {
-      padding: 14px;
+      padding: 11px 13px;
       border-radius: 16px;
-      background: rgba(15, 23, 42, 0.3);
-      border: 1px solid rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      transition: background 0.2s;
-    }
-    
-    .hero-stat:hover {
-      background: rgba(15, 23, 42, 0.5);
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(6px);
+      min-width: 0;
     }
 
     .hero-stat strong {
       display: block;
       font-size: 24px;
       line-height: 1;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .hero-stat span {
       font-size: 12px;
-      color: rgba(255,255,255,0.85);
       line-height: 1.2;
+      color: rgba(255,255,255,.92);
     }
 
     .main {
-      min-height: 0;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 280px; /* Reducción a 280px para estilizar el chat */
-      gap: 16px;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 12px;
+      min-height: 0;
+      align-items: start;
     }
 
-    /* Modificación estructural clave: permite scroll natural sin aplastar elementos */
-    .left-col {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      overflow-y: auto;
-      padding-right: 6px;
-    }
-
-    .left-col::-webkit-scrollbar {
-      width: 6px;
-    }
-    
-    .left-col::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 10px;
-    }
-
+    .left-col,
     .right-col {
       display: flex;
       flex-direction: column;
+      gap: 12px;
+      min-width: 0;
       min-height: 0;
     }
 
     .panel {
-      background: var(--paper);
-      border: 1px solid rgba(255,255,255,0.8);
-      backdrop-filter: blur(20px);
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.78);
+      backdrop-filter: blur(12px);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
+      overflow: hidden;
+      min-width: 0;
     }
 
     .panel-inner {
-      padding: 20px;
+      padding: 15px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
+      min-width: 0;
+      min-height: 0;
     }
 
     .section-head {
@@ -280,7 +265,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      flex-shrink: 0;
+      flex-wrap: wrap;
     }
 
     .section-title {
@@ -291,105 +276,99 @@
     }
 
     .section-sub {
-      margin-top: 4px;
-      color: var(--muted);
+      margin-top: 2px;
       font-size: 12px;
+      color: var(--muted);
     }
 
     .soft-badge {
-      padding: 6px 12px;
+      padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(16, 185, 129, 0.15);
+      background: linear-gradient(135deg, rgba(15,138,87,.12), rgba(31,116,216,.12));
       color: var(--green-2);
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .tab-row {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      flex-shrink: 0;
     }
 
     .tab-btn {
       border: none;
       border-radius: 999px;
-      padding: 8px 14px;
-      background: var(--bg2);
+      padding: 8px 12px;
+      background: #fff;
       border: 1px solid var(--line);
-      color: var(--muted);
+      color: var(--ink);
       font: inherit;
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 800;
       cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .tab-btn:hover {
-      border-color: var(--blue);
-      color: var(--blue);
     }
 
     .tab-btn.active {
-      background: var(--blue);
+      background: linear-gradient(135deg, var(--green-1), var(--blue-1));
       color: #fff;
-      border-color: var(--blue);
-      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+      border-color: transparent;
     }
 
     .screen {
       display: none;
+      min-width: 0;
     }
 
     .screen.active {
-      display: block; /* Modificado de flex para flujo natural */
+      display: block;
+      min-width: 0;
     }
 
     .featured-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      min-width: 0;
     }
 
     .being-card {
-      padding: 16px;
-      border-radius: var(--radius-lg);
-      background: var(--bg2);
       border: 1px solid var(--line);
-      cursor: pointer;
-      transition: all 0.2s ease;
+      background: var(--card-2);
+      border-radius: 18px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
+      cursor: pointer;
+      transition: .15s ease;
+      min-width: 0;
+      min-height: 165px;
     }
 
-    .being-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-      border-color: var(--blue);
-    }
-
+    .being-card:hover,
     .being-card.active {
-      background: #f0fdf4;
-      border-color: var(--green);
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+      transform: translateY(-1px);
+      border-color: rgba(15,138,87,.28);
+      box-shadow: 0 8px 18px rgba(20,43,34,.08);
     }
 
     .being-head {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      min-width: 0;
     }
 
     .being-photo {
       width: 48px;
       height: 48px;
-      border-radius: 12px;
+      border-radius: 14px;
       overflow: hidden;
       flex-shrink: 0;
-      background: #e2e8f0;
+      background: #d7e8d9;
     }
 
     .being-photo img {
@@ -401,57 +380,57 @@
     .being-name {
       font-size: 15px;
       font-weight: 800;
-      line-height: 1.2;
+      line-height: 1.1;
     }
 
     .being-sub {
       margin-top: 2px;
-      font-size: 12px;
+      font-size: 11px;
+      line-height: 1.2;
       color: var(--muted);
-    }
-
-    .season-line {
-      display: flex;
-      align-items: center;
     }
 
     .season-pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      border-radius: 6px;
-      padding: 4px 8px;
-      background: #f1f5f9;
-      color: var(--ink);
+      width: fit-content;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(15,138,87,.12), rgba(113,139,45,.16));
+      color: var(--green-3);
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
+      max-width: 100%;
     }
 
-    .being-summary {
+    .being-message {
       font-size: 13px;
-      color: var(--muted);
-      line-height: 1.4;
+      line-height: 1.35;
+      color: var(--ink);
     }
 
     .selected-card {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
+      min-width: 0;
     }
 
     .selected-top {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
+      min-width: 0;
     }
 
     .selected-photo {
-      width: 72px;
-      height: 72px;
-      border-radius: 16px;
+      width: 68px;
+      height: 68px;
+      border-radius: 18px;
       overflow: hidden;
       flex-shrink: 0;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 18px rgba(20,43,34,.10);
     }
 
     .selected-photo img {
@@ -461,77 +440,85 @@
     }
 
     .selected-name {
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 800;
-      line-height: 1.1;
+      line-height: 1.05;
     }
 
     .selected-sub {
-      margin-top: 6px;
-      color: var(--muted);
+      margin-top: 4px;
       font-size: 13px;
+      line-height: 1.25;
+      color: var(--muted);
     }
 
     .selected-status {
-      padding: 14px 16px;
-      border-radius: 12px;
-      background: #eff6ff;
-      border-left: 4px solid var(--blue);
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(15,138,87,.09), rgba(31,116,216,.09));
+      border: 1px solid rgba(31,116,216,.12);
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.4;
       color: var(--ink);
     }
 
     .info-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      min-width: 0;
     }
 
     .mini-panel {
-      padding: 14px;
-      border-radius: 12px;
-      background: var(--bg2);
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.74);
       border: 1px solid var(--line);
+      min-width: 0;
     }
 
     .mini-panel strong {
       display: block;
-      font-size: 11px;
-      color: var(--blue-2);
       margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-size: 12px;
       font-weight: 800;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .04em;
     }
 
     .mini-panel span {
       font-size: 13px;
-      line-height: 1.4;
+      line-height: 1.35;
       color: var(--ink);
     }
 
     .map-wrap {
       position: relative;
-      width: 100%;
-      height: 300px; /* Altura fija para el mapa interior */
-      border-radius: var(--radius-lg);
+      min-height: 420px;
+      border-radius: 20px;
       overflow: hidden;
       border: 1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(15,23,42,0.1), rgba(15,23,42,0.3)),
+        linear-gradient(180deg, rgba(8,18,10,.08), rgba(8,18,10,.16)),
         url('cartografia-finca.jpg') center/cover;
-      background-color: var(--green); /* Fallback */
+    }
+
+    .map-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      pointer-events: none;
     }
 
     .zone-label {
       position: absolute;
-      padding: 6px 10px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.9);
-      background: rgba(255,255,255,0.95);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      font-size: 11px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(255,255,255,.82);
+      box-shadow: 0 8px 14px rgba(20,43,34,.12);
+      font-size: 12px;
       font-weight: 800;
       color: var(--ink);
     }
@@ -543,29 +530,24 @@
 
     .node {
       position: absolute;
-      min-width: 90px;
+      min-width: 92px;
+      max-width: 126px;
       padding: 8px 10px;
-      border-radius: 12px;
-      border: 2px solid #ffffff;
-      background: rgba(255,255,255,0.95);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      border-radius: 14px;
+      background: rgba(255,255,255,.9);
+      border: 1px solid rgba(255,255,255,.84);
+      box-shadow: 0 8px 14px rgba(20,43,34,.12);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: .15s ease;
     }
 
     .node:hover, .node.active {
-      transform: translateY(-3px);
-      background: var(--blue);
-      border-color: var(--blue);
-      color: white;
-    }
-    
-    .node:hover .n-sub, .node.active .n-sub {
-      color: rgba(255,255,255,0.8);
+      transform: translateY(-2px);
+      background: #fff;
     }
 
-    .node .n-title { font-weight: 800; font-size: 12px; }
-    .node .n-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+    .node .n-title { font-size: 13px; font-weight: 800; }
+    .node .n-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
     .nisp { right: 24%; top: 24%; }
     .agua { right: 26%; top: 52%; }
@@ -577,14 +559,14 @@
 
     .timeline-list {
       display: grid;
-      gap: 12px;
+      gap: 10px;
     }
 
     .event {
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.76);
       border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 14px;
-      background: var(--bg2);
     }
 
     .event-head {
@@ -592,293 +574,288 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .event-head strong {
       font-size: 14px;
-      font-weight: 800;
+      line-height: 1.2;
     }
 
     .tag {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--green-1), var(--blue-1));
+      color: #fff;
       font-size: 11px;
-      font-weight: 700;
-      color: var(--green-2);
-      background: #dcfce7;
-      padding: 4px 8px;
-      border-radius: 6px;
+      font-weight: 800;
       white-space: nowrap;
     }
 
     .event p {
       margin: 8px 0 0;
-      color: var(--muted);
-      line-height: 1.5;
       font-size: 13px;
+      line-height: 1.4;
+      color: var(--muted);
     }
 
-    /* Rediseño del Chat - Más estilizado y compacto */
     .chat-panel {
-      flex: 1;
-      min-height: 0;
+      position: sticky;
+      top: 14px;
     }
 
     .chat {
-      height: 100%;
       display: flex;
       flex-direction: column;
-      min-height: 0;
+      min-height: 620px;
+      max-height: calc(100vh - 28px);
     }
 
     .chat-header {
-      padding: 12px 14px;
+      padding: 10px 12px 8px;
       border-bottom: 1px solid var(--line);
       display: flex;
       flex-direction: column;
-      gap: 10px; /* Reducido */
+      gap: 8px;
       flex-shrink: 0;
-      background: var(--paper-strong);
     }
 
     .chat-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
+      min-width: 0;
     }
 
     .chat-title {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       min-width: 0;
     }
 
     .chat-title .being-photo {
-      width: 34px; /* Mucho más pequeño */
-      height: 34px;
-      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
     }
 
     .chat-name {
+      font-size: 14px;
       font-weight: 800;
-      font-size: 14px; /* Reducido */
       line-height: 1.1;
     }
 
     .chat-sub {
-      font-size: 11px; /* Reducido */
-      color: var(--muted);
       margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 140px;
+      font-size: 11px;
+      line-height: 1.2;
+      color: var(--muted);
     }
 
     .chat-status {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      color: var(--green);
       font-size: 11px;
       font-weight: 800;
-    }
-    
-    .chat-status::before {
-      content: '';
-      display: block;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--green);
+      color: var(--green-2);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .speaker-row {
       display: flex;
       align-items: center;
-      gap: 6px; /* Ajustado */
+      gap: 6px;
       flex-wrap: wrap;
     }
 
     .speaker-label {
-      font-size: 11px; /* Reducido */
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 800;
       color: var(--muted);
-      margin-right: 2px;
     }
 
     .speaker-btn {
-      border: none;
-      border-radius: 6px;
-      padding: 4px 8px; /* Botones más compactos */
-      background: #f1f5f9;
-      color: var(--muted);
-      font: inherit;
-      font-size: 11px; /* Reducido */
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .speaker-btn:hover {
-      background: #e2e8f0;
+      border: 1px solid var(--line);
+      background: #fff;
       color: var(--ink);
+      border-radius: 999px;
+      padding: 6px 9px;
+      font: inherit;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      min-width: auto;
+      box-shadow: none;
     }
 
     .speaker-btn.active {
-      background: var(--ink);
+      background: linear-gradient(135deg, var(--green-1), var(--blue-1));
       color: #fff;
+      border-color: transparent;
     }
 
     .chat-body {
-      padding: 16px;
+      flex: 1;
+      min-height: 280px;
+      overflow-y: auto;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      overflow-y: auto;
-      flex: 1;
-      min-height: 0;
-      background: #f8fafc;
+      gap: 10px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.14), transparent),
+        repeating-linear-gradient(180deg, rgba(43,42,36,.02) 0, rgba(43,42,36,.02) 1px, transparent 1px, transparent 30px);
     }
 
     .msg {
-      max-width: 90%;
-      padding: 10px 14px;
-      border-radius: 16px;
-      line-height: 1.4;
-      font-size: 13px;
+      max-width: 92%;
       width: fit-content;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      padding: 10px 12px;
+      border-radius: 16px;
+      font-size: 13px;
+      line-height: 1.4;
+      box-shadow: 0 5px 10px rgba(20,43,34,.05);
     }
 
     .msg.system {
-      background: #dcfce7;
+      align-self: center;
+      background: rgba(15,138,87,.10);
+      border: 1px solid rgba(15,138,87,.14);
       color: var(--green-2);
-      border: 1px solid #bbf7d0;
-      margin: 4px auto;
       text-align: center;
-      font-size: 11px;
-      border-radius: 8px;
-      padding: 6px 12px;
-      font-weight: 600;
+      font-size: 12px;
     }
 
     .msg.being {
-      background: #ffffff;
-      border: 1px solid var(--line);
       align-self: flex-start;
+      background: #fff;
+      border: 1px solid rgba(24,49,40,.08);
       border-bottom-left-radius: 4px;
     }
 
     .msg.human {
-      background: var(--blue);
-      color: #ffffff;
       align-self: flex-end;
+      background: linear-gradient(135deg, var(--green-1), var(--blue-1));
+      color: #fff;
       border-bottom-right-radius: 4px;
     }
 
     .msg small {
       display: block;
-      margin-top: 6px;
-      opacity: 0.7;
+      margin-top: 4px;
       font-size: 10px;
+      opacity: .78;
     }
 
     .chat-input {
+      padding: 10px 12px;
       border-top: 1px solid var(--line);
-      padding: 12px;
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 8px;
       flex-shrink: 0;
-      background: var(--paper-strong);
+      align-items: center;
     }
 
-    input, button {
+    input, .send-btn {
       font: inherit;
-      border: none;
+      border-radius: 14px;
       outline: none;
-      border-radius: 10px;
     }
 
     input {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.95);
+      padding: 11px 12px;
+      font-size: 13px;
+      color: var(--ink);
       min-width: 0;
       width: 100%;
-      padding: 10px 14px;
-      background: #f1f5f9;
-      border: 1px solid transparent;
-      font-size: 13px;
-      transition: border 0.2s;
-    }
-    
-    input:focus {
-      border-color: var(--blue);
-      background: #fff;
     }
 
-    button {
-      padding: 10px 16px;
-      background: var(--blue);
+    .send-btn {
+      border: none;
+      padding: 11px 13px;
+      min-width: 78px;
+      background: linear-gradient(135deg, var(--green-1), var(--blue-1));
       color: #fff;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-weight: 700;
       font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 16px rgba(15,138,87,.18);
     }
 
-    button:hover {
-      background: var(--blue-2);
-      transform: translateY(-1px);
+    .hint {
+      padding: 0 12px 10px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 10.5px;
+      flex-shrink: 0;
     }
 
-    @media (max-width: 980px) {
-      body { overflow: auto; }
-
-      .app {
-        height: auto;
-        min-height: 100vh;
+    @media (max-width: 1080px) {
+      .main {
+        grid-template-columns: 1fr;
       }
 
-      .hero-head {
-        flex-direction: column;
+      .right-col {
+        order: 3;
+      }
+
+      .chat-panel {
+        position: relative;
+        top: auto;
+      }
+
+      .chat {
+        max-height: none;
+        min-height: 520px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero-copy h2 {
+        font-size: 40px;
       }
 
       .hero-stats {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .main {
+      .featured-grid {
         grid-template-columns: 1fr;
       }
-      
-      .left-col {
-        overflow-y: visible; /* En móvil dejamos que la página entera scrollee */
-        padding-right: 0;
-      }
 
-      .chat-panel {
-        min-height: 500px;
+      .info-grid {
+        grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 640px) {
+      .app {
+        padding: 10px;
+      }
+
       .topbar {
         flex-direction: column;
         align-items: flex-start;
       }
 
-      .topbar-right {
-        justify-content: flex-start;
+      .brand-title {
+        font-size: 32px;
       }
 
-      .hero-copy h2 { font-size: 32px; }
-
-      .hero-stats {
-        grid-template-columns: 1fr 1fr;
+      .hero-copy h2 {
+        font-size: 34px;
       }
 
-      .featured-grid, .info-grid {
+      .chat-input {
         grid-template-columns: 1fr;
+      }
+
+      .send-btn {
+        width: 100%;
       }
     }
   </style>
@@ -894,10 +871,7 @@
         </div>
       </div>
 
-      <div class="topbar-right">
-        <div class="mini-pill">App viva</div>
-        <div class="mini-pill" style="color: var(--blue-2);">Chat activo</div>
-      </div>
+      <div class="top-note">Versión de trabajo</div>
     </div>
 
     <section class="hero">
@@ -913,7 +887,7 @@
               <div class="weather-icon">⛅</div>
               <div>
                 <div class="weather-main" id="weatherMain">24°C · Analizando</div>
-                <div class="weather-sub" id="weatherSub">Gran Canaria · humedad alta · alisios</div>
+                <div class="weather-sub" id="weatherSub">Gran Canaria · humedad alta · vientos alisios</div>
               </div>
             </div>
           </div>
@@ -922,23 +896,22 @@
         <div class="hero-stats">
           <div class="hero-stat"><strong>7</strong><span>Seres conectados</span></div>
           <div class="hero-stat"><strong>3</strong><span>Voces en el chat</span></div>
-          <div class="hero-stat"><strong>1</strong><span>Estanque regulador</span></div>
+          <div class="hero-stat"><strong>1</strong><span>Estanque bioclimático</span></div>
           <div class="hero-stat"><strong id="monthLabel">Marzo</strong><span>Pulso estacional</span></div>
         </div>
       </div>
     </section>
 
     <div class="main">
-      <!-- Ajustado para que el scroll viva aquí de forma natural -->
       <div class="left-col">
         <div class="panel">
           <div class="panel-inner">
             <div class="section-head">
               <div>
                 <h3 class="section-title">Seres destacados</h3>
-                <div class="section-sub">Lectura rápida del estado actual de cada ser</div>
+                <div class="section-sub">Selecciona un ser y lee su estado del momento</div>
               </div>
-              <div class="soft-badge">Finca activa</div>
+              <div class="soft-badge">Lectura rápida</div>
             </div>
 
             <div class="tab-row">
@@ -953,8 +926,10 @@
 
             <section class="screen" id="left-mapa">
               <div class="map-wrap">
+                <div class="map-overlay"></div>
+
                 <div class="zone-label z-casa">Casa y núcleo</div>
-                <div class="zone-label z-huerto">Huerto cercanía</div>
+                <div class="zone-label z-huerto">Huerto de cercanía</div>
                 <div class="zone-label z-estanque">Agua viva</div>
                 <div class="zone-label z-biomasa">Masa vegetal</div>
 
@@ -972,7 +947,7 @@
                 </div>
                 <div class="node agua" data-being="aguacatero">
                   <div class="n-title">Aguacatero</div>
-                  <div class="n-sub">Prod. sensible</div>
+                  <div class="n-sub">Producción sensible</div>
                 </div>
                 <div class="node moral" data-being="moral">
                   <div class="n-title">Moral</div>
@@ -980,11 +955,11 @@
                 </div>
                 <div class="node toma" data-being="tomatero">
                   <div class="n-title">Tomatero</div>
-                  <div class="n-sub">Intensivo</div>
+                  <div class="n-sub">Huerto intensivo</div>
                 </div>
                 <div class="node estanque" data-being="estanque">
                   <div class="n-title">Estanque</div>
-                  <div class="n-sub">Regulación</div>
+                  <div class="n-sub">Regulación hídrica</div>
                 </div>
               </div>
             </section>
@@ -1002,7 +977,7 @@
                 <h3 class="section-title">Habla con los seres</h3>
                 <div class="section-sub">Ficha viva del ser seleccionado</div>
               </div>
-              <div class="soft-badge" id="selectedBadge" style="background: rgba(59,130,246,0.1); color: var(--blue-2);">activo</div>
+              <div class="soft-badge" id="selectedBadge">Activo</div>
             </div>
 
             <div class="selected-card">
@@ -1048,11 +1023,11 @@
                     <div class="chat-sub" id="chatSubtitle"></div>
                   </div>
                 </div>
-                <div class="chat-status" id="chatStatus">Sincronizado</div>
+                <div class="chat-status">Sincronizado</div>
               </div>
 
               <div class="speaker-row">
-                <span class="speaker-label">Voz:</span>
+                <span class="speaker-label">Como</span>
                 <button class="speaker-btn active" data-speaker="Mario">Mario</button>
                 <button class="speaker-btn" data-speaker="Yani">Yani</button>
                 <button class="speaker-btn" data-speaker="Invitad@">Invitad@</button>
@@ -1062,9 +1037,10 @@
             <div class="chat-body" id="chatBody"></div>
 
             <div class="chat-input">
-              <input id="messageInput" type="text" autocomplete="off" placeholder="Habla al sistema..." />
-              <button id="sendBtn">Enviar</button>
+              <input id="messageInput" type="text" autocomplete="off" placeholder="Escribe al ser vivo..." />
+              <button class="send-btn" id="sendBtn">Enviar</button>
             </div>
+            <div class="hint">El chat permanece activo y visible.</div>
           </div>
         </div>
       </div>
@@ -1081,15 +1057,16 @@
         aguacatero: {
           photo: 'https://images.unsplash.com/photo-1601039641847-7857b994d704?auto=format&fit=crop&w=500&q=80',
           name: 'Aguacatero',
-          subtitle: 'Persea americana · Variedad Hass',
+          subtitle: 'Persea americana · Variedad Hass/Fuerte',
           season: 'Raíz alerta',
           seasonIcon: '💧',
+          cardText: 'Conviene revisar drenaje y suelo antes de añadir más agua.',
           status: 'Manteniendo el follaje nuevo, pero con las raíces alerta por la humedad del suelo.',
           summary: 'Sensible al viento fuerte y a la asfixia radicular.',
-          function: 'Árbol de producción principal. Aporta alimento y estructura de estrato medio-alto.',
+          function: 'Árbol de producción principal. Aporta alimento, sombra parcial y estructura de estrato medio-alto dentro del sistema.',
           timelineTag: 'Atención suelo',
-          timelineText: 'El suelo drena bien, pero vigilar humedad en zona baja.',
-          bio: { needs: 'Drenaje excelente, protección contra vientos.' },
+          timelineText: 'El suelo volcánico drena bien, pero vigilar humedad en zona baja.',
+          bio: { needs: 'Drenaje excelente, protección contra vientos secos.' },
           messages: [
             { type: 'system', text: 'Conexión biológica establecida. El aguacatero analiza su entorno radicular.' },
             { type: 'being', text: 'Mario, noto el suelo de mi entorno un poco apelmazado. Si el agua se estanca demasiado, mis raíces finas lo notan enseguida.', by: 'Aguacatero', time: '10:00' },
@@ -1098,20 +1075,21 @@
         },
 
         nispero: {
-          photo: 'https://images.unsplash.com/photo-1601039641847-7857b994d704?auto=format&fit=crop&w=500&q=80', /* Cambia por tu img */
+          photo: 'nispero.jpg',
           name: 'Níspero',
           subtitle: 'Eriobotrya japonica · Frutal de invierno',
           season: 'Momento potásico',
           seasonIcon: '🌼',
+          cardText: 'Está en un momento bueno para potasio y consolidación del fruto.',
           status: 'Cargando reservas para mantener la floración y el cuajado a buen ritmo.',
           summary: 'Rústico y duro. Agradece potasio en época de engorde.',
-          function: 'Frutal de estrato medio. Da alimento y estabilidad en época fresca.',
+          function: 'Frutal de estrato medio con cosecha temprana. Da alimento, floración útil y estabilidad productiva en época fresca.',
           timelineTag: 'Abono potásico',
           timelineText: 'Requiere ceniza o consuelda para endulzar el fruto.',
           bio: { needs: 'Sol directo, algo de abono potásico.' },
           messages: [
             { type: 'system', text: 'Ciclo fenológico: desarrollo de fruto.' },
-            { type: 'being', text: 'Yo voy bien. El fresco ligero me sienta de maravilla. Si me das potasio ahora, te lo devuelvo en fruto.', by: 'Níspero', time: 'Ayer' }
+            { type: 'being', text: 'Yo voy bien. El fresco ligero me sienta de maravilla. Si me das potasio en este momento, te lo devuelvo en fruto.', by: 'Níspero', time: 'Ayer' }
           ]
         },
 
@@ -1121,31 +1099,33 @@
           subtitle: 'Morus nigra · Dosel sombreador',
           season: 'Biomasa fuerte',
           seasonIcon: '🌿',
+          cardText: 'Está empujando bien y se puede usar como apoyo de materia orgánica.',
           status: 'Empujando savia nueva y expandiendo copa sin parar.',
           summary: 'Generador masivo de biomasa para el estrato sintrópico.',
-          function: 'Produce biomasa, sombra y apoyo a la sucesión del bosque.',
+          function: 'Produce biomasa, sombra, materia orgánica y apoyo a la sucesión del bosque comestible.',
           timelineTag: 'Poda verde',
-          timelineText: 'Aprovechar sus hojas para alimentar el suelo.',
+          timelineText: 'Aprovechar sus hojas para alimentar el suelo de otras zonas.',
           bio: { needs: 'Podas de formación para no invadir zonas vecinas.' },
           messages: [
-            { type: 'being', text: 'Si necesitas biomasa para acolchar, puedes podarme. Reboto con fuerza.', by: 'Moral', time: '09:00' }
+            { type: 'being', text: 'Si necesitas biomasa para acolchar, puedes podarme. Reboto con fuerza y dejo materia buena para el suelo.', by: 'Moral', time: '09:00' }
           ]
         },
 
         tomatero: {
           photo: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&w=500&q=80',
           name: 'Tomatero',
-          subtitle: 'Solanum lycopersicum · Huerto',
-          season: 'Producción',
+          subtitle: 'Solanum lycopersicum · Huerto biointensivo',
+          season: 'Producción intensa',
           seasonIcon: '🍅',
+          cardText: 'Está fuerte, pero pide estructura y control de humedad en hoja.',
           status: 'Gastando muchísima energía en cuajar fruto y trepar.',
           summary: 'Exigente en calcio y luz solar directa.',
-          function: 'Cultivo rápido de alto rendimiento. Aporta alimento inmediato.',
+          function: 'Cultivo rápido de alto rendimiento. Aporta alimento inmediato y lectura clara del estado del huerto.',
           timelineTag: 'Entutorar',
-          timelineText: 'Riesgo de infección fúngica inminente si toca el suelo.',
+          timelineText: 'Las ramas tocan el suelo. Riesgo de infección fúngica inminente.',
           bio: { needs: 'Soporte físico, riego radicular constante.' },
           messages: [
-            { type: 'being', text: 'Estoy lanzado, pero si no me entutoras a tiempo, la humedad me pasará factura.', by: 'Tomatero', time: '08:30' }
+            { type: 'being', text: 'Estoy lanzado, pero si no me entutoras a tiempo, la humedad me va a pasar factura.', by: 'Tomatero', time: '08:30' }
           ]
         },
 
@@ -1155,49 +1135,52 @@
           subtitle: 'Biotopo acuático regulador',
           season: 'Equilibrio hídrico',
           seasonIcon: '💦',
+          cardText: 'Sostiene humedad y equilibrio general del sistema.',
           status: 'Las plantas oxigenadoras están trabajando bien. Agua templada.',
           summary: 'Regula la temperatura local y atrae fauna auxiliar.',
-          function: 'Reserva de agua y moderador térmico dentro del sistema.',
+          function: 'Reserva de agua, moderador térmico y nodo de biodiversidad dentro del sistema vivo.',
           timelineTag: 'Equilibrio',
-          timelineText: 'Las raíces filtran correctamente los nitratos.',
-          bio: { needs: 'Equilibrio luz/sombra, no retirar mucha vegetación.' },
+          timelineText: 'Las raíces de ribera están filtrando correctamente los nitratos.',
+          bio: { needs: 'Equilibrio entre luz y sombra, no retirar demasiadas plantas de ribera.' },
           messages: [
-            { type: 'being', text: 'Voy bien. Sigo equilibrando humedad y temperatura alrededor.', by: 'Estanque', time: 'Ayer' }
+            { type: 'being', text: 'Voy bien. Sigo equilibrando humedad, temperatura y vida alrededor. No me limpien como si fuera un quirófano.', by: 'Estanque', time: 'Ayer' }
           ]
         },
 
         mario: {
-          photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80',
+          photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994d704?auto=format&fit=crop&w=500&q=80',
           name: 'Mario',
-          subtitle: 'Humano cuidador · Acción',
+          subtitle: 'Humano cuidador · Acción y diseño',
           season: 'Lectura activa',
           seasonIcon: '🛠️',
+          cardText: 'Está en modo acción y ajuste fino del sistema.',
           status: 'Revisando planos y ajustando los riegos del sistema.',
-          summary: 'Ejecuta las tareas físicas leyendo los indicadores.',
-          function: 'Traduce observación en decisiones, riego, poda y manejo.',
+          summary: 'Ejecuta las tareas físicas leyendo los indicadores biológicos.',
+          function: 'Nodo humano de acción. Traduce observación en decisiones, riego, poda y manejo real.',
           timelineTag: 'Gestión agua',
-          timelineText: 'Asegurar que las entradas de agua funcionan.',
+          timelineText: 'Prioridad: asegurar que las entradas y salidas de agua funcionan.',
           bio: { needs: 'Descanso y buena alimentación.' },
           messages: [
             { type: 'system', text: 'Diario de campo de Mario.' },
-            { type: 'being', text: 'Anotado lo del tomatero. Esta tarde subo con rafia y reviso.', by: 'Mario', time: '11:00' }
+            { type: 'being', text: 'Anotado lo del tomatero y el aguacatero. Esta tarde subo con rafia y reviso el suelo.', by: 'Mario', time: '11:00' }
           ]
         },
 
         yani: {
           photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80',
           name: 'Yani',
-          subtitle: 'Humana cuidadora · Visión global',
+          subtitle: 'Humana cuidadora · Observación holística',
           season: 'Visión global',
           seasonIcon: '👁️',
+          cardText: 'Está leyendo relaciones, equilibrio y ritmo general.',
           status: 'Tomando notas del progreso del conjunto.',
           summary: 'Mantiene la visión global del ecosistema.',
-          function: 'Observa relaciones, ritmos y equilibrio del conjunto.',
+          function: 'Nodo humano de lectura global. Observa relaciones, ritmos y equilibrio del conjunto.',
           timelineTag: 'Observación',
-          timelineText: 'Evaluando la sinergia entre viento y cortavientos natural.',
+          timelineText: 'Evaluando la sinergia entre viento, humedad y cortavientos natural.',
           bio: { needs: 'Paseos de observación por la finca.' },
           messages: [
-            { type: 'being', text: 'He notado que la barrera viva hace un gran trabajo protegiendo a los seres.', by: 'Yani', time: '09:45' }
+            { type: 'being', text: 'He notado que la barrera viva está haciendo un buen trabajo. Los seres más sensibles están bastante más protegidos.', by: 'Yani', time: '09:45' }
           ]
         }
       },
@@ -1210,64 +1193,59 @@
         this.state = state;
       }
 
-      getBeing(key) { return this.state.beings[key]; }
-      getCurrentBeing() { return this.getBeing(this.state.currentContext); }
-      setCurrentContext(key) { if (this.state.beings[key]) this.state.currentContext = key; }
-      setSpeaker(name) { this.state.currentSpeaker = name; }
+      getBeing(key) {
+        return this.state.beings[key];
+      }
+
+      getCurrentBeing() {
+        return this.getBeing(this.state.currentContext);
+      }
+
+      setCurrentContext(key) {
+        if (this.state.beings[key]) this.state.currentContext = key;
+      }
+
+      setSpeaker(name) {
+        this.state.currentSpeaker = name;
+      }
 
       generateResponse(message, beingKey) {
-        // Normalizamos el texto: sin tildes y en minúsculas
         const text = message.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         const being = this.getBeing(beingKey);
         const temp = this.state.weather.temp || 24;
 
-        // 1. Saludos y estado general
-        if (text.includes('como estas') || text.includes('que tal') || text.includes('como vas') || text.includes('estado')) {
-          if (beingKey === 'aguacatero') return `Con este clima de ${temp}°C me defiendo, pero sigo fino con la raíz. ${being.status}`;
-          if (beingKey === 'nispero') return `Voy sereno. El momento me acompaña. ${being.status}`;
-          if (beingKey === 'moral') return `Fuerte. En modo expansión. ${being.status}`;
-          if (beingKey === 'tomatero') return `Rápido, pero necesito orden físico. ${being.status}`;
-          if (beingKey === 'estanque') return `Regulando el conjunto. ${being.status}`;
-          if (beingKey === 'mario' || beingKey === 'yani') return `Sigo leyendo el sistema y respondiendo a lo que pide.`;
+        if (text.includes('como estas') || text.includes('que tal') || text.includes('como vas')) {
+          if (beingKey === 'aguacatero') return `Con este clima de ${temp}°C me defiendo, pero sigo siendo muy fino con las raíces. ${being.status}`;
+          if (beingKey === 'nispero') return `Voy bastante sereno. El momento me acompaña. ${being.status}`;
+          if (beingKey === 'moral') return `Fuerte. Muy fuerte. Estoy en modo expansión. ${being.status}`;
+          if (beingKey === 'tomatero') return `Voy rápido, pero necesito orden físico. ${being.status}`;
+          if (beingKey === 'estanque') return `Sigo regulando el conjunto. ${being.status}`;
+          if (beingKey === 'mario' || beingKey === 'yani') return `Voy bien. Sigo leyendo el sistema y respondiendo a lo que pide.`;
         }
 
-        // 2. Clima y meteorología (lluvia, viento, sol)
-        if (text.includes('lluvi') || text.includes('llover') || text.includes('tormenta') || text.includes('viento')) {
-          if (beingKey === 'tomatero') return 'Si viene mucha lluvia, asegúrate de entutorarme bien. La humedad en las hojas bajas me trae hongos.';
-          if (beingKey === 'aguacatero') return 'La lluvia fuerte me preocupa por el encharcamiento. Revisa que mi drenaje esté libre, por favor.';
-          if (beingKey === 'nispero') return 'El agua me viene de maravilla para engordar el fruto. Estoy preparado.';
-          if (beingKey === 'moral') return 'Que llueva. Yo bebo profundo y sigo tirando biomasa.';
-          if (beingKey === 'estanque') return 'Preparado para recibir, filtrar y almacenar el excedente que caiga.';
-          if (beingKey === 'mario' || beingKey === 'yani') return 'Atentos a las correntías. Habrá que repasar los canales antes de que caiga la fuerte.';
+        if (text.includes('suelo') || text.includes('tierra') || text.includes('agua') || text.includes('riego')) {
+          if (beingKey === 'aguacatero') return 'Agua justa. Antes de regar, mejor verificar drenaje.';
+          if (beingKey === 'tomatero') return 'Agua a raíz, sin mojar hoja. Ahí está la diferencia.';
+          if (beingKey === 'nispero') return 'Yo aguanto bastante bien, pero el potasio me viene de lujo ahora.';
+          if (beingKey === 'moral') return 'A mí dame espacio para crecer y luego convierto todo en biomasa.';
+          if (beingKey === 'estanque') return 'Mi nivel varía, pero sigo sosteniendo humedad y vida.';
         }
 
-        // 3. Suelo, tierra y riego
-        if (text.includes('suelo') || text.includes('tierra') || text.includes('agua') || text.includes('rieg')) {
-          if (beingKey === 'aguacatero') return 'Agua justa. Mejor verificar drenaje primero, no me asfixies.';
-          if (beingKey === 'tomatero') return 'Agua a raíz, sin mojar la hoja. Ese es el secreto.';
-          if (beingKey === 'nispero') return 'El potasio me viene de lujo ahora si vas a regar.';
-          if (beingKey === 'moral') return 'Dame espacio y te devolveré buena materia orgánica para el suelo.';
-          if (beingKey === 'estanque') return 'Mi nivel varía, pero sostengo humedad y vida en el subsuelo.';
-        }
-
-        // 4. Poda y mantenimiento físico
         if (text.includes('poda') || text.includes('cortar') || text.includes('hojas') || text.includes('chupones')) {
-          if (beingKey === 'moral') return 'Pódame sin miedo. Soy fábrica de materia orgánica, reboto rápido.';
-          if (beingKey === 'aguacatero') return 'Con cuidado. Si me desnudas demasiado, el sol me quema la madera.';
-          if (beingKey === 'tomatero') return 'Quítame los chupones para no perder fuerza y guíame hacia arriba.';
-          if (beingKey === 'nispero') return 'Limpieza ligera, deja hojas sanas para proteger el fruto del sol directo.';
+          if (beingKey === 'moral') return 'Pódame sin miedo. Soy una fábrica de materia orgánica.';
+          if (beingKey === 'aguacatero') return 'Con cuidado. Si me desnudas demasiado, lo pago.';
+          if (beingKey === 'nispero') return 'Limpieza ligera, sí. Carnicería, no.';
+          if (beingKey === 'tomatero') return 'Quita chupones y entutora. Sin eso me desordeno.';
         }
 
-        // 5. Necesidades, ayuda y faltas (Atrapa "necesitarás", "necesitas", "ayuda", "falta")
-        if (text.includes('necesit') || text.includes('ayud') || text.includes('falta') || text.includes('hace falta')) {
-          return `Si quieres ayudarme, mi prioridad natural ahora mismo es: ${being.bio.needs.toLowerCase()}.`;
+        if (text.includes('necesitas') || text.includes('ayuda') || text.includes('hago')) {
+          return `Mi prioridad natural ahora mismo es esta: ${being.bio.needs.toLowerCase()}`;
         }
 
-        // Fallback natural si no entiende el concepto
         const fallbacks = [
           'Te escucho. Sigo mi ritmo y respondo a lo que trae el día.',
-          'Entendido. Aquí sigo, asimilando tu mensaje.',
-          'Tomo nota de lo que dices. La vida en la Finca continúa.'
+          'Entendido. Aquí sigo, trabajando en silencio.',
+          'Tomo nota. La vida en la Finca continúa.'
         ];
         return fallbacks[Math.floor(Math.random() * fallbacks.length)];
       }
@@ -1277,26 +1255,34 @@
         const timeStr = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
         const speaker = this.state.currentSpeaker;
 
-        // Añade el mensaje humano
-        being.messages.push({ type: 'human', text: humanMessage, by: speaker, time: timeStr });
-        
-        // Genera la respuesta
+        being.messages.push({
+          type: 'human',
+          text: humanMessage,
+          by: speaker,
+          time: timeStr
+        });
+
         const reply = this.generateResponse(humanMessage, this.state.currentContext);
 
-        // Simula un breve retardo biológico/de red
         setTimeout(() => {
-          being.messages.push({ type: 'being', text: reply, by: being.name, time: timeStr });
+          being.messages.push({
+            type: 'being',
+            text: reply,
+            by: being.name,
+            time: timeStr
+          });
           window.dispatchEvent(new Event('new-message'));
-        }, 500);
+        }, 420);
       }
 
       async updateWeather() {
         try {
           const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.139&longitude=-15.632&current=temperature_2m,relative_humidity_2m,weather_code&timezone=auto');
           const data = await res.json();
+          const current = data.current;
           this.state.weather = {
-            temp: Math.round(data.current.temperature_2m),
-            humidity: Math.round(data.current.relative_humidity_2m)
+            temp: Math.round(current.temperature_2m),
+            humidity: Math.round(current.relative_humidity_2m)
           };
         } catch (e) {
           this.state.weather = { temp: 24, humidity: 65 };
@@ -1327,7 +1313,7 @@
       selectedFunction: document.getElementById('selectedFunction'),
       selectedBadge: document.getElementById('selectedBadge'),
       leftTabs: document.querySelectorAll('.tab-btn'),
-      leftScreens: document.querySelectorAll('.screen'),
+      leftScreens: document.querySelectorAll('#left-seres, #left-mapa, #left-pulso'),
       speakerBtns: document.querySelectorAll('.speaker-btn')
     };
 
@@ -1343,10 +1329,8 @@
                 <div class="being-sub">${b.subtitle.split('·')[0]}</div>
               </div>
             </div>
-            <div class="season-line">
-              <div class="season-pill">${b.seasonIcon} ${b.season}</div>
-            </div>
-            <div class="being-summary">${b.summary}</div>
+            <div class="season-pill">${b.seasonIcon} ${b.season}</div>
+            <div class="being-message">${b.cardText}</div>
           </div>
         `;
       }).join('');
@@ -1400,7 +1384,7 @@
     function renderWeather() {
       if (engine.state.weather.temp) {
         DOM.weatherMain.textContent = `${engine.state.weather.temp}°C · Analizando`;
-        DOM.weatherSub.textContent = `Gran Canaria · ${engine.state.weather.humidity}% humedad · alisios`;
+        DOM.weatherSub.textContent = `Gran Canaria · ${engine.state.weather.humidity}% humedad · vientos alisios`;
       }
     }
 
