@@ -6,17 +6,25 @@
   <title>SERES · Finca Viva</title>
   <style>
     :root {
-      --bg: #efe9dd;
-      --paper: #f7f2e8;
-      --ink: #2b2a24;
-      --muted: #6e6a5f;
-      --green: #58714c;
-      --green-2: #728d64;
-      --moss: #8ea07a;
-      --soil: #8a6d51;
-      --gold: #c8a96a;
-      --line: rgba(43,42,36,.12);
-      --shadow: 0 12px 30px rgba(53, 45, 31, 0.08);
+      --bg: #eef7f3;
+      --bg-2: #e4f3ff;
+      --paper: rgba(255,255,255,0.78);
+      --paper-strong: rgba(255,255,255,0.9);
+      --ink: #153029;
+      --muted: #58756d;
+      --green: #169b62;
+      --green-2: #0d7d67;
+      --green-soft: #d8f5e8;
+      --blue: #2d8cff;
+      --blue-2: #2276d2;
+      --blue-soft: #dceeff;
+      --sky: #8cd3ff;
+      --soil: #7a5b42;
+      --line: rgba(21,48,41,.1);
+      --shadow: 0 14px 36px rgba(22, 74, 92, 0.14);
+      --radius-xl: 26px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
     }
 
     * { box-sizing: border-box; }
@@ -25,239 +33,96 @@
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,.45), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(88,113,76,.08), transparent 35%),
-        var(--bg);
       color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.75), transparent 22%),
+        radial-gradient(circle at top right, rgba(140,211,255,.32), transparent 28%),
+        linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 42%, #edf8f1 100%);
       overflow: hidden;
     }
 
-    .app {
+    .tablet-shell {
       height: 100vh;
-      display: grid;
-      grid-template-columns: 300px 1fr 360px;
-      gap: 16px;
-      padding: 16px;
-      overflow: hidden;
-    }
-
-    .panel {
-      background: rgba(247,242,232,.9);
-      border: 1px solid rgba(255,255,255,.6);
-      backdrop-filter: blur(12px);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      min-height: 0;
-    }
-
-    .sidebar {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      padding: 16px;
-      gap: 14px;
-      min-height: 0;
+      gap: 12px;
+      overflow: hidden;
     }
 
-    .brand {
+    .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 4px 4px 12px;
-      border-bottom: 1px solid var(--line);
+      padding: 6px 4px 0;
       flex-shrink: 0;
     }
 
-    .brand h1 {
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-box {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #d8ffe9, #a8efd0);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+      font-size: 22px;
+    }
+
+    .brand-title {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 28px;
-      font-weight: 700;
+      font-size: 34px;
+      line-height: 1;
       letter-spacing: -0.02em;
     }
 
-    .leaf {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #dce8d1, #9cb38c);
-      display: grid;
-      place-items: center;
-      color: var(--green);
-      font-size: 18px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
-    }
-
-    .small {
-      font-size: 12px;
+    .brand-subtitle {
+      margin-top: 2px;
       color: var(--muted);
-    }
-
-    .humans {
-      background: linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.3));
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 12px;
-      flex-shrink: 0;
-    }
-
-    .humans h3, .section-title {
-      margin: 0 0 8px;
-      font-size: 14px;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
-    .human-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #8ea07a, #58714c);
-      color: #fff;
-      font-weight: 700;
-      font-size: 14px;
-      border: 2px solid rgba(255,255,255,.75);
-      box-shadow: 0 4px 10px rgba(88,113,76,.2);
-    }
-
-    .avatar.j {
-      background: linear-gradient(135deg, #b88b66, #8a6d51);
-    }
-
-    .filters-wrap {
-      flex-shrink: 0;
-    }
-
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .chip {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.55);
-      color: var(--ink);
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: .2s ease;
-    }
-
-    .chip.active, .chip:hover {
-      background: var(--green);
-      color: #fff;
-      border-color: transparent;
-    }
-
-    .cards-section {
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .cards {
-      display: grid;
-      gap: 10px;
-      overflow: auto;
-      padding-right: 4px;
-      min-height: 0;
-    }
-
-    .being-card {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.6);
-      border-radius: 16px;
-      cursor: pointer;
-      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-    }
-
-    .being-card:hover, .being-card.active {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 16px rgba(88,113,76,.1);
-      border-color: rgba(88,113,76,.3);
-    }
-
-    .being-content {
-      padding: 10px;
-    }
-
-    .being-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .being-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .being-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #d9ead0, #b7c9a8);
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .being-icon img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .being-name { font-weight: 700; font-size: 14px; }
-
-    .being-status {
-      margin-top: 8px;
       font-size: 13px;
-      color: var(--muted);
-      line-height: 1.35;
     }
 
-    .main {
-      display: grid;
-      grid-template-rows: 240px 1fr;
-      gap: 16px;
-      min-width: 0;
-      min-height: 0;
+    .status-pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(255,255,255,.8);
+      box-shadow: var(--shadow);
+      color: var(--green-2);
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
     }
 
     .hero {
       position: relative;
+      min-height: 210px;
+      border-radius: var(--radius-xl);
       overflow: hidden;
-      border-radius: 24px;
-      color: #f8f5ef;
+      box-shadow: var(--shadow);
       background:
-        linear-gradient(180deg, rgba(12,16,12,.1), rgba(12,16,12,.6)),
+        linear-gradient(180deg, rgba(6,33,30,.06), rgba(6,33,30,.42)),
         url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80') center/cover;
+      flex-shrink: 0;
     }
 
-    .hero::before {
+    .hero::after {
       content: "";
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,.15), transparent 20%),
-        radial-gradient(circle at 80% 30%, rgba(255,255,255,.08), transparent 15%);
+        radial-gradient(circle at 18% 18%, rgba(255,255,255,.24), transparent 18%),
+        linear-gradient(90deg, rgba(9,41,36,.38), rgba(9,41,36,.08) 60%, rgba(9,41,36,.15));
       pointer-events: none;
     }
 
@@ -265,159 +130,429 @@
       position: relative;
       z-index: 1;
       height: 100%;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 22px;
-      background: linear-gradient(90deg, rgba(0,0,0,.2), rgba(0,0,0,.02));
+      gap: 14px;
+      color: #f7fffb;
     }
 
-    .hero-copy { max-width: 600px; }
-
-    .hero h2 {
-      margin: 0 0 8px;
-      font-size: 42px;
-      font-family: Georgia, "Times New Roman", serif;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      text-shadow: 0 3px 10px rgba(0,0,0,.3);
-    }
-
-    .hero p {
-      max-width: 580px;
-      color: rgba(248,245,239,.95);
-      font-size: 15px;
-      line-height: 1.35;
-      margin: 0;
-      text-shadow: 0 2px 8px rgba(0,0,0,.25);
-    }
-
-    .hero-topline {
+    .hero-head {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
+      gap: 14px;
     }
 
-    .weather-chip {
+    .hero-copy {
+      max-width: 520px;
+    }
+
+    .hero-copy h2 {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 44px;
+      line-height: .95;
+      letter-spacing: -0.03em;
+      text-shadow: 0 4px 12px rgba(0,0,0,.22);
+    }
+
+    .hero-copy p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.35;
+      color: rgba(247,255,251,.95);
+      max-width: 520px;
+    }
+
+    .weather-card {
+      min-width: 250px;
+      max-width: 290px;
+      padding: 14px 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.22);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 24px rgba(0,0,0,.12);
+    }
+
+    .weather-row {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 12px 14px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.15);
-      backdrop-filter: blur(8px);
-      min-width: 280px;
-      box-shadow: 0 8px 16px rgba(0,0,0,.15);
     }
 
-    .weather-chip strong {
-      display: block;
-      font-size: 20px;
-      color: #fff;
-      line-height: 1.1;
+    .weather-icon {
+      font-size: 28px;
     }
 
-    .weather-chip span {
-      display: block;
-      color: rgba(255,255,255,.85);
+    .weather-main {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.05;
+    }
+
+    .weather-sub {
+      margin-top: 4px;
       font-size: 12px;
       line-height: 1.3;
-      margin-top: 2px;
-    }
-
-    .stats {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-
-    .stat {
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.15);
-      color: #fff;
-      padding: 10px 14px;
-      border-radius: 14px;
-      min-width: 130px;
-      box-shadow: 0 8px 16px rgba(0,0,0,.15);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 22px;
-      margin-bottom: 2px;
-      line-height: 1;
-      text-shadow: 0 2px 6px rgba(0,0,0,.2);
-    }
-
-    .stat span {
-      font-size: 12px;
       color: rgba(255,255,255,.9);
     }
 
-    .ecosystem {
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      overflow: hidden;
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
     }
 
-    .tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 12px;
+    .hero-stat {
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 18px rgba(0,0,0,.12);
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .hero-stat span {
+      font-size: 12px;
+      color: rgba(255,255,255,.92);
+      line-height: 1.2;
+    }
+
+    .main-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
       flex-shrink: 0;
     }
 
-    .tab-btn {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.65);
+    .nav-btn {
+      border: none;
+      border-radius: 18px;
+      padding: 14px 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.68));
       color: var(--ink);
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 13px;
+      box-shadow: var(--shadow);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
       cursor: pointer;
-      transition: .2s ease;
-      font-weight: 600;
+      transition: .18s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
-    .tab-btn.active,
-    .tab-btn:hover {
-      background: var(--green);
+    .nav-btn.active {
+      background: linear-gradient(135deg, var(--green), var(--blue));
       color: #fff;
-      border-color: transparent;
     }
 
-    .tab-panels {
-      min-height: 0;
+    .nav-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .content {
       flex: 1;
+      min-height: 0;
       position: relative;
     }
 
-    .tab-panel {
+    .screen {
       display: none;
       height: 100%;
       min-height: 0;
     }
 
-    .tab-panel.active {
-      display: flex;
-      flex-direction: column;
+    .screen.active {
+      display: block;
     }
 
-    .map-panel, .timeline-panel {
+    .panel {
+      background: var(--paper);
+      border: 1px solid rgba(255,255,255,.7);
+      backdrop-filter: blur(14px);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .screen-grid {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 14px;
+      min-height: 0;
+    }
+
+    .panel-inner {
       padding: 16px;
+      height: 100%;
+      min-height: 0;
       display: flex;
       flex-direction: column;
+      gap: 12px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .section-sub {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .soft-badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--green-soft), var(--blue-soft));
+      color: var(--green-2);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .caregivers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .care-card {
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.66);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--green), var(--green-2));
+      flex-shrink: 0;
+    }
+
+    .avatar.j {
+      background: linear-gradient(135deg, #4d8fff, #2774d8);
+    }
+
+    .mini-text {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.25;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      flex-shrink: 0;
+    }
+
+    .chip {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,.78);
+      color: var(--ink);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      border: 1px solid var(--line);
+    }
+
+    .chip.active {
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .beings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      overflow: auto;
+      padding-right: 4px;
+      min-height: 0;
+    }
+
+    .being-card {
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: .15s ease;
+    }
+
+    .being-card:hover,
+    .being-card.active {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(45,140,255,.10);
+      border-color: rgba(22,155,98,.28);
+    }
+
+    .being-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .being-photo {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #d9ead0;
+    }
+
+    .being-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .being-name {
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .being-sub {
+      margin-top: 2px;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.2;
+    }
+
+    .being-summary {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .selected-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
       min-height: 0;
       height: 100%;
     }
 
+    .selected-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .selected-photo {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 10px 20px rgba(0,0,0,.08);
+    }
+
+    .selected-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .selected-name {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.05;
+    }
+
+    .selected-sub {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .selected-status {
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(22,155,98,.09), rgba(45,140,255,.09));
+      border: 1px solid rgba(45,140,255,.12);
+      font-size: 14px;
+      line-height: 1.4;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .mini-panel {
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid var(--line);
+    }
+
+    .mini-panel strong {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .mini-panel span {
+      font-size: 13px;
+      line-height: 1.35;
+      color: var(--ink);
+    }
+
     .map-wrap {
-      margin-top: 10px;
       position: relative;
       flex: 1;
       min-height: 0;
@@ -425,7 +560,7 @@
       overflow: hidden;
       background:
         linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.08)),
-        linear-gradient(135deg, #dce7cf, #c2d2b1 55%, #aabf93);
+        linear-gradient(135deg, #ddf6ea, #cfe8fb 56%, #c5efdb);
       border: 1px solid var(--line);
     }
 
@@ -441,7 +576,7 @@
 
     .parcel {
       position: absolute;
-      border: 2px dashed rgba(43,42,36,.35);
+      border: 2px dashed rgba(21,48,41,.25);
       border-radius: 24px;
       display: flex;
       align-items: flex-start;
@@ -449,16 +584,16 @@
       padding: 10px;
       font-family: Georgia, serif;
       font-size: 24px;
-      color: rgba(43,42,36,.72);
+      color: rgba(21,48,41,.64);
     }
 
-    .parcel.e { left: 56%; top: 8%; width: 34%; height: 43%; background: rgba(179, 168, 214, 0.15); }
-    .parcel.f { left: 46%; top: 28%; width: 22%; height: 21%; background: rgba(122, 176, 216, 0.15); }
-    .parcel.g { left: 12%; top: 36%; width: 57%; height: 50%; background: rgba(132, 181, 120, 0.15); border-radius: 30px; }
+    .parcel.e { left: 56%; top: 8%; width: 34%; height: 43%; background: rgba(120, 154, 255, 0.10); }
+    .parcel.f { left: 46%; top: 28%; width: 22%; height: 21%; background: rgba(34, 186, 182, 0.10); }
+    .parcel.g { left: 12%; top: 36%; width: 57%; height: 50%; background: rgba(46, 196, 113, 0.10); border-radius: 30px; }
 
     .house {
       position: absolute;
-      left: 52%; top: 34%; width: 90px; height: 56px;
+      left: 52%; top: 34%; width: 92px; height: 58px;
       background: linear-gradient(180deg, #9f8467, #80644a);
       border: 2px solid rgba(43,42,36,.25);
       border-radius: 8px;
@@ -479,8 +614,8 @@
       position: absolute;
       left: 46%; top: 64%; width: 96px; height: 60px;
       border-radius: 48% 52% 44% 56% / 48% 40% 60% 52%;
-      background: radial-gradient(circle at 40% 30%, #81b6ba, #446a72 70%, #325057);
-      box-shadow: inset 0 0 0 6px rgba(255,255,255,.14), 0 10px 16px rgba(50,80,87,.18);
+      background: radial-gradient(circle at 40% 30%, #8cd3ff, #3d91de 70%, #2e67a8);
+      box-shadow: inset 0 0 0 6px rgba(255,255,255,.16), 0 10px 16px rgba(50,80,87,.18);
     }
 
     .path {
@@ -493,12 +628,12 @@
 
     .node {
       position: absolute;
-      min-width: 90px;
-      max-width: 120px;
+      min-width: 92px;
+      max-width: 124px;
       padding: 8px 10px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.6);
-      background: rgba(255,255,255,.8);
+      border: 1px solid rgba(255,255,255,.7);
+      background: rgba(255,255,255,.84);
       box-shadow: 0 8px 14px rgba(43,42,36,.08);
       cursor: pointer;
       transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
@@ -510,7 +645,7 @@
       box-shadow: 0 12px 20px rgba(43,42,36,.12);
     }
 
-    .node .n-title { font-weight: 700; font-size: 13px; }
+    .node .n-title { font-weight: 800; font-size: 13px; }
     .node .n-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
     .nisp { left: 68%; top: 10%; }
@@ -522,7 +657,6 @@
     .jani { left: 32%; top: 26%; }
 
     .timeline-list {
-      margin-top: 10px;
       display: grid;
       gap: 10px;
       overflow: auto;
@@ -532,9 +666,9 @@
 
     .event {
       border: 1px solid var(--line);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 12px;
-      background: rgba(255,255,255,.55);
+      background: rgba(255,255,255,.66);
     }
 
     .event-head {
@@ -544,14 +678,18 @@
       gap: 10px;
     }
 
-    .event-head strong { font-size: 14px; }
+    .event-head strong {
+      font-size: 14px;
+      line-height: 1.2;
+    }
 
     .tag {
       font-size: 11px;
       color: #fff;
-      background: var(--green-2);
-      padding: 4px 8px;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      padding: 5px 8px;
       border-radius: 999px;
+      white-space: nowrap;
     }
 
     .event p {
@@ -562,10 +700,10 @@
     }
 
     .chat {
+      height: 100%;
       display: flex;
       flex-direction: column;
       min-height: 0;
-      height: 100%;
     }
 
     .chat-header {
@@ -582,12 +720,33 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      min-width: 0;
     }
 
-    .chat-title .being-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
+    .chat-title .being-photo {
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
+    }
+
+    .chat-name {
+      font-weight: 800;
+      font-size: 16px;
+      line-height: 1.1;
+    }
+
+    .chat-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+      line-height: 1.25;
+    }
+
+    .chat-status {
+      color: var(--green-2);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
     }
 
     .chat-body {
@@ -604,19 +763,19 @@
     }
 
     .msg {
-      max-width: 85%;
-      padding: 10px 14px;
+      max-width: 88%;
+      padding: 11px 14px;
       border-radius: 18px;
-      line-height: 1.4;
+      line-height: 1.42;
       font-size: 14px;
       box-shadow: 0 6px 12px rgba(43,42,36,.05);
       width: fit-content;
     }
 
     .msg.system {
-      background: rgba(88,113,76,.1);
-      color: var(--green);
-      border: 1px solid rgba(88,113,76,.15);
+      background: rgba(22,155,98,.10);
+      color: var(--green-2);
+      border: 1px solid rgba(22,155,98,.14);
       margin: 0 auto;
       text-align: center;
       font-size: 12px;
@@ -630,7 +789,7 @@
     }
 
     .msg.human {
-      background: linear-gradient(135deg, #6c875e, #58714c);
+      background: linear-gradient(135deg, var(--green), var(--blue));
       color: #fff;
       align-self: flex-end;
       border-bottom-right-radius: 4px;
@@ -661,23 +820,23 @@
 
     input {
       padding: 12px 14px;
-      background: rgba(255,255,255,.8);
+      background: rgba(255,255,255,.88);
       border: 1px solid var(--line);
       font-size: 14px;
     }
 
     button {
       padding: 12px 16px;
-      background: var(--green);
+      background: linear-gradient(135deg, var(--green), var(--blue));
       color: #fff;
       cursor: pointer;
       transition: .2s ease;
-      font-weight: 500;
-      box-shadow: 0 6px 12px rgba(88,113,76,.15);
+      font-weight: 700;
+      box-shadow: 0 8px 16px rgba(22,155,98,.18);
     }
 
     button:hover {
-      filter: brightness(1.05);
+      filter: brightness(1.04);
       transform: translateY(-1px);
     }
 
@@ -689,211 +848,289 @@
       flex-shrink: 0;
     }
 
-    @media (max-width: 1280px) {
+    @media (max-width: 980px) {
       body { overflow: auto; }
-      .app {
+
+      .tablet-shell {
         height: auto;
         min-height: 100vh;
-        grid-template-columns: 260px 1fr;
+        overflow: visible;
       }
-      .chat {
-        grid-column: 1 / -1;
-        min-height: 500px;
+
+      .main-nav {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .screen-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-head {
+        flex-direction: column;
+      }
+
+      .hero-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 900px) {
-      body { overflow: auto; }
-      .app {
+    @media (max-width: 640px) {
+      .hero-copy h2 {
+        font-size: 34px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .beings-grid {
         grid-template-columns: 1fr;
-        height: auto;
-        min-height: 100vh;
-        padding: 10px;
       }
-      .main {
-        grid-template-rows: auto auto;
+
+      .info-grid {
+        grid-template-columns: 1fr;
       }
-      .hero-topline {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+
+      .main-nav {
+        grid-template-columns: 1fr 1fr;
       }
-      .weather-chip {
-        min-width: 0;
-        width: 100%;
-      }
-      .hero h2 { font-size: 36px; }
-      .hero p { font-size: 15px; }
-      .map-wrap { min-height: 320px; }
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <aside class="panel sidebar">
-      <div class="brand">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div class="leaf">🌿</div>
-          <div>
-            <h1>SERES</h1>
-            <div class="small">Finca viva · universo orgánico</div>
-          </div>
+  <div class="tablet-shell">
+    <div class="topbar">
+      <div class="brand-wrap">
+        <div class="logo-box">🌿</div>
+        <div>
+          <h1 class="brand-title">SERES</h1>
+          <div class="brand-subtitle">Finca viva · universo sintrópico</div>
         </div>
-        <div class="small" style="background:var(--line);padding:2px 6px;border-radius:6px;">beta</div>
       </div>
+      <div class="status-pill">beta tablet</div>
+    </div>
 
-      <section class="humans">
-        <h3>Cuidadores</h3>
-        <div class="human-row" style="margin-bottom:8px;">
-          <div class="avatar">M</div>
-          <div>
-            <div style="font-size:14px;"><strong>Mario</strong></div>
-            <div class="small">Observa, riega, poda</div>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-head">
+          <div class="hero-copy">
+            <h2>SERES · la finca habla</h2>
+            <p>Un gemelo digital donde los seres del Desaguadero comunican sus ritmos, necesidades biológicas y respuestas al clima de Gran Canaria.</p>
           </div>
-        </div>
-        <div class="human-row">
-          <div class="avatar j">J</div>
-          <div>
-            <div style="font-size:14px;"><strong>Jani</strong></div>
-            <div class="small">Escucha y organiza</div>
-          </div>
-        </div>
-      </section>
 
-      <section class="filters-wrap">
-        <div class="section-title">Capas del ecosistema</div>
-        <div class="filters">
-          <button class="chip active">Todos</button>
-          <button class="chip">Estrato Alto</button>
-          <button class="chip">Sintropía</button>
-          <button class="chip">Agua</button>
-        </div>
-      </section>
-
-      <section class="cards-section">
-        <div class="section-title">Seres destacados hoy</div>
-        <div class="cards" id="cards"></div>
-      </section>
-    </aside>
-
-    <main class="main">
-      <section class="hero panel">
-        <div class="hero-inner">
-          <div class="hero-topline">
-            <div class="hero-copy">
-              <h2>SERES · la finca habla</h2>
-              <p>Un gemelo digital donde los seres del Desaguadero comunican sus ritmos, necesidades biológicas y respuestas al clima de Gran Canaria.</p>
-            </div>
-            <div class="weather-chip" id="weatherChip">
-              <div style="font-size:26px;">⛅</div>
+          <div class="weather-card" id="weatherCard">
+            <div class="weather-row">
+              <div class="weather-icon">⛅</div>
               <div>
-                <strong id="weatherMain">24°C · nubes y claros</strong>
-                <span id="weatherSub">Santa María de Guía · Viento Alisio moderado</span>
+                <div class="weather-main" id="weatherMain">24°C · nubes y claros</div>
+                <div class="weather-sub" id="weatherSub">Santa María de Guía · humedad alta · alisio suave</div>
               </div>
             </div>
           </div>
-          <div class="stats">
-            <div class="stat"><strong>7</strong><span>Seres conectados</span></div>
-            <div class="stat"><strong>3</strong><span>Terrazas · E, F, G</span></div>
-            <div class="stat"><strong>1</strong><span>Estanque bioclimático</span></div>
-            <div class="stat"><strong id="monthLabel">Marzo</strong><span>Brotación y floración</span></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="ecosystem">
-        <div class="tabs">
-          <button class="tab-btn active" data-tab="mapa">Mapa</button>
-          <button class="tab-btn" data-tab="pulso">Pulso</button>
         </div>
 
-        <div class="tab-panels">
-          <div class="tab-panel active" id="tab-mapa">
-            <div class="panel map-panel">
-              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-                <div>
-                  <div class="section-title">Cartografía Sintrópica</div>
-                  <div class="small">Diseño topográfico inspirado en los planos</div>
-                </div>
-                <div class="small" style="color:var(--green);font-weight:600;">Interactivo</div>
-              </div>
-              <div class="map-wrap" id="mapWrap">
-                <div class="terrain-lines"></div>
-                <div class="parcel e">E</div>
-                <div class="parcel f">F</div>
-                <div class="parcel g">G</div>
-                <div class="house" title="Casa en lote F"></div>
-                <div class="pond" title="Estanque"></div>
-                <div class="path">
-                  <svg viewBox="0 0 1000 700" preserveAspectRatio="none">
-                    <path d="M120,180 C220,200 310,250 430,300 C500,330 560,335 615,360 C710,402 760,470 790,535" fill="none" stroke="rgba(92,79,59,.35)" stroke-width="8" stroke-linecap="round" stroke-dasharray="12 10"/>
-                    <path d="M620,360 C670,320 725,260 795,180" fill="none" stroke="rgba(88,113,76,.32)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 10"/>
-                    <path d="M610,420 C560,500 515,545 460,585" fill="none" stroke="rgba(63,109,119,.28)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 10"/>
-                  </svg>
-                </div>
-
-                <div class="node mario" data-being="mario">
-                  <div class="n-title">Mario</div>
-                  <div class="n-sub">Ingeniero del suelo</div>
-                </div>
-                <div class="node jani" data-being="jani">
-                  <div class="n-title">Jani</div>
-                  <div class="n-sub">Armonía del sistema</div>
-                </div>
-                <div class="node nisp" data-being="nispero">
-                  <div class="n-title">Níspero</div>
-                  <div class="n-sub">Eriobotrya japonica</div>
-                </div>
-                <div class="node agua" data-being="aguacatero">
-                  <div class="n-title">Aguacatero</div>
-                  <div class="n-sub">Persea americana</div>
-                </div>
-                <div class="node moral" data-being="moral">
-                  <div class="n-title">Moral</div>
-                  <div class="n-sub">Morus nigra</div>
-                </div>
-                <div class="node toma" data-being="tomatero">
-                  <div class="n-title">Tomatero</div>
-                  <div class="n-sub">Solanum lycopersicum</div>
-                </div>
-                <div class="node estanque" data-being="estanque">
-                  <div class="n-title">Estanque</div>
-                  <div class="n-sub">Depuradora biológica</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="tab-panel" id="tab-pulso">
-            <div class="panel timeline-panel">
-              <div class="section-title">Pulso Biológico</div>
-              <div class="timeline-list" id="timeline"></div>
-            </div>
-          </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>7</strong><span>Seres conectados</span></div>
+          <div class="hero-stat"><strong>3</strong><span>Terrazas E · F · G</span></div>
+          <div class="hero-stat"><strong>1</strong><span>Estanque bioclimático</span></div>
+          <div class="hero-stat"><strong id="monthLabel">Marzo</strong><span>Brotación y floración</span></div>
         </div>
-      </section>
-    </main>
-
-    <section class="panel chat">
-      <div class="chat-header">
-        <div class="chat-title">
-          <div class="being-icon" id="chatIcon"></div>
-          <div>
-            <div id="chatName" style="font-weight:700;font-size:16px;">Aguacatero</div>
-            <div id="chatSubtitle" class="small">Conciencia de raíz y hoja</div>
-          </div>
-        </div>
-        <div class="small" id="chatStatus" style="color:var(--green);font-weight:500;">Sincronizado</div>
       </div>
-
-      <div class="chat-body" id="chatBody"></div>
-
-      <div class="chat-input">
-        <input id="messageInput" type="text" autocomplete="off" placeholder="Escribe al ser vivo... Ej: ¿Cómo llevas el suelo?" />
-        <button id="sendBtn">Enviar</button>
-      </div>
-      <div class="hint">El motor biológico adapta la conversación al carácter de cada planta.</div>
     </section>
+
+    <nav class="main-nav">
+      <button class="nav-btn active" data-screen="seres">🌿 Seres</button>
+      <button class="nav-btn" data-screen="mapa">🗺️ Mapa</button>
+      <button class="nav-btn" data-screen="pulso">📈 Pulso</button>
+      <button class="nav-btn" data-screen="chat">💬 Chat</button>
+    </nav>
+
+    <div class="content">
+      <section class="screen active" id="screen-seres">
+        <div class="screen-grid">
+          <div class="panel">
+            <div class="panel-inner">
+              <div class="section-head">
+                <div>
+                  <h3 class="section-title">Seres destacados hoy</h3>
+                  <div class="section-sub">Selección rápida del ecosistema vivo</div>
+                </div>
+                <div class="soft-badge">Tablet first</div>
+              </div>
+
+              <div class="caregivers">
+                <div class="care-card">
+                  <div class="avatar">M</div>
+                  <div>
+                    <strong style="font-size:14px;">Mario</strong>
+                    <div class="mini-text">Observa, riega, poda</div>
+                  </div>
+                </div>
+                <div class="care-card">
+                  <div class="avatar j">J</div>
+                  <div>
+                    <strong style="font-size:14px;">Jani</strong>
+                    <div class="mini-text">Escucha y armoniza</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="filter-row">
+                <button class="chip active">Todos</button>
+                <button class="chip">Estrato alto</button>
+                <button class="chip">Huerto</button>
+                <button class="chip">Agua</button>
+                <button class="chip">Cuidadores</button>
+              </div>
+
+              <div class="beings-grid" id="cards"></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-inner">
+              <div class="section-head">
+                <div>
+                  <h3 class="section-title">Ficha viva</h3>
+                  <div class="section-sub">Estado actual del ser seleccionado</div>
+                </div>
+                <div class="soft-badge" id="selectedBadge">activo</div>
+              </div>
+
+              <div class="selected-card">
+                <div class="selected-top">
+                  <div class="selected-photo" id="selectedPhoto"></div>
+                  <div>
+                    <div class="selected-name" id="selectedName">Aguacatero</div>
+                    <div class="selected-sub" id="selectedSubtitle">Persea americana · Variedad Hass/Fuerte</div>
+                  </div>
+                </div>
+
+                <div class="selected-status" id="selectedStatus">
+                  Manteniendo el follaje nuevo, pero con las raíces alerta por la humedad del suelo.
+                </div>
+
+                <div class="info-grid">
+                  <div class="mini-panel">
+                    <strong>Necesidad principal</strong>
+                    <span id="selectedNeed">Drenaje excelente, protección contra vientos secos.</span>
+                  </div>
+                  <div class="mini-panel">
+                    <strong>Resumen del día</strong>
+                    <span id="selectedSummary">Sensible al viento fuerte y a la asfixia radicular (Phytophthora).</span>
+                  </div>
+                </div>
+
+                <div class="mini-panel" style="flex:1; min-height:0;">
+                  <strong>Pulso biológico</strong>
+                  <span id="selectedPulse">El suelo volcánico drena bien, pero vigilar humedad en zona baja.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="screen-mapa">
+        <div class="panel" style="height:100%;">
+          <div class="panel-inner">
+            <div class="section-head">
+              <div>
+                <h3 class="section-title">Cartografía sintrópica</h3>
+                <div class="section-sub">Diseño topográfico inspirado en los planos</div>
+              </div>
+              <div class="soft-badge">Interactivo</div>
+            </div>
+
+            <div class="map-wrap" id="mapWrap">
+              <div class="terrain-lines"></div>
+              <div class="parcel e">E</div>
+              <div class="parcel f">F</div>
+              <div class="parcel g">G</div>
+              <div class="house" title="Casa en lote F"></div>
+              <div class="pond" title="Estanque"></div>
+              <div class="path">
+                <svg viewBox="0 0 1000 700" preserveAspectRatio="none">
+                  <path d="M120,180 C220,200 310,250 430,300 C500,330 560,335 615,360 C710,402 760,470 790,535" fill="none" stroke="rgba(92,79,59,.35)" stroke-width="8" stroke-linecap="round" stroke-dasharray="12 10"/>
+                  <path d="M620,360 C670,320 725,260 795,180" fill="none" stroke="rgba(22,155,98,.28)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 10"/>
+                  <path d="M610,420 C560,500 515,545 460,585" fill="none" stroke="rgba(45,140,255,.24)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 10"/>
+                </svg>
+              </div>
+
+              <div class="node mario" data-being="mario">
+                <div class="n-title">Mario</div>
+                <div class="n-sub">Ingeniero del suelo</div>
+              </div>
+              <div class="node jani" data-being="jani">
+                <div class="n-title">Jani</div>
+                <div class="n-sub">Armonía del sistema</div>
+              </div>
+              <div class="node nisp" data-being="nispero">
+                <div class="n-title">Níspero</div>
+                <div class="n-sub">Eriobotrya japonica</div>
+              </div>
+              <div class="node agua" data-being="aguacatero">
+                <div class="n-title">Aguacatero</div>
+                <div class="n-sub">Persea americana</div>
+              </div>
+              <div class="node moral" data-being="moral">
+                <div class="n-title">Moral</div>
+                <div class="n-sub">Morus nigra</div>
+              </div>
+              <div class="node toma" data-being="tomatero">
+                <div class="n-title">Tomatero</div>
+                <div class="n-sub">Solanum lycopersicum</div>
+              </div>
+              <div class="node estanque" data-being="estanque">
+                <div class="n-title">Estanque</div>
+                <div class="n-sub">Depuradora biológica</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="screen-pulso">
+        <div class="panel" style="height:100%;">
+          <div class="panel-inner">
+            <div class="section-head">
+              <div>
+                <h3 class="section-title">Pulso biológico</h3>
+                <div class="section-sub">Lecturas rápidas del estado del sistema</div>
+              </div>
+              <div class="soft-badge">Hoy</div>
+            </div>
+
+            <div class="timeline-list" id="timeline"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="screen-chat">
+        <div class="panel" style="height:100%;">
+          <div class="chat">
+            <div class="chat-header">
+              <div class="chat-title">
+                <div class="being-photo" id="chatIcon"></div>
+                <div>
+                  <div class="chat-name" id="chatName">Aguacatero</div>
+                  <div class="chat-sub" id="chatSubtitle">Conciencia de raíz y hoja</div>
+                </div>
+              </div>
+              <div class="chat-status" id="chatStatus">Sincronizado</div>
+            </div>
+
+            <div class="chat-body" id="chatBody"></div>
+
+            <div class="chat-input">
+              <input id="messageInput" type="text" autocomplete="off" placeholder="Escribe al ser vivo... Ej: ¿Cómo llevas el suelo?" />
+              <button id="sendBtn">Enviar</button>
+            </div>
+            <div class="hint">El motor biológico adapta la conversación al carácter de cada planta.</div>
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
 
   <script>
@@ -1004,7 +1241,7 @@
       },
       featuredOrder: ['aguacatero', 'nispero', 'tomatero', 'moral', 'estanque'],
       currentContext: 'aguacatero',
-      weather: { temp: null, desc: null, humidity: null }
+      weather: { temp: null, humidity: null }
     };
 
     class FincaEngine {
@@ -1016,9 +1253,7 @@
       getCurrentBeing() { return this.getBeing(this.state.currentContext); }
 
       setCurrentContext(key) {
-        if (this.state.beings[key]) {
-          this.state.currentContext = key;
-        }
+        if (this.state.beings[key]) this.state.currentContext = key;
       }
 
       generateResponse(message, beingKey) {
@@ -1027,40 +1262,40 @@
         const temp = this.state.weather.temp || 24;
 
         if (beingKey === 'mario' || beingKey === 'jani') {
-          return `Te leo alto y claro. Lo apunto para la próxima vuelta por las terrazas.`;
+          return 'Te leo alto y claro. Lo apunto para la próxima vuelta por las terrazas.';
         }
 
         if (text.includes('como estas') || text.includes('que tal') || text.includes('como vas')) {
-          if (beingKey === 'aguacatero') return `Con este clima de ${temp}°C me defiendo, pero ya sabes que soy un poco sibarita con las raíces. ${being.status}`;
-          if (beingKey === 'nispero') return `Bastante a gusto, la verdad. Aquí en mi rincón se está muy bien. ${being.status}`;
-          if (beingKey === 'moral') return `¡Rebosante de energía! No paro de sacar hojas nuevas. ${being.status}`;
-          if (beingKey === 'tomatero') return `¡Acelerado! Voy a toda máquina, pero necesito ayuda para no caerme al suelo. ${being.status}`;
-          if (beingKey === 'estanque') return `Fluyendo y respirando despacio. ${being.status}`;
+          if (beingKey === 'aguacatero') return `Con este clima de ${temp}°C me defiendo, pero sigo siendo un sibarita con las raíces. ${being.status}`;
+          if (beingKey === 'nispero') return `Bastante a gusto. El fresco suave me viene bien. ${being.status}`;
+          if (beingKey === 'moral') return `Rebosante de energía. No paro de sacar hoja nueva. ${being.status}`;
+          if (beingKey === 'tomatero') return `Voy lanzado, pero necesito estructura. ${being.status}`;
+          if (beingKey === 'estanque') return `Fluyendo y regulando el sistema. ${being.status}`;
         }
 
         if (text.includes('suelo') || text.includes('tierra') || text.includes('agua') || text.includes('riego') || text.includes('sed')) {
-          if (beingKey === 'aguacatero') return `Uf, el agua justa, por favor. Si me encharco, me ahogo. Comprueba que la tierra drena bien antes de regarme.`;
-          if (beingKey === 'tomatero') return `Agua directa a las raíces, siempre. Como me mojes las hojas con humedad ambiente, el mildiu me hace polvo.`;
-          if (beingKey === 'nispero') return `Yo tengo las raíces profundas. Dame agua si ves que aprieta mucho la sequía, si no, aguanto bien.`;
-          if (beingKey === 'moral') return `Bebo lo que haga falta para seguir estirándome, no tengo muchas manías con la tierra.`;
-          if (beingKey === 'estanque') return `Mi nivel de agua va bajando un poco por evaporación, pero es natural. Mientras me dejes la vegetación de orilla, todo bien.`;
+          if (beingKey === 'aguacatero') return 'Agua justa. Si me encharco, me ahogo. Mejor revisar drenaje antes que regar por inercia.';
+          if (beingKey === 'tomatero') return 'Agua a raíz y sin mojar hoja. Con humedad alta, cualquier exceso me complica.';
+          if (beingKey === 'nispero') return 'Yo aguanto bien, pero si me das potasio en buen momento te respondo con fruta mejor.';
+          if (beingKey === 'moral') return 'Bebo lo que haga falta para seguir produciendo biomasa.';
+          if (beingKey === 'estanque') return 'Mi nivel baja un poco por evaporación, pero sigo equilibrando humedad y vida auxiliar.';
         }
 
         if (text.includes('poda') || text.includes('cortar') || text.includes('hojas') || text.includes('chupones')) {
-          if (beingKey === 'moral') return `¡Pódame sin piedad! Me viene genial y así usas mis hojas para hacer un buen acolchado a los demás.`;
-          if (beingKey === 'aguacatero') return `Mucho cuidado con las tijeras. Si me dejas desnudo de golpe, el sol me quemará las ramas jóvenes.`;
-          if (beingKey === 'nispero') return `Solo un poco de peluquería por la parte baja para que corra el aire, no me toques lo de arriba.`;
-          if (beingKey === 'tomatero') return `Quítame los chupones ya, que me están robando fuerza para engordar los tomates.`;
+          if (beingKey === 'moral') return 'Pódame sin miedo. Luego usa esa biomasa donde más haga falta.';
+          if (beingKey === 'aguacatero') return 'Con cuidado. No me desnudes de golpe o me castiga el sol.';
+          if (beingKey === 'nispero') return 'Solo limpieza ligera por abajo para que corra el aire.';
+          if (beingKey === 'tomatero') return 'Quita chupones y entutora. Ahí está la jugada.';
         }
 
         if (text.includes('ayuda') || text.includes('necesitas') || text.includes('hago')) {
-          return `Para serte sincero, mi prioridad natural ahora mismo es esta: ${being.bio.needs.toLowerCase()}`;
+          return `Mi prioridad natural ahora mismo es esta: ${being.bio.needs.toLowerCase()}`;
         }
 
         const fallbacks = [
-          `Te escucho. Sigo a mi ritmo, adaptándome a lo que trae el día.`,
-          `Entendido. Aquí sigo, afianzando raíces y haciendo mis cosas de planta.`,
-          `Tomo nota. La vida en la terraza sigue su curso normal.`
+          'Te escucho. Sigo mi ritmo y respondo a lo que trae el día.',
+          'Entendido. Aquí sigo, trabajando en silencio.',
+          'Tomo nota. La vida en la terraza continúa.'
         ];
         return fallbacks[Math.floor(Math.random() * fallbacks.length)];
       }
@@ -1075,7 +1310,7 @@
         setTimeout(() => {
           being.messages.push({ type: 'being', text: reply, by: being.name, time: timeStr });
           window.dispatchEvent(new Event('new-message'));
-        }, 500);
+        }, 450);
       }
 
       async updateWeather() {
@@ -1106,7 +1341,17 @@
       sendBtn: document.getElementById('sendBtn'),
       weatherMain: document.getElementById('weatherMain'),
       weatherSub: document.getElementById('weatherSub'),
-      monthLabel: document.getElementById('monthLabel')
+      monthLabel: document.getElementById('monthLabel'),
+      selectedPhoto: document.getElementById('selectedPhoto'),
+      selectedName: document.getElementById('selectedName'),
+      selectedSubtitle: document.getElementById('selectedSubtitle'),
+      selectedStatus: document.getElementById('selectedStatus'),
+      selectedNeed: document.getElementById('selectedNeed'),
+      selectedSummary: document.getElementById('selectedSummary'),
+      selectedPulse: document.getElementById('selectedPulse'),
+      selectedBadge: document.getElementById('selectedBadge'),
+      navButtons: document.querySelectorAll('.nav-btn'),
+      screens: document.querySelectorAll('.screen')
     };
 
     function renderCards() {
@@ -1114,18 +1359,14 @@
         const b = engine.getBeing(key);
         return `
           <div class="being-card ${key === engine.state.currentContext ? 'active' : ''}" data-being="${key}">
-            <div class="being-content">
-              <div class="being-top">
-                <div class="being-title">
-                  <div class="being-icon"><img src="${b.photo}" alt="${b.name}" /></div>
-                  <div>
-                    <div class="being-name">${b.name}</div>
-                    <div class="small">${b.subtitle.split('·')[0]}</div>
-                  </div>
-                </div>
+            <div class="being-head">
+              <div class="being-photo"><img src="${b.photo}" alt="${b.name}" /></div>
+              <div>
+                <div class="being-name">${b.name}</div>
+                <div class="being-sub">${b.subtitle.split('·')[0]}</div>
               </div>
-              <div class="being-status">${b.summary}</div>
             </div>
+            <div class="being-summary">${b.summary}</div>
           </div>
         `;
       }).join('');
@@ -1133,6 +1374,18 @@
       document.querySelectorAll('[data-being]').forEach(el => {
         el.addEventListener('click', () => handleContextChange(el.dataset.being));
       });
+    }
+
+    function renderSelected() {
+      const b = engine.getCurrentBeing();
+      DOM.selectedPhoto.innerHTML = `<img src="${b.photo}" alt="${b.name}" />`;
+      DOM.selectedName.textContent = b.name;
+      DOM.selectedSubtitle.textContent = b.subtitle;
+      DOM.selectedStatus.textContent = b.status;
+      DOM.selectedNeed.textContent = b.bio.needs;
+      DOM.selectedSummary.textContent = b.summary;
+      DOM.selectedPulse.textContent = b.timelineText;
+      DOM.selectedBadge.textContent = b.timelineTag;
     }
 
     function renderTimeline() {
@@ -1166,16 +1419,17 @@
 
     function renderWeather() {
       if (engine.state.weather.temp) {
-        DOM.weatherMain.textContent = `${engine.state.weather.temp}°C · Analizando`;
-        DOM.weatherSub.textContent = `Gran Canaria · ${engine.state.weather.humidity}% humedad · Vientos Alisios`;
+        DOM.weatherMain.textContent = `${engine.state.weather.temp}°C · analizando`;
+        DOM.weatherSub.textContent = `Gran Canaria · ${engine.state.weather.humidity}% humedad · vientos alisios`;
       }
     }
 
     function handleContextChange(key) {
       engine.setCurrentContext(key);
       renderCards();
-      document.querySelectorAll('.node').forEach(n => n.classList.toggle('active', n.dataset.being === key));
+      renderSelected();
       renderChat();
+      document.querySelectorAll('.node').forEach(n => n.classList.toggle('active', n.dataset.being === key));
     }
 
     function handleSendMessage() {
@@ -1186,26 +1440,21 @@
       renderChat();
     }
 
-    function initTabs() {
-      const tabButtons = document.querySelectorAll('.tab-btn');
-      const tabPanels = document.querySelectorAll('.tab-panel');
-
-      tabButtons.forEach(btn => {
+    function initNavigation() {
+      DOM.navButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-          const tab = btn.dataset.tab;
-
-          tabButtons.forEach(b => b.classList.remove('active'));
-          tabPanels.forEach(p => p.classList.remove('active'));
-
+          const screen = btn.dataset.screen;
+          DOM.navButtons.forEach(b => b.classList.remove('active'));
+          DOM.screens.forEach(s => s.classList.remove('active'));
           btn.classList.add('active');
-          document.getElementById(`tab-${tab}`).classList.add('active');
+          document.getElementById(`screen-${screen}`).classList.add('active');
         });
       });
     }
 
     function initializeApp() {
       const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-      if (DOM.monthLabel) DOM.monthLabel.textContent = months[new Date().getMonth()];
+      DOM.monthLabel.textContent = months[new Date().getMonth()];
 
       engine.updateWeather().then(renderWeather);
 
@@ -1216,7 +1465,7 @@
 
       window.addEventListener('new-message', renderChat);
 
-      initTabs();
+      initNavigation();
       handleContextChange(engine.state.currentContext);
       renderTimeline();
     }
