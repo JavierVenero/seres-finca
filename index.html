@@ -1216,11 +1216,13 @@
       setSpeaker(name) { this.state.currentSpeaker = name; }
 
       generateResponse(message, beingKey) {
+        // Normalizamos el texto: sin tildes y en minúsculas
         const text = message.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         const being = this.getBeing(beingKey);
         const temp = this.state.weather.temp || 24;
 
-        if (text.includes('como estas') || text.includes('que tal') || text.includes('como vas')) {
+        // 1. Saludos y estado general
+        if (text.includes('como estas') || text.includes('que tal') || text.includes('como vas') || text.includes('estado')) {
           if (beingKey === 'aguacatero') return `Con este clima de ${temp}°C me defiendo, pero sigo fino con la raíz. ${being.status}`;
           if (beingKey === 'nispero') return `Voy sereno. El momento me acompaña. ${being.status}`;
           if (beingKey === 'moral') return `Fuerte. En modo expansión. ${being.status}`;
@@ -1228,25 +1230,44 @@
           if (beingKey === 'estanque') return `Regulando el conjunto. ${being.status}`;
           if (beingKey === 'mario' || beingKey === 'yani') return `Sigo leyendo el sistema y respondiendo a lo que pide.`;
         }
-        if (text.includes('suelo') || text.includes('tierra') || text.includes('agua') || text.includes('riego')) {
-          if (beingKey === 'aguacatero') return 'Agua justa. Mejor verificar drenaje primero.';
-          if (beingKey === 'tomatero') return 'Agua a raíz, sin mojar la hoja.';
-          if (beingKey === 'nispero') return 'El potasio me viene de lujo ahora.';
-          if (beingKey === 'moral') return 'Dame espacio y te devolveré biomasa para el suelo.';
-          if (beingKey === 'estanque') return 'Mi nivel varía, pero sostengo humedad y vida.';
-        }
-        if (text.includes('poda') || text.includes('cortar') || text.includes('hojas')) {
-          if (beingKey === 'moral') return 'Pódame sin miedo. Soy fábrica de materia orgánica.';
-          if (beingKey === 'aguacatero') return 'Con cuidado. Si me desnudas demasiado, lo pago.';
-        }
-        if (text.includes('necesitas') || text.includes('ayuda')) {
-          return `Mi prioridad natural ahora es: ${being.bio.needs.toLowerCase()}`;
+
+        // 2. Clima y meteorología (lluvia, viento, sol)
+        if (text.includes('lluvi') || text.includes('llover') || text.includes('tormenta') || text.includes('viento')) {
+          if (beingKey === 'tomatero') return 'Si viene mucha lluvia, asegúrate de entutorarme bien. La humedad en las hojas bajas me trae hongos.';
+          if (beingKey === 'aguacatero') return 'La lluvia fuerte me preocupa por el encharcamiento. Revisa que mi drenaje esté libre, por favor.';
+          if (beingKey === 'nispero') return 'El agua me viene de maravilla para engordar el fruto. Estoy preparado.';
+          if (beingKey === 'moral') return 'Que llueva. Yo bebo profundo y sigo tirando biomasa.';
+          if (beingKey === 'estanque') return 'Preparado para recibir, filtrar y almacenar el excedente que caiga.';
+          if (beingKey === 'mario' || beingKey === 'yani') return 'Atentos a las correntías. Habrá que repasar los canales antes de que caiga la fuerte.';
         }
 
+        // 3. Suelo, tierra y riego
+        if (text.includes('suelo') || text.includes('tierra') || text.includes('agua') || text.includes('rieg')) {
+          if (beingKey === 'aguacatero') return 'Agua justa. Mejor verificar drenaje primero, no me asfixies.';
+          if (beingKey === 'tomatero') return 'Agua a raíz, sin mojar la hoja. Ese es el secreto.';
+          if (beingKey === 'nispero') return 'El potasio me viene de lujo ahora si vas a regar.';
+          if (beingKey === 'moral') return 'Dame espacio y te devolveré buena materia orgánica para el suelo.';
+          if (beingKey === 'estanque') return 'Mi nivel varía, pero sostengo humedad y vida en el subsuelo.';
+        }
+
+        // 4. Poda y mantenimiento físico
+        if (text.includes('poda') || text.includes('cortar') || text.includes('hojas') || text.includes('chupones')) {
+          if (beingKey === 'moral') return 'Pódame sin miedo. Soy fábrica de materia orgánica, reboto rápido.';
+          if (beingKey === 'aguacatero') return 'Con cuidado. Si me desnudas demasiado, el sol me quema la madera.';
+          if (beingKey === 'tomatero') return 'Quítame los chupones para no perder fuerza y guíame hacia arriba.';
+          if (beingKey === 'nispero') return 'Limpieza ligera, deja hojas sanas para proteger el fruto del sol directo.';
+        }
+
+        // 5. Necesidades, ayuda y faltas (Atrapa "necesitarás", "necesitas", "ayuda", "falta")
+        if (text.includes('necesit') || text.includes('ayud') || text.includes('falta') || text.includes('hace falta')) {
+          return `Si quieres ayudarme, mi prioridad natural ahora mismo es: ${being.bio.needs.toLowerCase()}.`;
+        }
+
+        // Fallback natural si no entiende el concepto
         const fallbacks = [
-          'Te escucho. Sigo mi ritmo y respondo al día.',
-          'Entendido. Aquí sigo, trabajando en silencio.',
-          'Tomo nota. La vida en la Finca continúa.'
+          'Te escucho. Sigo mi ritmo y respondo a lo que trae el día.',
+          'Entendido. Aquí sigo, asimilando tu mensaje.',
+          'Tomo nota de lo que dices. La vida en la Finca continúa.'
         ];
         return fallbacks[Math.floor(Math.random() * fallbacks.length)];
       }
@@ -1256,13 +1277,17 @@
         const timeStr = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
         const speaker = this.state.currentSpeaker;
 
+        // Añade el mensaje humano
         being.messages.push({ type: 'human', text: humanMessage, by: speaker, time: timeStr });
+        
+        // Genera la respuesta
         const reply = this.generateResponse(humanMessage, this.state.currentContext);
 
+        // Simula un breve retardo biológico/de red
         setTimeout(() => {
           being.messages.push({ type: 'being', text: reply, by: being.name, time: timeStr });
           window.dispatchEvent(new Event('new-message'));
-        }, 400);
+        }, 500);
       }
 
       async updateWeather() {
