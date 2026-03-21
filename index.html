@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Finca Viva · Seres del universo sintrópico</title>
+  <title>Finca Viva · Seres del Universo Sintrópico</title>
   <style>
     :root {
-      --bg: #e9f7f1;
-      --bg2: #dff2ff;
-      --paper: rgba(255,255,255,.82);
-      --paper-strong: rgba(255,255,255,.92);
+      --bg: #edf8f3;
+      --bg2: #dff1ff;
+      --paper: rgba(255,255,255,.86);
+      --paper-strong: rgba(255,255,255,.94);
       --ink: #102c25;
       --muted: #58756d;
-      --green: #11995d;
-      --green-2: #0c755c;
+      --green: #0f9a5a;
+      --green-2: #0a7456;
       --blue: #247fff;
-      --blue-2: #1860cc;
-      --cyan: #30c7c9;
+      --blue-2: #1c67d2;
+      --cyan: #25b8c8;
+      --olive: #7aa23a;
       --line: rgba(16,44,37,.10);
       --shadow: 0 14px 34px rgba(20, 65, 76, .14);
       --radius-xl: 26px;
@@ -32,15 +33,15 @@
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at top left, rgba(255,255,255,.75), transparent 22%),
-        radial-gradient(circle at top right, rgba(112, 197, 255, .22), transparent 28%),
-        linear-gradient(180deg, var(--bg2) 0%, var(--bg) 45%, #eef9f2 100%);
+        radial-gradient(circle at top left, rgba(255,255,255,.78), transparent 22%),
+        radial-gradient(circle at top right, rgba(100,190,255,.18), transparent 26%),
+        linear-gradient(180deg, var(--bg2) 0%, var(--bg) 44%, #effaf4 100%);
       overflow: hidden;
     }
 
     .app {
       height: 100vh;
-      max-width: 1100px;
+      max-width: 1180px;
       margin: 0 auto;
       padding: 14px;
       display: grid;
@@ -70,7 +71,7 @@
       border-radius: 16px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, #d7ffe8, #9df0cb);
+      background: linear-gradient(135deg, #d9ffe7, #9eefd0);
       box-shadow: inset 0 1px 0 rgba(255,255,255,.85);
       font-size: 23px;
       flex-shrink: 0;
@@ -79,7 +80,7 @@
     .brand-title {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 35px;
+      font-size: 36px;
       line-height: 1;
       letter-spacing: -0.03em;
     }
@@ -102,8 +103,8 @@
     .mini-pill {
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255,255,255,.8);
-      border: 1px solid rgba(255,255,255,.85);
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(255,255,255,.88);
       box-shadow: var(--shadow);
       color: var(--green-2);
       font-size: 12px;
@@ -113,13 +114,13 @@
 
     .hero {
       position: relative;
-      min-height: 240px;
+      min-height: 255px;
       border-radius: var(--radius-xl);
       overflow: hidden;
       box-shadow: var(--shadow);
       background:
-        linear-gradient(180deg, rgba(8,22,14,.05), rgba(8,22,14,.42)),
-        url('cartografia-finca.jpg') center/cover;
+        linear-gradient(180deg, rgba(8,22,14,.04), rgba(8,22,14,.34)),
+        url('cartografia-finca.jpg') center center / cover;
     }
 
     .hero::after {
@@ -127,8 +128,8 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(90deg, rgba(8,32,28,.52), rgba(8,32,28,.18) 58%, rgba(8,32,28,.26)),
-        radial-gradient(circle at 18% 18%, rgba(255,255,255,.16), transparent 16%);
+        linear-gradient(90deg, rgba(7,31,27,.48), rgba(7,31,27,.14) 56%, rgba(7,31,27,.2)),
+        radial-gradient(circle at 18% 18%, rgba(255,255,255,.14), transparent 16%);
       pointer-events: none;
     }
 
@@ -152,21 +153,21 @@
     }
 
     .hero-copy {
-      max-width: 560px;
+      max-width: 610px;
     }
 
     .hero-copy h2 {
       margin: 0 0 8px;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 48px;
-      line-height: .94;
+      font-size: 50px;
+      line-height: .93;
       letter-spacing: -0.03em;
-      text-shadow: 0 4px 14px rgba(0,0,0,.26);
+      text-shadow: 0 4px 14px rgba(0,0,0,.28);
     }
 
     .hero-copy p {
       margin: 0;
-      max-width: 560px;
+      max-width: 590px;
       font-size: 15px;
       line-height: 1.35;
       color: rgba(246,255,251,.96);
@@ -174,11 +175,11 @@
 
     .weather-card {
       min-width: 270px;
-      max-width: 310px;
+      max-width: 320px;
       padding: 14px 16px;
       border-radius: 20px;
-      background: rgba(255,255,255,.16);
-      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.24);
       backdrop-filter: blur(10px);
       box-shadow: 0 12px 24px rgba(0,0,0,.12);
     }
@@ -215,7 +216,7 @@
     .hero-stat {
       padding: 12px 14px;
       border-radius: 18px;
-      background: rgba(255,255,255,.14);
+      background: rgba(255,255,255,.16);
       border: 1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(7px);
       box-shadow: 0 10px 18px rgba(0,0,0,.10);
@@ -237,7 +238,7 @@
     .main {
       min-height: 0;
       display: grid;
-      grid-template-columns: 1.05fr .95fr;
+      grid-template-columns: minmax(0, 1fr) 340px;
       gap: 12px;
     }
 
@@ -250,7 +251,7 @@
 
     .panel {
       background: var(--paper);
-      border: 1px solid rgba(255,255,255,.75);
+      border: 1px solid rgba(255,255,255,.78);
       backdrop-filter: blur(14px);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
@@ -291,7 +292,7 @@
     .soft-badge {
       padding: 6px 10px;
       border-radius: 999px;
-      background: linear-gradient(135deg, rgba(17,153,93,.14), rgba(36,127,255,.14));
+      background: linear-gradient(135deg, rgba(15,154,90,.14), rgba(36,127,255,.14));
       color: var(--green-2);
       font-size: 12px;
       font-weight: 700;
@@ -309,7 +310,7 @@
       border: none;
       border-radius: 999px;
       padding: 8px 12px;
-      background: rgba(255,255,255,.82);
+      background: rgba(255,255,255,.84);
       border: 1px solid var(--line);
       color: var(--ink);
       font: inherit;
@@ -336,7 +337,7 @@
       min-height: 0;
     }
 
-    .beings-grid {
+    .featured-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
@@ -348,17 +349,21 @@
     .being-card {
       padding: 12px;
       border-radius: 18px;
-      background: rgba(255,255,255,.76);
+      background: rgba(255,255,255,.78);
       border: 1px solid var(--line);
       cursor: pointer;
       transition: .15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 152px;
     }
 
     .being-card:hover,
     .being-card.active {
       transform: translateY(-1px);
       box-shadow: 0 10px 18px rgba(36,127,255,.10);
-      border-color: rgba(17,153,93,.28);
+      border-color: rgba(15,154,90,.28);
     }
 
     .being-head {
@@ -368,8 +373,8 @@
     }
 
     .being-photo {
-      width: 44px;
-      height: 44px;
+      width: 46px;
+      height: 46px;
       border-radius: 14px;
       overflow: hidden;
       flex-shrink: 0;
@@ -395,8 +400,27 @@
       line-height: 1.2;
     }
 
+    .season-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .season-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: linear-gradient(135deg, rgba(15,154,90,.1), rgba(36,127,255,.1));
+      color: var(--green-2);
+      font-size: 11px;
+      font-weight: 800;
+      width: fit-content;
+    }
+
     .being-summary {
-      margin-top: 10px;
       font-size: 13px;
       color: var(--muted);
       line-height: 1.35;
@@ -418,8 +442,8 @@
     }
 
     .selected-photo {
-      width: 64px;
-      height: 64px;
+      width: 68px;
+      height: 68px;
       border-radius: 18px;
       overflow: hidden;
       flex-shrink: 0;
@@ -448,7 +472,7 @@
     .selected-status {
       padding: 12px 14px;
       border-radius: 18px;
-      background: linear-gradient(135deg, rgba(17,153,93,.10), rgba(36,127,255,.10));
+      background: linear-gradient(135deg, rgba(15,154,90,.10), rgba(36,127,255,.10));
       border: 1px solid rgba(36,127,255,.12);
       font-size: 14px;
       line-height: 1.4;
@@ -466,7 +490,7 @@
     .mini-panel {
       padding: 12px;
       border-radius: 16px;
-      background: rgba(255,255,255,.74);
+      background: rgba(255,255,255,.76);
       border: 1px solid var(--line);
     }
 
@@ -566,7 +590,7 @@
       border: 1px solid var(--line);
       border-radius: 18px;
       padding: 12px;
-      background: rgba(255,255,255,.68);
+      background: rgba(255,255,255,.7);
     }
 
     .event-head {
@@ -610,7 +634,7 @@
     }
 
     .chat-header {
-      padding: 16px;
+      padding: 14px 14px 10px;
       border-bottom: 1px solid var(--line);
       display: flex;
       flex-direction: column;
@@ -633,9 +657,9 @@
     }
 
     .chat-title .being-photo {
-      width: 50px;
-      height: 50px;
-      border-radius: 16px;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
     }
 
     .chat-name {
@@ -675,7 +699,7 @@
       border: none;
       border-radius: 999px;
       padding: 7px 11px;
-      background: rgba(255,255,255,.82);
+      background: rgba(255,255,255,.84);
       border: 1px solid var(--line);
       color: var(--ink);
       font: inherit;
@@ -691,7 +715,7 @@
     }
 
     .chat-body {
-      padding: 16px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -704,8 +728,8 @@
     }
 
     .msg {
-      max-width: 88%;
-      padding: 11px 14px;
+      max-width: 92%;
+      padding: 11px 13px;
       border-radius: 18px;
       line-height: 1.42;
       font-size: 14px;
@@ -714,9 +738,9 @@
     }
 
     .msg.system {
-      background: rgba(17,153,93,.10);
+      background: rgba(15,154,90,.10);
       color: var(--green-2);
-      border: 1px solid rgba(17,153,93,.14);
+      border: 1px solid rgba(15,154,90,.14);
       margin: 0 auto;
       text-align: center;
       font-size: 12px;
@@ -745,7 +769,7 @@
 
     .chat-input {
       border-top: 1px solid var(--line);
-      padding: 12px 16px;
+      padding: 12px 14px;
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 8px;
@@ -764,20 +788,20 @@
       min-width: 0;
       width: 100%;
       padding: 12px 14px;
-      background: rgba(255,255,255,.90);
+      background: rgba(255,255,255,.92);
       border: 1px solid var(--line);
       font-size: 14px;
     }
 
     button {
-      min-width: 88px;
-      padding: 12px 14px;
+      min-width: 84px;
+      padding: 12px 13px;
       background: linear-gradient(135deg, var(--green), var(--blue));
       color: #fff;
       cursor: pointer;
       transition: .2s ease;
       font-weight: 700;
-      box-shadow: 0 8px 16px rgba(17,153,93,.18);
+      box-shadow: 0 8px 16px rgba(15,154,90,.18);
       white-space: nowrap;
     }
 
@@ -789,7 +813,7 @@
     .hint {
       font-size: 11px;
       color: var(--muted);
-      padding: 0 16px 12px;
+      padding: 0 14px 12px;
       text-align: center;
       flex-shrink: 0;
     }
@@ -812,10 +836,6 @@
 
       .main {
         grid-template-columns: 1fr;
-      }
-
-      .left-col, .right-col {
-        min-height: auto;
       }
 
       .chat-panel {
@@ -841,7 +861,7 @@
         grid-template-columns: 1fr 1fr;
       }
 
-      .beings-grid {
+      .featured-grid {
         grid-template-columns: 1fr;
       }
 
@@ -866,13 +886,13 @@
         <div class="logo">🌿</div>
         <div>
           <h1 class="brand-title">Finca Viva</h1>
-          <div class="brand-subtitle">Seres del universo sintrópico · finca acompañada por Mario y Yani</div>
+          <div class="brand-subtitle">Seres del Universo Sintrópico · Finca acompañada por Mario y Yani</div>
         </div>
       </div>
 
       <div class="topbar-right">
-        <div class="mini-pill">app viva</div>
-        <div class="mini-pill">chat activo</div>
+        <div class="mini-pill">App viva</div>
+        <div class="mini-pill">Chat activo</div>
       </div>
     </div>
 
@@ -880,7 +900,7 @@
       <div class="hero-inner">
         <div class="hero-head">
           <div class="hero-copy">
-            <h2>La finca habla contigo</h2>
+            <h2>La Finca habla contigo</h2>
             <p>Un espacio donde los seres del lugar comunican su estado, su función sintrópica y sus necesidades reales en diálogo vivo con Mario, Yani o Invitad@.</p>
           </div>
 
@@ -888,7 +908,7 @@
             <div class="weather-row">
               <div class="weather-icon">⛅</div>
               <div>
-                <div class="weather-main" id="weatherMain">24°C · analizando</div>
+                <div class="weather-main" id="weatherMain">24°C · Analizando</div>
                 <div class="weather-sub" id="weatherSub">Gran Canaria · humedad alta · vientos alisios</div>
               </div>
             </div>
@@ -906,14 +926,14 @@
 
     <div class="main">
       <div class="left-col">
-        <div class="panel" style="flex:1; min-height:0;">
+        <div class="panel" style="flex: 1; min-height: 0;">
           <div class="panel-inner">
             <div class="section-head">
               <div>
                 <h3 class="section-title">Seres destacados</h3>
-                <div class="section-sub">Selección rápida del ecosistema vivo</div>
+                <div class="section-sub">Primera lectura rápida del estado actual de cada ser</div>
               </div>
-              <div class="soft-badge">finca activa</div>
+              <div class="soft-badge">Finca activa</div>
             </div>
 
             <div class="tab-row">
@@ -923,7 +943,7 @@
             </div>
 
             <section class="screen active" id="left-seres">
-              <div class="beings-grid" id="cards"></div>
+              <div class="featured-grid" id="cards"></div>
             </section>
 
             <section class="screen" id="left-mapa">
@@ -972,7 +992,7 @@
           </div>
         </div>
 
-        <div class="panel" style="min-height: 280px;">
+        <div class="panel" style="min-height: 300px;">
           <div class="panel-inner">
             <div class="section-head">
               <div>
@@ -1025,7 +1045,7 @@
                     <div class="chat-sub" id="chatSubtitle"></div>
                   </div>
                 </div>
-                <div class="chat-status" id="chatStatus">sincronizado</div>
+                <div class="chat-status" id="chatStatus">Sincronizado</div>
               </div>
 
               <div class="speaker-row">
@@ -1057,10 +1077,11 @@
 
       beings: {
         aguacatero: {
-          icon: '🥑',
           photo: 'https://images.unsplash.com/photo-1601039641847-7857b994d704?auto=format&fit=crop&w=500&q=80',
           name: 'Aguacatero',
           subtitle: 'Persea americana · Variedad Hass/Fuerte',
+          season: 'Raíz alerta',
+          seasonIcon: '💧',
           status: 'Manteniendo el follaje nuevo, pero con las raíces alerta por la humedad del suelo.',
           summary: 'Sensible al viento fuerte y a la asfixia radicular.',
           function: 'Árbol de producción principal. Aporta alimento, sombra parcial y estructura de estrato medio-alto dentro del sistema.',
@@ -1075,10 +1096,11 @@
         },
 
         nispero: {
-          icon: '🍐',
           photo: 'nispero.jpg',
           name: 'Níspero',
           subtitle: 'Eriobotrya japonica · Frutal de invierno',
+          season: 'Momento potásico',
+          seasonIcon: '🌼',
           status: 'Cargando reservas para mantener la floración y el cuajado a buen ritmo.',
           summary: 'Rústico y duro. Agradece potasio en época de engorde.',
           function: 'Frutal de estrato medio con cosecha temprana. Da alimento, floración útil y estabilidad productiva en época fresca.',
@@ -1092,10 +1114,11 @@
         },
 
         moral: {
-          icon: '🫐',
           photo: 'https://images.unsplash.com/photo-1628773822503-930a7eaecf80?auto=format&fit=crop&w=500&q=80',
           name: 'Moral',
           subtitle: 'Morus nigra · Dosel sombreador',
+          season: 'Biomasa fuerte',
+          seasonIcon: '🌿',
           status: 'Empujando savia nueva y expandiendo copa sin parar.',
           summary: 'Generador masivo de biomasa para el estrato sintrópico.',
           function: 'Produce biomasa, sombra, materia orgánica y apoyo a la sucesión del bosque comestible.',
@@ -1108,10 +1131,11 @@
         },
 
         tomatero: {
-          icon: '🍅',
           photo: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&w=500&q=80',
           name: 'Tomatero',
           subtitle: 'Solanum lycopersicum · Huerto biointensivo',
+          season: 'Producción intensa',
+          seasonIcon: '🍅',
           status: 'Gastando muchísima energía en cuajar fruto y trepar.',
           summary: 'Exigente en calcio y luz solar directa.',
           function: 'Cultivo rápido de alto rendimiento. Aporta alimento inmediato y lectura clara del estado del huerto.',
@@ -1124,10 +1148,11 @@
         },
 
         estanque: {
-          icon: '💧',
           photo: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=500&q=80',
           name: 'Estanque',
           subtitle: 'Biotopo acuático regulador',
+          season: 'Equilibrio hídrico',
+          seasonIcon: '💦',
           status: 'Las plantas oxigenadoras están trabajando bien. Agua templada.',
           summary: 'Regula la temperatura local y atrae fauna auxiliar.',
           function: 'Reserva de agua, moderador térmico y nodo de biodiversidad dentro del sistema vivo.',
@@ -1140,10 +1165,11 @@
         },
 
         mario: {
-          icon: '🧑',
           photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80',
           name: 'Mario',
           subtitle: 'Humano cuidador · Acción y diseño',
+          season: 'Lectura activa',
+          seasonIcon: '🛠️',
           status: 'Revisando planos y ajustando los riegos del sistema.',
           summary: 'Ejecuta las tareas físicas leyendo los indicadores biológicos.',
           function: 'Nodo humano de acción. Traduce observación en decisiones, riego, poda y manejo real.',
@@ -1157,10 +1183,11 @@
         },
 
         yani: {
-          icon: '👩',
           photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80',
           name: 'Yani',
           subtitle: 'Humana cuidadora · Observación holística',
+          season: 'Visión global',
+          seasonIcon: '👁️',
           status: 'Tomando notas del progreso del conjunto.',
           summary: 'Mantiene la visión global del ecosistema.',
           function: 'Nodo humano de lectura global. Observa relaciones, ritmos y equilibrio del conjunto.',
@@ -1233,7 +1260,7 @@
         const fallbacks = [
           'Te escucho. Sigo mi ritmo y respondo a lo que trae el día.',
           'Entendido. Aquí sigo, trabajando en silencio.',
-          'Tomo nota. La vida en la finca continúa.'
+          'Tomo nota. La vida en la Finca continúa.'
         ];
         return fallbacks[Math.floor(Math.random() * fallbacks.length)];
       }
@@ -1298,7 +1325,6 @@
       selectedStatus: document.getElementById('selectedStatus'),
       selectedNeed: document.getElementById('selectedNeed'),
       selectedSummary: document.getElementById('selectedSummary'),
-      selectedPulse: document.getElementById('selectedPulse'),
       selectedFunction: document.getElementById('selectedFunction'),
       selectedBadge: document.getElementById('selectedBadge'),
       leftTabs: document.querySelectorAll('.tab-btn'),
@@ -1318,6 +1344,11 @@
                 <div class="being-sub">${b.subtitle.split('·')[0]}</div>
               </div>
             </div>
+
+            <div class="season-line">
+              <div class="season-pill">${b.seasonIcon} ${b.season}</div>
+            </div>
+
             <div class="being-summary">${b.summary}</div>
           </div>
         `;
@@ -1336,7 +1367,6 @@
       DOM.selectedStatus.textContent = b.status;
       DOM.selectedNeed.textContent = b.bio.needs;
       DOM.selectedSummary.textContent = b.summary;
-      DOM.selectedPulse.textContent = b.timelineText;
       DOM.selectedFunction.textContent = b.function;
       DOM.selectedBadge.textContent = b.timelineTag;
     }
@@ -1347,7 +1377,7 @@
         return `
           <article class="event">
             <div class="event-head">
-              <strong>${b.icon} ${b.name}</strong>
+              <strong>${b.seasonIcon} ${b.name}</strong>
               <span class="tag">${b.timelineTag}</span>
             </div>
             <p>${b.timelineText}</p>
@@ -1372,7 +1402,7 @@
 
     function renderWeather() {
       if (engine.state.weather.temp) {
-        DOM.weatherMain.textContent = `${engine.state.weather.temp}°C · analizando`;
+        DOM.weatherMain.textContent = `${engine.state.weather.temp}°C · Analizando`;
         DOM.weatherSub.textContent = `Gran Canaria · ${engine.state.weather.humidity}% humedad · vientos alisios`;
       }
     }
