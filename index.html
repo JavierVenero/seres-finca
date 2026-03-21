@@ -6,23 +6,23 @@
   <title>Finca Viva · Seres del Universo Sintrópico</title>
   <style>
     :root {
-      --bg: #edf8f3;
-      --bg2: #dff1ff;
-      --paper: rgba(255,255,255,.86);
-      --paper-strong: rgba(255,255,255,.94);
-      --ink: #102c25;
-      --muted: #58756d;
-      --green: #0f9a5a;
-      --green-2: #0a7456;
-      --blue: #247fff;
-      --blue-2: #1c67d2;
-      --cyan: #25b8c8;
-      --olive: #7aa23a;
-      --line: rgba(16,44,37,.10);
-      --shadow: 0 14px 34px rgba(20, 65, 76, .14);
-      --radius-xl: 26px;
-      --radius-lg: 20px;
-      --radius-md: 16px;
+      --bg: #e7efe8;
+      --bg-2: #dbe9df;
+      --card: rgba(255,255,255,.9);
+      --card-2: rgba(248,250,248,.96);
+      --ink: #183128;
+      --muted: #557066;
+      --green-1: #0f8a57;
+      --green-2: #0a6b45;
+      --green-3: #1d5f3f;
+      --blue-1: #1f74d8;
+      --blue-2: #165cb0;
+      --olive: #718b2d;
+      --line: rgba(24,49,40,.12);
+      --shadow: 0 10px 26px rgba(20, 43, 34, .12);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
     }
 
     * { box-sizing: border-box; }
@@ -33,15 +33,14 @@
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at top left, rgba(255,255,255,.78), transparent 22%),
-        radial-gradient(circle at top right, rgba(100,190,255,.18), transparent 26%),
-        linear-gradient(180deg, var(--bg2) 0%, var(--bg) 44%, #effaf4 100%);
+        radial-gradient(circle at top left, rgba(255,255,255,.55), transparent 24%),
+        linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 58%, #eef4ef 100%);
       overflow: hidden;
     }
 
     .app {
-      height: 100vh;
       max-width: 1180px;
+      height: 100vh;
       margin: 0 auto;
       padding: 14px;
       display: grid;
@@ -54,8 +53,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding: 4px 2px 0;
+      gap: 16px;
     }
 
     .brand {
@@ -66,60 +64,53 @@
     }
 
     .logo {
-      width: 48px;
-      height: 48px;
+      width: 50px;
+      height: 50px;
       border-radius: 16px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, #d9ffe7, #9eefd0);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.85);
-      font-size: 23px;
+      font-size: 24px;
+      background: linear-gradient(135deg, #c7f2d9, #84daa9);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
       flex-shrink: 0;
     }
 
     .brand-title {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 36px;
-      line-height: 1;
+      font-size: 38px;
+      line-height: .95;
       letter-spacing: -0.03em;
     }
 
     .brand-subtitle {
-      margin-top: 3px;
+      margin-top: 4px;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.2;
     }
 
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .mini-pill {
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.82);
-      border: 1px solid rgba(255,255,255,.88);
-      box-shadow: var(--shadow);
+    .top-note {
       color: var(--green-2);
       font-size: 12px;
       font-weight: 700;
+      background: rgba(255,255,255,.7);
+      border: 1px solid rgba(255,255,255,.75);
+      padding: 9px 12px;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .hero {
       position: relative;
-      min-height: 255px;
+      min-height: 220px;
       border-radius: var(--radius-xl);
       overflow: hidden;
       box-shadow: var(--shadow);
       background:
-        linear-gradient(180deg, rgba(8,22,14,.04), rgba(8,22,14,.34)),
+        linear-gradient(180deg, rgba(9,18,11,.10), rgba(9,18,11,.42)),
         url('cartografia-finca.jpg') center center / cover;
     }
 
@@ -128,8 +119,7 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(90deg, rgba(7,31,27,.48), rgba(7,31,27,.14) 56%, rgba(7,31,27,.2)),
-        radial-gradient(circle at 18% 18%, rgba(255,255,255,.14), transparent 16%);
+        linear-gradient(90deg, rgba(8,29,22,.62), rgba(8,29,22,.22) 54%, rgba(8,29,22,.18));
       pointer-events: none;
     }
 
@@ -140,48 +130,48 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
       padding: 18px;
-      color: #f6fffb;
+      color: #f7fff9;
     }
 
     .hero-head {
       display: flex;
-      align-items: flex-start;
       justify-content: space-between;
+      align-items: flex-start;
       gap: 14px;
     }
 
     .hero-copy {
-      max-width: 610px;
+      max-width: 620px;
     }
 
     .hero-copy h2 {
       margin: 0 0 8px;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 50px;
-      line-height: .93;
+      font-size: 48px;
+      line-height: .92;
       letter-spacing: -0.03em;
       text-shadow: 0 4px 14px rgba(0,0,0,.28);
     }
 
     .hero-copy p {
       margin: 0;
-      max-width: 590px;
+      max-width: 610px;
       font-size: 15px;
-      line-height: 1.35;
-      color: rgba(246,255,251,.96);
+      line-height: 1.34;
+      color: rgba(247,255,249,.95);
     }
 
     .weather-card {
-      min-width: 270px;
-      max-width: 320px;
-      padding: 14px 16px;
-      border-radius: 20px;
-      background: rgba(255,255,255,.18);
-      border: 1px solid rgba(255,255,255,.24);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 12px 24px rgba(0,0,0,.12);
+      min-width: 260px;
+      max-width: 310px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.22);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.12);
     }
 
     .weather-row {
@@ -190,12 +180,10 @@
       gap: 10px;
     }
 
-    .weather-icon {
-      font-size: 28px;
-    }
+    .weather-icon { font-size: 27px; }
 
     .weather-main {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 800;
       line-height: 1.05;
     }
@@ -214,12 +202,11 @@
     }
 
     .hero-stat {
-      padding: 12px 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.16);
-      border: 1px solid rgba(255,255,255,.18);
-      backdrop-filter: blur(7px);
-      box-shadow: 0 10px 18px rgba(0,0,0,.10);
+      padding: 11px 13px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(6px);
     }
 
     .hero-stat strong {
@@ -231,14 +218,14 @@
 
     .hero-stat span {
       font-size: 12px;
-      color: rgba(255,255,255,.94);
       line-height: 1.2;
+      color: rgba(255,255,255,.92);
     }
 
     .main {
       min-height: 0;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 340px;
+      grid-template-columns: minmax(0, 1fr) 320px;
       gap: 12px;
     }
 
@@ -250,19 +237,19 @@
     }
 
     .panel {
-      background: var(--paper);
+      background: var(--card);
       border: 1px solid rgba(255,255,255,.78);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(12px);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
-      min-height: 0;
       overflow: hidden;
+      min-height: 0;
     }
 
     .panel-inner {
-      padding: 16px;
-      min-height: 0;
       height: 100%;
+      min-height: 0;
+      padding: 15px;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -278,25 +265,26 @@
 
     .section-title {
       margin: 0;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--ink);
     }
 
     .section-sub {
       margin-top: 2px;
-      color: var(--muted);
       font-size: 12px;
+      color: var(--muted);
     }
 
     .soft-badge {
       padding: 6px 10px;
       border-radius: 999px;
-      background: linear-gradient(135deg, rgba(15,154,90,.14), rgba(36,127,255,.14));
+      background: linear-gradient(135deg, rgba(15,138,87,.12), rgba(31,116,216,.12));
       color: var(--green-2);
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .tab-row {
@@ -310,17 +298,17 @@
       border: none;
       border-radius: 999px;
       padding: 8px 12px;
-      background: rgba(255,255,255,.84);
+      background: #fff;
       border: 1px solid var(--line);
       color: var(--ink);
       font: inherit;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
     }
 
     .tab-btn.active {
-      background: linear-gradient(135deg, var(--green), var(--blue));
+      background: linear-gradient(135deg, var(--green-1), var(--blue-1));
       color: #fff;
       border-color: transparent;
     }
@@ -341,29 +329,29 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
+      min-height: 0;
       overflow: auto;
       padding-right: 4px;
-      min-height: 0;
     }
 
     .being-card {
-      padding: 12px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.78);
       border: 1px solid var(--line);
-      cursor: pointer;
-      transition: .15s ease;
+      background: var(--card-2);
+      border-radius: 18px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      min-height: 152px;
+      cursor: pointer;
+      transition: .15s ease;
+      min-height: 165px;
     }
 
     .being-card:hover,
     .being-card.active {
       transform: translateY(-1px);
-      box-shadow: 0 10px 18px rgba(36,127,255,.10);
-      border-color: rgba(15,154,90,.28);
+      border-color: rgba(15,138,87,.28);
+      box-shadow: 0 8px 18px rgba(20,43,34,.08);
     }
 
     .being-head {
@@ -373,12 +361,12 @@
     }
 
     .being-photo {
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       border-radius: 14px;
       overflow: hidden;
       flex-shrink: 0;
-      background: #d9ead0;
+      background: #d7e8d9;
     }
 
     .being-photo img {
@@ -396,34 +384,27 @@
     .being-sub {
       margin-top: 2px;
       font-size: 11px;
-      color: var(--muted);
       line-height: 1.2;
-    }
-
-    .season-line {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
+      color: var(--muted);
     }
 
     .season-pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      border-radius: 999px;
+      width: fit-content;
       padding: 5px 9px;
-      background: linear-gradient(135deg, rgba(15,154,90,.1), rgba(36,127,255,.1));
-      color: var(--green-2);
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(15,138,87,.12), rgba(113,139,45,.16));
+      color: var(--green-3);
       font-size: 11px;
       font-weight: 800;
-      width: fit-content;
     }
 
-    .being-summary {
+    .being-message {
       font-size: 13px;
-      color: var(--muted);
       line-height: 1.35;
+      color: var(--ink);
     }
 
     .selected-card {
@@ -438,7 +419,6 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      flex-shrink: 0;
     }
 
     .selected-photo {
@@ -447,7 +427,7 @@
       border-radius: 18px;
       overflow: hidden;
       flex-shrink: 0;
-      box-shadow: 0 10px 20px rgba(0,0,0,.08);
+      box-shadow: 0 8px 18px rgba(20,43,34,.10);
     }
 
     .selected-photo img {
@@ -457,48 +437,47 @@
     }
 
     .selected-name {
-      font-size: 20px;
+      font-size: 21px;
       font-weight: 800;
       line-height: 1.05;
     }
 
     .selected-sub {
       margin-top: 4px;
-      color: var(--muted);
       font-size: 13px;
       line-height: 1.25;
+      color: var(--muted);
     }
 
     .selected-status {
       padding: 12px 14px;
       border-radius: 18px;
-      background: linear-gradient(135deg, rgba(15,154,90,.10), rgba(36,127,255,.10));
-      border: 1px solid rgba(36,127,255,.12);
+      background: linear-gradient(135deg, rgba(15,138,87,.09), rgba(31,116,216,.09));
+      border: 1px solid rgba(31,116,216,.12);
       font-size: 14px;
       line-height: 1.4;
       color: var(--ink);
-      flex-shrink: 0;
     }
 
     .info-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      flex-shrink: 0;
     }
 
     .mini-panel {
       padding: 12px;
       border-radius: 16px;
-      background: rgba(255,255,255,.76);
+      background: rgba(255,255,255,.74);
       border: 1px solid var(--line);
     }
 
     .mini-panel strong {
       display: block;
-      font-size: 12px;
-      color: var(--muted);
       margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--muted);
       text-transform: uppercase;
       letter-spacing: .04em;
     }
@@ -517,7 +496,7 @@
       overflow: hidden;
       border: 1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(9,18,10,.08), rgba(9,18,10,.16)),
+        linear-gradient(180deg, rgba(8,18,10,.08), rgba(8,18,10,.16)),
         url('cartografia-finca.jpg') center/cover;
     }
 
@@ -525,8 +504,7 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,.08), transparent 18%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
       pointer-events: none;
     }
 
@@ -534,13 +512,12 @@
       position: absolute;
       padding: 8px 10px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.82);
       background: rgba(255,255,255,.88);
-      box-shadow: 0 8px 14px rgba(43,42,36,.12);
+      border: 1px solid rgba(255,255,255,.82);
+      box-shadow: 0 8px 14px rgba(20,43,34,.12);
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--ink);
-      backdrop-filter: blur(6px);
     }
 
     .z-casa { right: 15%; top: 12%; }
@@ -554,20 +531,19 @@
       max-width: 126px;
       padding: 8px 10px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.82);
-      background: rgba(255,255,255,.90);
-      box-shadow: 0 8px 14px rgba(43,42,36,.12);
+      background: rgba(255,255,255,.9);
+      border: 1px solid rgba(255,255,255,.84);
+      box-shadow: 0 8px 14px rgba(20,43,34,.12);
       cursor: pointer;
-      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      transition: .15s ease;
     }
 
     .node:hover, .node.active {
       transform: translateY(-2px);
       background: #fff;
-      box-shadow: 0 12px 20px rgba(43,42,36,.18);
     }
 
-    .node .n-title { font-weight: 800; font-size: 13px; }
+    .node .n-title { font-size: 13px; font-weight: 800; }
     .node .n-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
     .nisp { right: 24%; top: 24%; }
@@ -587,10 +563,10 @@
     }
 
     .event {
-      border: 1px solid var(--line);
-      border-radius: 18px;
       padding: 12px;
-      background: rgba(255,255,255,.7);
+      border-radius: 18px;
+      background: rgba(255,255,255,.76);
+      border: 1px solid var(--line);
     }
 
     .event-head {
@@ -606,19 +582,20 @@
     }
 
     .tag {
-      font-size: 11px;
-      color: #fff;
-      background: linear-gradient(135deg, var(--green), var(--blue));
       padding: 5px 8px;
       border-radius: 999px;
+      background: linear-gradient(135deg, var(--green-1), var(--blue-1));
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
       white-space: nowrap;
     }
 
     .event p {
       margin: 8px 0 0;
-      color: var(--muted);
-      line-height: 1.4;
       font-size: 13px;
+      line-height: 1.4;
+      color: var(--muted);
     }
 
     .chat-panel {
@@ -634,11 +611,11 @@
     }
 
     .chat-header {
-      padding: 14px 14px 10px;
+      padding: 10px 12px 8px;
       border-bottom: 1px solid var(--line);
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       flex-shrink: 0;
     }
 
@@ -646,130 +623,131 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
     }
 
     .chat-title {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       min-width: 0;
     }
 
     .chat-title .being-photo {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
     }
 
     .chat-name {
+      font-size: 14px;
       font-weight: 800;
-      font-size: 16px;
       line-height: 1.1;
     }
 
     .chat-sub {
-      font-size: 12px;
+      margin-top: 2px;
+      font-size: 11px;
+      line-height: 1.2;
       color: var(--muted);
-      margin-top: 3px;
-      line-height: 1.25;
     }
 
     .chat-status {
-      color: var(--green-2);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
+      color: var(--green-2);
       white-space: nowrap;
     }
 
     .speaker-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
     }
 
     .speaker-label {
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 800;
       color: var(--muted);
     }
 
     .speaker-btn {
-      border: none;
-      border-radius: 999px;
-      padding: 7px 11px;
-      background: rgba(255,255,255,.84);
       border: 1px solid var(--line);
+      background: #fff;
       color: var(--ink);
+      border-radius: 999px;
+      padding: 6px 9px;
       font: inherit;
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 800;
       cursor: pointer;
+      min-width: auto;
+      box-shadow: none;
     }
 
     .speaker-btn.active {
-      background: linear-gradient(135deg, var(--green), var(--blue));
+      background: linear-gradient(135deg, var(--green-1), var(--blue-1));
       color: #fff;
       border-color: transparent;
     }
 
     .chat-body {
-      padding: 14px;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 12px;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      overflow-y: auto;
-      flex: 1;
-      min-height: 0;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.18), transparent),
-        repeating-linear-gradient(180deg, rgba(43,42,36,.02) 0, rgba(43,42,36,.02) 1px, transparent 1px, transparent 32px);
+        linear-gradient(180deg, rgba(255,255,255,.14), transparent),
+        repeating-linear-gradient(180deg, rgba(43,42,36,.02) 0, rgba(43,42,36,.02) 1px, transparent 1px, transparent 30px);
     }
 
     .msg {
       max-width: 92%;
-      padding: 11px 13px;
-      border-radius: 18px;
-      line-height: 1.42;
-      font-size: 14px;
-      box-shadow: 0 6px 12px rgba(43,42,36,.05);
       width: fit-content;
+      padding: 10px 12px;
+      border-radius: 16px;
+      font-size: 13px;
+      line-height: 1.4;
+      box-shadow: 0 5px 10px rgba(20,43,34,.05);
     }
 
     .msg.system {
-      background: rgba(15,154,90,.10);
+      align-self: center;
+      background: rgba(15,138,87,.10);
+      border: 1px solid rgba(15,138,87,.14);
       color: var(--green-2);
-      border: 1px solid rgba(15,154,90,.14);
-      margin: 0 auto;
       text-align: center;
       font-size: 12px;
     }
 
     .msg.being {
-      background: #fff;
-      border: 1px solid rgba(43,42,36,.08);
       align-self: flex-start;
+      background: #fff;
+      border: 1px solid rgba(24,49,40,.08);
       border-bottom-left-radius: 4px;
     }
 
     .msg.human {
-      background: linear-gradient(135deg, var(--green), var(--blue));
-      color: #fff;
       align-self: flex-end;
+      background: linear-gradient(135deg, var(--green-1), var(--blue-1));
+      color: #fff;
       border-bottom-right-radius: 4px;
     }
 
     .msg small {
       display: block;
       margin-top: 4px;
-      opacity: .75;
-      font-size: 11px;
+      font-size: 10px;
+      opacity: .78;
     }
 
     .chat-input {
+      padding: 10px 12px;
       border-top: 1px solid var(--line);
-      padding: 12px 14px;
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 8px;
@@ -777,44 +755,39 @@
       align-items: center;
     }
 
-    input, button {
+    input, .send-btn {
       font: inherit;
-      border: none;
-      outline: none;
       border-radius: 14px;
+      outline: none;
     }
 
     input {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.95);
+      padding: 11px 12px;
+      font-size: 13px;
+      color: var(--ink);
       min-width: 0;
       width: 100%;
-      padding: 12px 14px;
-      background: rgba(255,255,255,.92);
-      border: 1px solid var(--line);
-      font-size: 14px;
     }
 
-    button {
-      min-width: 84px;
-      padding: 12px 13px;
-      background: linear-gradient(135deg, var(--green), var(--blue));
+    .send-btn {
+      border: none;
+      padding: 11px 13px;
+      min-width: 78px;
+      background: linear-gradient(135deg, var(--green-1), var(--blue-1));
       color: #fff;
+      font-size: 13px;
+      font-weight: 800;
       cursor: pointer;
-      transition: .2s ease;
-      font-weight: 700;
-      box-shadow: 0 8px 16px rgba(15,154,90,.18);
-      white-space: nowrap;
-    }
-
-    button:hover {
-      filter: brightness(1.04);
-      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(15,138,87,.18);
     }
 
     .hint {
-      font-size: 11px;
-      color: var(--muted);
-      padding: 0 14px 12px;
+      padding: 0 12px 10px;
       text-align: center;
+      color: var(--muted);
+      font-size: 10.5px;
       flex-shrink: 0;
     }
 
@@ -839,7 +812,7 @@
       }
 
       .chat-panel {
-        min-height: 520px;
+        min-height: 500px;
       }
     }
 
@@ -849,16 +822,8 @@
         align-items: flex-start;
       }
 
-      .topbar-right {
-        justify-content: flex-start;
-      }
-
       .hero-copy h2 {
         font-size: 36px;
-      }
-
-      .hero-stats {
-        grid-template-columns: 1fr 1fr;
       }
 
       .featured-grid {
@@ -873,7 +838,7 @@
         grid-template-columns: 1fr;
       }
 
-      button {
+      .send-btn {
         width: 100%;
       }
     }
@@ -890,10 +855,7 @@
         </div>
       </div>
 
-      <div class="topbar-right">
-        <div class="mini-pill">App viva</div>
-        <div class="mini-pill">Chat activo</div>
-      </div>
+      <div class="top-note">Versión de trabajo</div>
     </div>
 
     <section class="hero">
@@ -926,14 +888,14 @@
 
     <div class="main">
       <div class="left-col">
-        <div class="panel" style="flex: 1; min-height: 0;">
+        <div class="panel" style="flex:1; min-height:0;">
           <div class="panel-inner">
             <div class="section-head">
               <div>
                 <h3 class="section-title">Seres destacados</h3>
-                <div class="section-sub">Primera lectura rápida del estado actual de cada ser</div>
+                <div class="section-sub">Selecciona un ser y lee su estado del momento</div>
               </div>
-              <div class="soft-badge">Finca activa</div>
+              <div class="soft-badge">Lectura rápida</div>
             </div>
 
             <div class="tab-row">
@@ -992,14 +954,14 @@
           </div>
         </div>
 
-        <div class="panel" style="min-height: 300px;">
+        <div class="panel" style="min-height: 308px;">
           <div class="panel-inner">
             <div class="section-head">
               <div>
                 <h3 class="section-title">Habla con los seres</h3>
                 <div class="section-sub">Ficha viva del ser seleccionado</div>
               </div>
-              <div class="soft-badge" id="selectedBadge">activo</div>
+              <div class="soft-badge" id="selectedBadge">Activo</div>
             </div>
 
             <div class="selected-card">
@@ -1045,11 +1007,11 @@
                     <div class="chat-sub" id="chatSubtitle"></div>
                   </div>
                 </div>
-                <div class="chat-status" id="chatStatus">Sincronizado</div>
+                <div class="chat-status">Sincronizado</div>
               </div>
 
               <div class="speaker-row">
-                <span class="speaker-label">Escribe como</span>
+                <span class="speaker-label">Como</span>
                 <button class="speaker-btn active" data-speaker="Mario">Mario</button>
                 <button class="speaker-btn" data-speaker="Yani">Yani</button>
                 <button class="speaker-btn" data-speaker="Invitad@">Invitad@</button>
@@ -1059,10 +1021,10 @@
             <div class="chat-body" id="chatBody"></div>
 
             <div class="chat-input">
-              <input id="messageInput" type="text" autocomplete="off" placeholder="Escribe al ser vivo... Ej: ¿Cómo llevas el suelo?" />
-              <button id="sendBtn">Enviar</button>
+              <input id="messageInput" type="text" autocomplete="off" placeholder="Escribe al ser vivo..." />
+              <button class="send-btn" id="sendBtn">Enviar</button>
             </div>
-            <div class="hint">El chat siempre está activo. Cambia de voz cuando quieras.</div>
+            <div class="hint">El chat permanece activo y visible.</div>
           </div>
         </div>
       </div>
@@ -1082,6 +1044,7 @@
           subtitle: 'Persea americana · Variedad Hass/Fuerte',
           season: 'Raíz alerta',
           seasonIcon: '💧',
+          cardText: 'Conviene revisar drenaje y suelo antes de añadir más agua.',
           status: 'Manteniendo el follaje nuevo, pero con las raíces alerta por la humedad del suelo.',
           summary: 'Sensible al viento fuerte y a la asfixia radicular.',
           function: 'Árbol de producción principal. Aporta alimento, sombra parcial y estructura de estrato medio-alto dentro del sistema.',
@@ -1101,6 +1064,7 @@
           subtitle: 'Eriobotrya japonica · Frutal de invierno',
           season: 'Momento potásico',
           seasonIcon: '🌼',
+          cardText: 'Está en un momento bueno para potasio y consolidación del fruto.',
           status: 'Cargando reservas para mantener la floración y el cuajado a buen ritmo.',
           summary: 'Rústico y duro. Agradece potasio en época de engorde.',
           function: 'Frutal de estrato medio con cosecha temprana. Da alimento, floración útil y estabilidad productiva en época fresca.',
@@ -1119,6 +1083,7 @@
           subtitle: 'Morus nigra · Dosel sombreador',
           season: 'Biomasa fuerte',
           seasonIcon: '🌿',
+          cardText: 'Está empujando bien y se puede usar como apoyo de materia orgánica.',
           status: 'Empujando savia nueva y expandiendo copa sin parar.',
           summary: 'Generador masivo de biomasa para el estrato sintrópico.',
           function: 'Produce biomasa, sombra, materia orgánica y apoyo a la sucesión del bosque comestible.',
@@ -1136,6 +1101,7 @@
           subtitle: 'Solanum lycopersicum · Huerto biointensivo',
           season: 'Producción intensa',
           seasonIcon: '🍅',
+          cardText: 'Está fuerte, pero pide estructura y control de humedad en hoja.',
           status: 'Gastando muchísima energía en cuajar fruto y trepar.',
           summary: 'Exigente en calcio y luz solar directa.',
           function: 'Cultivo rápido de alto rendimiento. Aporta alimento inmediato y lectura clara del estado del huerto.',
@@ -1153,6 +1119,7 @@
           subtitle: 'Biotopo acuático regulador',
           season: 'Equilibrio hídrico',
           seasonIcon: '💦',
+          cardText: 'Sostiene humedad y equilibrio general del sistema.',
           status: 'Las plantas oxigenadoras están trabajando bien. Agua templada.',
           summary: 'Regula la temperatura local y atrae fauna auxiliar.',
           function: 'Reserva de agua, moderador térmico y nodo de biodiversidad dentro del sistema vivo.',
@@ -1170,6 +1137,7 @@
           subtitle: 'Humano cuidador · Acción y diseño',
           season: 'Lectura activa',
           seasonIcon: '🛠️',
+          cardText: 'Está en modo acción y ajuste fino del sistema.',
           status: 'Revisando planos y ajustando los riegos del sistema.',
           summary: 'Ejecuta las tareas físicas leyendo los indicadores biológicos.',
           function: 'Nodo humano de acción. Traduce observación en decisiones, riego, poda y manejo real.',
@@ -1188,6 +1156,7 @@
           subtitle: 'Humana cuidadora · Observación holística',
           season: 'Visión global',
           seasonIcon: '👁️',
+          cardText: 'Está leyendo relaciones, equilibrio y ritmo general.',
           status: 'Tomando notas del progreso del conjunto.',
           summary: 'Mantiene la visión global del ecosistema.',
           function: 'Nodo humano de lectura global. Observa relaciones, ritmos y equilibrio del conjunto.',
@@ -1344,12 +1313,8 @@
                 <div class="being-sub">${b.subtitle.split('·')[0]}</div>
               </div>
             </div>
-
-            <div class="season-line">
-              <div class="season-pill">${b.seasonIcon} ${b.season}</div>
-            </div>
-
-            <div class="being-summary">${b.summary}</div>
+            <div class="season-pill">${b.seasonIcon} ${b.season}</div>
+            <div class="being-message">${b.cardText}</div>
           </div>
         `;
       }).join('');
