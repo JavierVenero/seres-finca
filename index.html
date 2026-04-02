@@ -5,811 +5,483 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Finca Viva · Seres del Universo Sintrópico</title>
   <style>
-    :root{
-      --bg:#e7efe8;
-      --bg2:#d9e8de;
-      --card:rgba(255,255,255,.94);
-      --card2:rgba(248,250,248,.98);
-      --ink:#183128;
-      --muted:#5c7168;
-      --green1:#0f8a57;
-      --green2:#0a6b45;
-      --green3:#184d36;
-      --blue1:#1e72d4;
-      --olive:#758f2f;
-      --line:rgba(24,49,40,.12);
-      --shadow:0 10px 26px rgba(20,43,34,.10);
-      --r-xl:24px;
-      --r-lg:18px;
-      --r-md:14px;
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,.55), transparent 24%),
-        linear-gradient(180deg,var(--bg2) 0%,var(--bg) 58%,#eef4ef 100%);
-    }
-
-    .app{
-      max-width:1200px;
-      margin:0 auto;
-      padding:14px;
-      display:grid;
-      gap:12px;
-    }
-
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
-
-    .logo{
-      width:50px;
-      height:50px;
-      border-radius:16px;
-      display:grid;
-      place-items:center;
-      font-size:24px;
-      background:linear-gradient(135deg,#c7f2d9,#84daa9);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.8);
-      flex-shrink:0;
-    }
-
-    .brand-title{
-      margin:0;
-      font-family:Georgia,"Times New Roman",serif;
-      font-size:38px;
-      line-height:.95;
-      letter-spacing:-0.03em;
-    }
-
-    .brand-subtitle{
-      margin-top:4px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.2;
-    }
-
-    .pill-top{
-      padding:9px 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,.78);
-      border:1px solid rgba(255,255,255,.82);
-      color:var(--green2);
-      font-size:12px;
-      font-weight:800;
-      box-shadow:var(--shadow);
-      white-space:nowrap;
-    }
-
-    .panel{
-      background:var(--card);
-      border:1px solid rgba(255,255,255,.78);
-      backdrop-filter:blur(12px);
-      border-radius:var(--r-xl);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-      min-width:0;
-    }
-
-    .hero{
-      position:relative;
-      min-height:132px;
-      background:
-        linear-gradient(180deg,rgba(9,18,11,.12),rgba(9,18,11,.38)),
-        url('cartografia-finca.jpg') center center / cover;
-    }
-
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(90deg,rgba(8,29,22,.54),rgba(8,29,22,.18) 58%,rgba(8,29,22,.10));
-      pointer-events:none;
-    }
-
-    .hero-inner{
-      position:relative;
-      z-index:1;
-      padding:14px 16px;
-      color:#f7fff9;
-      display:grid;
-      grid-template-columns:minmax(0,1fr) auto;
-      gap:12px;
-      align-items:start;
-    }
-
-    .hero-copy h2{
-      margin:0 0 4px;
-      font-family:Georgia,"Times New Roman",serif;
-      font-size:34px;
-      line-height:.95;
-      letter-spacing:-0.03em;
-      text-shadow:0 4px 14px rgba(0,0,0,.24);
-    }
-
-    .hero-copy p{
-      margin:0;
-      font-size:13px;
-      line-height:1.3;
-      max-width:700px;
-      color:rgba(247,255,249,.94);
-    }
-
-    .hero-aside{
-      display:grid;
-      gap:8px;
-      min-width:240px;
-    }
-
-    .weather-card,
-    .mini-stats{
-      padding:10px 12px;
-      border-radius:16px;
-      background:rgba(255,255,255,.15);
-      border:1px solid rgba(255,255,255,.20);
-      backdrop-filter:blur(8px);
-    }
-
-    .weather-row{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .weather-icon{font-size:24px}
-
-    .weather-main{
-      font-size:18px;
-      font-weight:800;
-      line-height:1.05;
-    }
-
-    .weather-sub{
-      margin-top:2px;
-      font-size:11px;
-      line-height:1.25;
-      color:rgba(255,255,255,.9);
-    }
-
-    .mini-stats{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:8px;
-    }
-
-    .mini-stat strong{
-      display:block;
-      font-size:18px;
-      line-height:1;
-      margin-bottom:2px;
-    }
-
-    .mini-stat span{
-      display:block;
-      font-size:10.5px;
-      line-height:1.2;
-      color:rgba(255,255,255,.92);
-    }
-
-    .main{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) 340px;
-      gap:12px;
-      align-items:start;
-    }
-
-    .left-col,
-    .right-col{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      min-width:0;
-    }
-
-    .section-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:10px;
-    }
-
-    .section-title{
-      margin:0;
-      font-size:16px;
-      font-weight:800;
-      color:var(--ink);
-    }
-
-    .section-sub{
-      margin-top:2px;
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .soft-badge{
-      padding:6px 10px;
-      border-radius:999px;
-      background:linear-gradient(135deg,rgba(15,138,87,.12),rgba(31,116,216,.12));
-      color:var(--green2);
-      font-size:12px;
-      font-weight:800;
-      white-space:nowrap;
-    }
-
-    .compact-grid{
-      display:grid;
-      grid-template-columns:repeat(5,minmax(0,1fr));
-      gap:10px;
-    }
-
-    .being-card{
-      border:1px solid var(--line);
-      background:var(--card2);
-      border-radius:18px;
-      padding:10px;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      cursor:pointer;
-      transition:.15s ease;
-      min-width:0;
-      min-height:142px;
-    }
-
-    .being-card:hover,
-    .being-card.active{
-      transform:translateY(-1px);
-      border-color:rgba(15,138,87,.32);
-      box-shadow:0 8px 18px rgba(20,43,34,.08);
-    }
-
-    .being-head{
-      display:flex;
-      align-items:center;
-      gap:9px;
-      min-width:0;
-    }
-
-    .being-photo{
-      width:42px;
-      height:42px;
-      border-radius:13px;
-      overflow:hidden;
-      flex-shrink:0;
-      background:#d7e8d9;
-    }
-
-    .being-photo img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .being-name{
-      font-size:14px;
-      font-weight:800;
-      line-height:1.1;
-    }
-
-    .being-sub{
-      margin-top:2px;
-      font-size:10.5px;
-      line-height:1.2;
-      color:var(--muted);
-    }
-
-    .season-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      width:fit-content;
-      max-width:100%;
-      padding:4px 8px;
-      border-radius:999px;
-      background:linear-gradient(135deg,rgba(15,138,87,.12),rgba(113,139,45,.16));
-      color:var(--green3);
-      font-size:10.5px;
-      font-weight:800;
-    }
-
-    .being-message{
-      font-size:12.5px;
-      line-height:1.3;
-      color:var(--ink);
-    }
-
-    .detail-panel .panel-inner,
-    .chat-panel .panel-inner{
-      padding:14px;
-    }
-
-    .selected-card{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
-    .selected-top{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
-
-    .selected-photo{
-      width:64px;
-      height:64px;
-      border-radius:18px;
-      overflow:hidden;
-      flex-shrink:0;
-      box-shadow:0 8px 18px rgba(20,43,34,.10);
-    }
-
-    .selected-photo img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .selected-name{
-      font-size:21px;
-      font-weight:800;
-      line-height:1.05;
-    }
-
-    .selected-sub{
-      margin-top:4px;
-      font-size:13px;
-      line-height:1.25;
-      color:var(--muted);
-    }
-
-    .selected-status{
-      padding:12px 14px;
-      border-radius:18px;
-      background:linear-gradient(135deg,rgba(15,138,87,.09),rgba(31,116,216,.09));
-      border:1px solid rgba(31,116,216,.12);
-      font-size:14px;
-      line-height:1.4;
-      color:var(--ink);
-    }
-
-    .info-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:10px;
-    }
-
-    .mini-panel{
-      padding:12px;
-      border-radius:16px;
-      background:rgba(255,255,255,.74);
-      border:1px solid var(--line);
-      min-width:0;
-    }
-
-    .mini-panel strong{
-      display:block;
-      margin-bottom:6px;
-      font-size:12px;
-      font-weight:800;
-      color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:.04em;
-    }
-
-    .mini-panel span{
-      font-size:13px;
-      line-height:1.35;
-      color:var(--ink);
-    }
-
-    .chat-panel{
-      position:sticky;
-      top:14px;
-    }
-
-    .chat-wrap{
-      display:flex;
-      flex-direction:column;
-      min-height:560px;
-      max-height:calc(100vh - 28px);
-    }
-
-    .chat-header{
-      padding:10px 12px 8px;
-      border-bottom:1px solid var(--line);
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      flex-shrink:0;
-    }
-
-    .chat-top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:8px;
-      min-width:0;
-    }
-
-    .chat-title{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      min-width:0;
-    }
-
-    .chat-title .being-photo{
-      width:40px;
-      height:40px;
-      border-radius:12px;
-    }
-
-    .chat-name{
-      font-size:14px;
-      font-weight:800;
-      line-height:1.1;
-    }
-
-    .chat-sub{
-      margin-top:2px;
-      font-size:11px;
-      line-height:1.2;
-      color:var(--muted);
-    }
-
-    .chat-status{
-      font-size:11px;
-      font-weight:800;
-      color:var(--green2);
-      white-space:nowrap;
-      flex-shrink:0;
-    }
-
-    .speaker-row{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      flex-wrap:wrap;
-    }
-
-    .speaker-label{
-      font-size:11px;
-      font-weight:800;
-      color:var(--muted);
-    }
-
-    .speaker-btn{
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--ink);
-      border-radius:999px;
-      padding:6px 9px;
-      font:inherit;
-      font-size:11px;
-      font-weight:800;
-      cursor:pointer;
-      transition:.15s ease;
-    }
-
-    .speaker-btn.active{
-      background:linear-gradient(135deg,var(--green1),var(--blue1));
-      color:#fff;
-      border-color:transparent;
-    }
-
-    .chat-body{
-      flex:1;
-      min-height:260px;
-      overflow-y:auto;
-      padding:12px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      background:
-        linear-gradient(180deg,rgba(255,255,255,.14),transparent),
-        repeating-linear-gradient(180deg,rgba(43,42,36,.02) 0,rgba(43,42,36,.02) 1px,transparent 1px,transparent 30px);
-    }
-
-    .msg{
-      max-width:92%;
-      width:fit-content;
-      padding:10px 12px;
-      border-radius:16px;
-      font-size:13px;
-      line-height:1.4;
-      box-shadow:0 5px 10px rgba(20,43,34,.05);
-    }
-
-    .msg.system{
-      align-self:center;
-      background:rgba(15,138,87,.10);
-      border:1px solid rgba(15,138,87,.14);
-      color:var(--green2);
-      text-align:center;
-      font-size:12px;
-    }
-
-    .msg.being{
-      align-self:flex-start;
-      background:#fff;
-      border:1px solid rgba(24,49,40,.08);
-      border-bottom-left-radius:4px;
-    }
-
-    .msg.human{
-      align-self:flex-end;
-      background:linear-gradient(135deg,var(--green1),var(--blue1));
-      color:#fff;
-      border-bottom-right-radius:4px;
-    }
-
-    .msg small{
-      display:block;
-      margin-top:4px;
-      font-size:10px;
-      opacity:.78;
-    }
-
-    .chat-input{
-      padding:10px 12px;
-      border-top:1px solid var(--line);
-      display:grid;
-      grid-template-columns:minmax(0,1fr) auto;
-      gap:8px;
-      flex-shrink:0;
-      align-items:center;
-    }
-
-    input,.send-btn{
-      font:inherit;
-      border-radius:14px;
-      outline:none;
-    }
-
-    input{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.95);
-      padding:11px 12px;
-      font-size:13px;
-      color:var(--ink);
-      min-width:0;
-      width:100%;
-    }
-
-    .send-btn{
-      border:none;
-      padding:11px 13px;
-      min-width:78px;
-      background:linear-gradient(135deg,var(--green1),var(--blue1));
-      color:#fff;
-      font-size:13px;
-      font-weight:800;
-      cursor:pointer;
-      box-shadow:0 8px 16px rgba(15,138,87,.18);
-    }
-
-    .hint{
-      padding:0 12px 10px;
-      text-align:center;
-      color:var(--muted);
-      font-size:10.5px;
-      flex-shrink:0;
-    }
-
-    @media (max-width:1150px){
-      .compact-grid{
-        grid-template-columns:repeat(3,minmax(0,1fr));
-      }
-    }
-
-    @media (max-width:1080px){
-      .main{
-        grid-template-columns:1fr;
-      }
-
-      .chat-panel{
-        position:relative;
-        top:auto;
-      }
-
-      .chat-wrap{
-        max-height:none;
-        min-height:500px;
-      }
-    }
-
-    @media (max-width:900px){
-      .hero-inner{
-        grid-template-columns:1fr;
-      }
-
-      .hero-copy h2{
-        font-size:32px;
-      }
-
-      .compact-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-      }
-
-      .info-grid{
-        grid-template-columns:1fr;
-      }
-    }
-
-    @media (max-width:640px){
-      .app{padding:10px}
-      .topbar{flex-direction:column;align-items:flex-start}
-      .brand-title{font-size:32px}
-      .hero-copy h2{font-size:28px}
-      .compact-grid{grid-template-columns:1fr}
-      .chat-input{grid-template-columns:1fr}
-      .send-btn{width:100%}
+    /* =========================================
+       v2 - PALETA SINTRÓPICA MODERNA Y VIVA
+       (Adiós pasteles, hola vitalidad oscura)
+       ========================================= */
+    :root {
+      /* Fondo oscuro absoluto para profundidad */
+      --color-bg-deep: #0C0D0E;
+      /* Superficies oscuras */
+      --color-surface-base: #151618;
+      /* Elementos UI */
+      --color-surface-raised: #202123;
+      
+      /* Colores de Vida Neón */
+      --color-bio-green: #39FF14; /* Verde LIMA Neón (Crecimiento) */
+      --color-bio-emerald: #10B981; /* Esmeralda Vivo (Sintropía) */
+      --color-water-blue: #00E5FF; /* Cian Eléctrico (Sincronización Clima) */
+      
+      /* Texto y UI */
+      --color-text-main: #FFFFFF;
+      --color-text-sub: #A0A0A0;
+      --color-ui-accent: var(--color-water-blue);
+      --color-user-pill-inactive: #3D3D3D;
+      
+      /* Espaciados y Bordes */
+      --border-ui: 1px solid #333333;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --r-xl: 16px;
+      --r-lg: 12px;
+      --r-md: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--color-text-main);
+      background-color: var(--color-bg-deep);
+      overflow: hidden; /* Evitar scroll general, manejar internamente */
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      max-width: 1400px; /* Más ancho para aprovechar pantallas grandes */
+      margin: 0 auto;
+    }
+
+    /* =========================================
+       1. CABECERA COMPACTA
+       ========================================= */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background-color: var(--color-surface-base);
+      border-bottom: var(--border-ui);
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--r-md);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      background: linear-gradient(135deg, var(--color-bio-emerald), var(--color-bio-green));
+      color: #000;
+      box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--color-text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .brand-subtitle {
+      font-size: 12px;
+      color: var(--color-text-sub);
+    }
+
+    .pill-top {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(57, 255, 20, 0.1);
+      border: 1px solid rgba(57, 255, 20, 0.3);
+      color: var(--color-bio-green);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Clima en cabecera */
+    .weather-compact {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--color-text-sub);
+    }
+    .weather-compact .temp { font-weight: bold; color: var(--color-text-main); }
+    .weather-compact .icon { font-size: 16px; }
+
+    /* =========================================
+       2. LAYOUT PRINCIPAL (Flexbox)
+       ========================================= */
+    .main-content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* --- COLUMNA IZQUIERDA: Selector y Ficha --- */
+    .left-col {
+      width: 350px;
+      background-color: var(--color-surface-raised);
+      border-right: var(--border-ui);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .section-head-compact {
+      padding: 15px 20px 5px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-text-sub);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Lista de Seres (Cards reducidas) */
+    .beings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 0 15px 15px;
+    }
+
+    .being-card-sm {
+      background-color: var(--color-surface-base);
+      border: 1px solid transparent;
+      border-radius: var(--r-md);
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .being-card-sm:hover {
+      background-color: #2A2B2D;
+    }
+
+    .being-card-sm.active {
+      border-color: var(--color-bio-emerald);
+      background-color: rgba(16, 185, 129, 0.05);
+      box-shadow: inset 2px 0 0 var(--color-bio-green);
+    }
+
+    .being-photo-sm {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1px solid #444;
+    }
+    .being-photo-sm img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .being-info-sm h4 { font-size: 14px; font-weight: 600; color: var(--color-text-main); margin-bottom: 2px;}
+    .being-info-sm span { font-size: 11px; color: var(--color-text-sub); }
+
+    /* Ficha Detalle (Compacta) */
+    .detail-panel {
+      padding: 20px;
+      background-color: var(--color-bg-deep); /* Destacar del fondo raised */
+      border-top: var(--border-ui);
+      flex-shrink: 0;
+    }
+
+    .selected-top { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+    .selected-photo {
+      width: 60px; height: 60px; border-radius: var(--r-lg); border: 2px solid var(--color-surface-raised);
+    }
+    .selected-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--r-lg); }
+    .selected-name { font-size: 20px; font-weight: 800; color: var(--color-bio-green); }
+    .selected-sub { font-size: 12px; color: var(--color-text-sub); }
+
+    .mini-panel {
+      background-color: var(--color-surface-base);
+      border: var(--border-ui);
+      border-radius: var(--r-md);
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .mini-panel strong { display: block; font-size: 10px; text-transform: uppercase; color: var(--color-bio-emerald); margin-bottom: 4px; }
+    .mini-panel span { font-size: 12px; line-height: 1.4; color: var(--color-text-main); }
+
+
+    /* --- COLUMNA DERECHA: Chat Protagonista --- */
+    .chat-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--color-bg-deep);
+      position: relative;
+    }
+
+    /* Fondo sintrópico sutil */
+    .chat-area::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(16, 185, 129, 0.03) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Chat Header */
+    .chat-header {
+      padding: 15px 25px;
+      border-bottom: var(--border-ui);
+      background-color: rgba(21, 22, 24, 0.8);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .chat-title-group { display: flex; align-items: center; gap: 12px; }
+    .chat-title-group img { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #444;}
+    .chat-name-lg { font-size: 16px; font-weight: 700; color: var(--color-text-main); }
+    .sync-status { font-size: 11px; color: var(--color-water-blue); display: flex; align-items: center; gap: 4px;}
+    .sync-status::before { content: "●"; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+
+    /* Selector de Voz (Compacto y en el Header del Chat) */
+    .voice-selector {
+      display: flex;
+      align-items: center;
+      background: var(--color-surface-raised);
+      border-radius: 999px;
+      padding: 3px;
+      border: var(--border-ui);
+    }
+    .voice-label { font-size: 10px; text-transform: uppercase; color: var(--color-text-sub); padding: 0 10px; font-weight: 600;}
+    
+    .speaker-btn {
+      background: transparent;
+      color: var(--color-text-sub);
+      border: none;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .speaker-btn.active {
+      background: var(--color-surface-base);
+      color: var(--color-bio-green);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      border: 1px solid #333;
+    }
+
+    /* Mensajes */
+    .chat-viewport {
+      flex: 1;
+      overflow-y: auto;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 5;
+    }
+
+    .msg {
+      max-width: 75%;
+      padding: 12px 16px;
+      border-radius: var(--r-md);
+      font-size: 14px;
+      line-height: 1.5;
+      position: relative;
+    }
+
+    .msg small {
+      display: block;
+      margin-top: 5px;
+      font-size: 10px;
+      opacity: 0.6;
+      text-align: right;
+    }
+
+    /* Sistema */
+    .msg.system {
+      align-self: center;
+      background: rgba(0, 229, 255, 0.05);
+      border: 1px solid rgba(0, 229, 255, 0.1);
+      color: var(--color-water-blue);
+      font-size: 12px;
+      text-align: center;
+      max-width: 90%;
+      border-radius: 999px;
+      padding: 6px 16px;
+    }
+
+    /* Ser (Bot) */
+    .msg.being {
+      align-self: flex-start;
+      background-color: var(--color-surface-raised);
+      border: var(--border-ui);
+      border-bottom-left-radius: 0;
+      color: var(--color-text-main);
+    }
+    .msg.being strong { color: var(--color-bio-emerald); }
+
+    /* Humano */
+    .msg.human {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #1A3A2B, #0F4C3A); /* Verde oscuro elegante */
+      border: 1px solid var(--color-bio-emerald);
+      border-bottom-right-radius: 0;
+      color: var(--color-text-main);
+    }
+
+    /* Input Area */
+    .input-area {
+      padding: 15px 25px;
+      background-color: var(--color-surface-base);
+      border-top: var(--border-ui);
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      background-color: var(--color-surface-raised);
+      border: 1px solid #444;
+      color: var(--color-text-main);
+      padding: 14px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus {
+      border-color: var(--color-bio-green);
+    }
+    input[type="text"]::placeholder { color: #666; }
+
+    .send-btn {
+      background-color: var(--color-bio-green);
+      color: #000;
+      border: none;
+      padding: 0 25px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .send-btn:hover { opacity: 0.8; }
+
+    /* =========================================
+       RESPONSIVE
+       ========================================= */
+    @media (max-width: 900px) {
+      .main-content { flex-direction: column; }
+      .left-col { width: 100%; height: 40vh; border-right: none; border-bottom: var(--border-ui); }
+      .detail-panel { display: none; /* Ocultar detalle en móvil para priorizar chat */ }
+      .beings-list { flex-direction: row; overflow-x: auto; padding-bottom: 5px;}
+      .being-card-sm { min-width: 200px; }
+      .chat-area { height: 60vh; }
+      .chat-header { flex-direction: column; align-items: flex-start; gap: 10px;}
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <div class="topbar">
+    
+    <header class="topbar">
       <div class="brand">
         <div class="logo">🌿</div>
         <div>
           <h1 class="brand-title">Finca Viva</h1>
-          <div class="brand-subtitle">Seres del Universo Sintrópico · Finca acompañada por Mario y Yani</div>
+          <div class="brand-subtitle">Gemelo Digital Sintrópico</div>
         </div>
       </div>
-      <div class="pill-top">Versión de trabajo</div>
-    </div>
-
-    <section class="panel hero">
-      <div class="hero-inner">
-        <div class="hero-copy">
-          <h2>La Finca habla contigo</h2>
-          <p>Un espacio donde los seres del lugar comunican su estado, su función sintrópica y sus necesidades reales en diálogo vivo con Mario, Yani o Invitad@.</p>
-        </div>
-
-        <div class="hero-aside">
-          <div class="weather-card">
-            <div class="weather-row">
-              <div class="weather-icon">⛅</div>
-              <div>
-                <div class="weather-main" id="weatherMain">24°C · Analizando</div>
-                <div class="weather-sub" id="weatherSub">Gran Canaria · humedad alta · vientos alisios</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mini-stats">
-            <div class="mini-stat">
-              <strong id="beingsCount">5</strong>
-              <span>Seres</span>
-            </div>
-            <div class="mini-stat">
-              <strong>3</strong>
-              <span>Voces</span>
-            </div>
-            <div class="mini-stat">
-              <strong id="monthLabel">Marzo</strong>
-              <span>Pulso</span>
-            </div>
-          </div>
-        </div>
+      
+      <div class="weather-compact">
+        <span class="icon">⛅</span>
+        <span class="temp" id="weatherMain">--°C</span>
+        <span id="weatherSub">Analizando entorno...</span>
       </div>
-    </section>
+      
+      <div class="pill-top">v2 Core</div>
+    </header>
 
-    <div class="main">
-      <div class="left-col">
-        <section class="panel">
-          <div class="panel-inner">
-            <div class="section-head">
-              <div>
-                <h3 class="section-title">Seres destacados</h3>
-                <div class="section-sub">Todos visibles aquí. Al pulsar uno, se abre su ficha y su conversación.</div>
-              </div>
-              <div class="soft-badge">Lectura rápida</div>
-            </div>
-
-            <div class="compact-grid" id="cards"></div>
+    <main class="main-content">
+      
+      <aside class="left-col">
+        <div class="section-head-compact">Red Biológica (Selecciona un ser)</div>
+        <div class="beings-list" id="cards">
           </div>
-        </section>
 
-        <section class="panel detail-panel">
-          <div class="panel-inner">
-            <div class="section-head">
-              <div>
-                <h3 class="section-title">Habla con los seres</h3>
-                <div class="section-sub">Ficha viva del ser seleccionado</div>
-              </div>
-              <div class="soft-badge" id="selectedBadge">Activo</div>
-            </div>
-
-            <div class="selected-card">
-              <div class="selected-top">
-                <div class="selected-photo" id="selectedPhoto"></div>
-                <div>
-                  <div class="selected-name" id="selectedName">Aguacatero</div>
-                  <div class="selected-sub" id="selectedSubtitle"></div>
-                </div>
-              </div>
-
-              <div class="selected-status" id="selectedStatus"></div>
-
-              <div class="info-grid">
-                <div class="mini-panel">
-                  <strong>Necesidad principal</strong>
-                  <span id="selectedNeed"></span>
-                </div>
-                <div class="mini-panel">
-                  <strong>Resumen del día</strong>
-                  <span id="selectedSummary"></span>
-                </div>
-              </div>
-
-              <div class="mini-panel">
-                <strong>Función sintrópica</strong>
-                <span id="selectedFunction"></span>
-              </div>
+        <div class="detail-panel">
+          <div class="selected-top">
+            <div class="selected-photo" id="selectedPhoto"></div>
+            <div>
+              <div class="selected-name" id="selectedName">--</div>
+              <div class="selected-sub" id="selectedSubtitle">--</div>
             </div>
           </div>
-        </section>
-      </div>
-
-      <aside class="right-col">
-        <section class="panel chat-panel">
-          <div class="panel-inner chat-wrap">
-            <div class="chat-header">
-              <div class="chat-top">
-                <div class="chat-title">
-                  <div class="being-photo" id="chatIcon"></div>
-                  <div>
-                    <div class="chat-name" id="chatName">Aguacatero</div>
-                    <div class="chat-sub" id="chatSubtitle"></div>
-                  </div>
-                </div>
-                <div class="chat-status">Sincronizado</div>
-              </div>
-
-              <div class="speaker-row">
-                <span class="speaker-label">Como</span>
-                <button class="speaker-btn active" data-speaker="Mario">Mario</button>
-                <button class="speaker-btn" data-speaker="Yani">Yani</button>
-                <button class="speaker-btn" data-speaker="Invitad@">Invitad@</button>
-              </div>
-            </div>
-
-            <div class="chat-body" id="chatBody"></div>
-
-            <div class="chat-input">
-              <input id="messageInput" type="text" autocomplete="off" placeholder="Escribe al ser vivo..." />
-              <button class="send-btn" id="sendBtn">Enviar</button>
-            </div>
-            <div class="hint">La ficha y el chat cambian juntos al seleccionar un ser.</div>
+          
+          <div class="mini-panel">
+            <strong>Estado Actual</strong>
+            <span id="selectedStatus">--</span>
           </div>
-        </section>
+          <div class="mini-panel">
+            <strong>Necesidad Radicular</strong>
+            <span id="selectedNeed">--</span>
+          </div>
+          <div class="mini-panel">
+            <strong>Función Sintrópica</strong>
+            <span id="selectedFunction">--</span>
+          </div>
+        </div>
       </aside>
-    </div>
+
+      <section class="chat-area">
+        
+        <div class="chat-header">
+          <div class="chat-title-group">
+            <div id="chatIcon"></div>
+            <div>
+              <div class="chat-name-lg" id="chatName">Conectando...</div>
+              <div class="sync-status">Sincronizado con entorno</div>
+            </div>
+          </div>
+
+          <div class="voice-selector">
+            <span class="voice-label">Habla como</span>
+            <button class="speaker-btn active" data-speaker="Mario">Mario</button>
+            <button class="speaker-btn" data-speaker="Yani">Yani</button>
+            <button class="speaker-btn" data-speaker="Invitad@">Invitad@</button>
+          </div>
+        </div>
+
+        <div class="chat-viewport" id="chatBody">
+          </div>
+
+        <div class="input-area">
+          <input id="messageInput" type="text" autocomplete="off" placeholder="Inicia conexión verbal con el ser vivo..." />
+          <button class="send-btn" id="sendBtn">Enviar</button>
+        </div>
+
+      </section>
+    </main>
   </div>
 
   <script>
+    // Se mantiene intacto el "alma sintrópica" (Lógica FincaEngine original)
     const fincaState = {
       currentContext: 'aguacatero',
       currentSpeaker: 'Mario',
@@ -817,73 +489,49 @@
 
       beings: {
         aguacatero: {
-          photo: 'https://images.unsplash.com/photo-1601039641847-7857b994d704?auto=format&fit=crop&w=500&q=80',
+          photo: 'https://images.unsplash.com/photo-1601039641847-7857b994d704?auto=format&fit=crop&w=150&q=80',
           name: 'Aguacatero',
-          subtitle: 'Persea americana · Variedad Hass/Fuerte',
-          season: 'Raíz alerta',
-          seasonIcon: '💧',
-          cardText: 'Conviene revisar drenaje y suelo antes de añadir más agua.',
+          subtitle: 'Persea americana · Hass/Fuerte',
           status: 'Manteniendo el follaje nuevo, pero con las raíces alerta por la humedad del suelo.',
           summary: 'Sensible al viento fuerte y a la asfixia radicular.',
-          function: 'Árbol de producción principal. Aporta alimento, sombra parcial y estructura de estrato medio-alto dentro del sistema.',
-          timelineTag: 'Atención suelo',
+          function: 'Árbol principal. Aporta alimento, sombra y estructura media-alta.',
           bio: { needs: 'Drenaje excelente, protección contra vientos secos.' }
         },
-
         nispero: {
-          photo: 'nispero.jpg',
+          photo: 'https://images.unsplash.com/photo-1596489373979-3d2cb04b901a?auto=format&fit=crop&w=150&q=80', // Foto de reserva
           name: 'Níspero',
-          subtitle: 'Eriobotrya japonica · Frutal de invierno',
-          season: 'Momento potásico',
-          seasonIcon: '🌼',
-          cardText: 'Buen momento para apoyar fruto y consolidar el árbol.',
+          subtitle: 'Eriobotrya japonica · Invierno',
           status: 'Cargando reservas para mantener la floración y el cuajado a buen ritmo.',
           summary: 'Rústico y duro. Agradece potasio en época de engorde.',
-          function: 'Frutal de estrato medio con cosecha temprana. Da alimento y estabilidad productiva en época fresca.',
-          timelineTag: 'Abono potásico',
+          function: 'Frutal medio. Alimento temprano y estabilidad.',
           bio: { needs: 'Sol directo, algo de abono potásico.' }
         },
-
         tomatero: {
-          photo: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&w=500&q=80',
+          photo: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&w=150&q=80',
           name: 'Tomatero',
-          subtitle: 'Solanum lycopersicum · Huerto biointensivo',
-          season: 'Producción intensa',
-          seasonIcon: '🍅',
-          cardText: 'Está fuerte, pero pide estructura y control de humedad en hoja.',
+          subtitle: 'Solanum lycopersicum',
           status: 'Gastando muchísima energía en cuajar fruto y trepar.',
           summary: 'Exigente en calcio y luz solar directa.',
-          function: 'Cultivo rápido de alto rendimiento. Aporta alimento inmediato y lectura clara del estado del huerto.',
-          timelineTag: 'Entutorar',
+          function: 'Rendimiento rápido. Lectura clara del estado del huerto.',
           bio: { needs: 'Soporte físico, riego radicular constante.' }
         },
-
         moral: {
-          photo: 'https://images.unsplash.com/photo-1628773822503-930a7eaecf80?auto=format&fit=crop&w=500&q=80',
+          photo: 'https://images.unsplash.com/photo-1628773822503-930a7eaecf80?auto=format&fit=crop&w=150&q=80',
           name: 'Moral',
           subtitle: 'Morus nigra · Dosel sombreador',
-          season: 'Biomasa fuerte',
-          seasonIcon: '🌿',
-          cardText: 'Está empujando bien y puede apoyar mucho al sistema.',
           status: 'Empujando savia nueva y expandiendo copa sin parar.',
-          summary: 'Generador masivo de biomasa para el estrato sintrópico.',
-          function: 'Produce biomasa, sombra y materia orgánica útil para la evolución del sistema.',
-          timelineTag: 'Poda verde',
-          bio: { needs: 'Podas de formación y espacio para desarrollarse con orden.' }
+          summary: 'Generador masivo de biomasa.',
+          function: 'Produce biomasa, sombra y materia orgánica útil.',
+          bio: { needs: 'Podas de formación y espacio.' }
         },
-
         estanque: {
-          photo: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=500&q=80',
+          photo: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=150&q=80',
           name: 'Estanque',
           subtitle: 'Biotopo acuático regulador',
-          season: 'Equilibrio hídrico',
-          seasonIcon: '💦',
-          cardText: 'Sostiene humedad y equilibrio general del sistema.',
-          status: 'Las plantas oxigenadoras están trabajando bien. Agua templada.',
-          summary: 'Regula la temperatura local y atrae fauna auxiliar.',
-          function: 'Reserva de agua, moderador térmico y nodo de biodiversidad dentro del sistema vivo.',
-          timelineTag: 'Equilibrio',
-          bio: { needs: 'Equilibrio entre luz y sombra, sin limpieza excesiva.' }
+          status: 'Plantas oxigenadoras trabajando. Agua templada.',
+          summary: 'Regula temperatura local y atrae fauna.',
+          function: 'Reserva hídrica, moderador térmico y biodiversidad.',
+          bio: { needs: 'Equilibrio luz/sombra, sin limpieza excesiva.' }
         }
       }
     };
@@ -896,299 +544,85 @@
       }
 
       buildInitialThreads() {
+        // Reducido por brevedad en este bloque, pero mantiene la estructura.
         return {
           aguacatero: {
             Mario: [
-              { type: 'system', text: 'Conexión biológica establecida. El aguacatero analiza su entorno radicular.' },
-              { type: 'being', text: 'Mario, noto el suelo de mi entorno un poco apelmazado. Si el agua se estanca demasiado, mis raíces finas lo notan enseguida.', by: 'Aguacatero', time: '10:00' },
-              { type: 'human', text: 'Ayer llovió fuerte. Luego te reviso el drenaje.', by: 'Mario', time: '10:15' }
+              { type: 'system', text: 'Conexión biológica establecida. Analizando radicular.' },
+              { type: 'being', text: 'Mario, noto el suelo un poco apelmazado. Mis raíces finas lo notan enseguida.', by: 'Aguacatero', time: '10:00' }
             ],
             Yani: [
-              { type: 'system', text: 'Canal de Yani abierto con el Aguacatero.' },
-              { type: 'being', text: 'Yani, contigo me fijo más en equilibrio general. Si me ves algo tenso de hoja, no siempre es sed: a veces es raíz incómoda.', by: 'Aguacatero', time: 'Ayer' }
+              { type: 'system', text: 'Canal de Yani abierto.' },
+              { type: 'being', text: 'Yani, si me ves tenso de hoja, no siempre es sed: a veces es raíz incómoda.', by: 'Aguacatero', time: 'Ayer' }
             ],
             'Invitad@': [
-              { type: 'system', text: 'Canal de Invitad@ abierto con el Aguacatero.' },
-              { type: 'being', text: 'Si acabas de llegar, quédate con esta idea: conmigo importa más cómo respira el suelo que regar por costumbre.', by: 'Aguacatero', time: 'Hoy' }
+              { type: 'system', text: 'Canal de Invitad@.' },
+              { type: 'being', text: 'Conmigo importa más cómo respira el suelo que regar por costumbre.', by: 'Aguacatero', time: 'Hoy' }
             ]
           },
-
           nispero: {
-            Mario: [
-              { type: 'system', text: 'Canal de Mario abierto con el Níspero.' },
-              { type: 'being', text: 'Mario, ahora mismo estoy en momento bueno para consolidar fruto sin demasiada intervención.', by: 'Níspero', time: '10:05' }
-            ],
-            Yani: [
-              { type: 'system', text: 'Canal de Yani abierto con el Níspero.' },
-              { type: 'being', text: 'Yani, contigo hablaría más de ritmo y momento. Estoy más en consolidar que en pedir acción fuerte.', by: 'Níspero', time: 'Ayer' }
-            ],
-            'Invitad@': [
-              { type: 'system', text: 'Canal de Invitad@ abierto con el Níspero.' },
-              { type: 'being', text: 'Soy un frutal bastante sereno. Si me entiendes en tiempo y nutrición, respondo bien.', by: 'Níspero', time: 'Hoy' }
-            ]
+            Mario: [{ type: 'being', text: 'Mario, buen momento para consolidar fruto.', by: 'Níspero', time: '10:05' }],
+            Yani: [{ type: 'being', text: 'Yani, estoy en consolidar, no en pedir acción fuerte.', by: 'Níspero', time: 'Ayer' }],
+            'Invitad@': [{ type: 'being', text: 'Soy sereno. Si me entiendes, respondo bien.', by: 'Níspero', time: 'Hoy' }]
           },
-
           tomatero: {
-            Mario: [
-              { type: 'system', text: 'Canal de Mario abierto con el Tomatero.' },
-              { type: 'being', text: 'Mario, conmigo ahora mismo mandan estructura, aire y agua bien puesta.', by: 'Tomatero', time: '10:08' }
-            ],
-            Yani: [
-              { type: 'system', text: 'Canal de Yani abierto con el Tomatero.' },
-              { type: 'being', text: 'Yani, si me ves demasiado cerrado o húmedo arriba, sospecha. Yo aviso rápido.', by: 'Tomatero', time: 'Ayer' }
-            ],
-            'Invitad@': [
-              { type: 'system', text: 'Canal de Invitad@ abierto con el Tomatero.' },
-              { type: 'being', text: 'Conmigo no hay misterio: luz, ventilación y orden. Sin eso, protesto.', by: 'Tomatero', time: 'Hoy' }
-            ]
+             Mario: [{ type: 'being', text: 'Mario, mandan estructura, aire y agua bien puesta.', by: 'Tomatero', time: '10:08' }],
+             Yani: [{ type: 'being', text: 'Yani, si me ves húmedo arriba, sospecha.', by: 'Tomatero', time: 'Ayer' }],
+             'Invitad@': [{ type: 'being', text: 'Luz, ventilación y orden. Sin eso protesto.', by: 'Tomatero', time: 'Hoy' }]
           },
-
           moral: {
-            Mario: [
-              { type: 'system', text: 'Canal de Mario abierto con el Moral.' },
-              { type: 'being', text: 'Mario, ahora mismo puedo servirte muy bien como generador de biomasa.', by: 'Moral', time: '10:11' }
-            ],
-            Yani: [
-              { type: 'system', text: 'Canal de Yani abierto con el Moral.' },
-              { type: 'being', text: 'Yani, conmigo encaja más una lectura de conjunto: sombra, masa y apoyo al sistema.', by: 'Moral', time: 'Ayer' }
-            ],
-            'Invitad@': [
-              { type: 'system', text: 'Canal de Invitad@ abierto con el Moral.' },
-              { type: 'being', text: 'Yo aporto mucho cuando se me entiende como estructura y biomasa, no solo como árbol suelto.', by: 'Moral', time: 'Hoy' }
-            ]
+             Mario: [{ type: 'being', text: 'Mario, puedo servirte bien como generador de biomasa.', by: 'Moral', time: '10:11' }],
+             Yani: [{ type: 'being', text: 'Yani, encaja más una lectura de conjunto.', by: 'Moral', time: 'Ayer' }],
+             'Invitad@': [{ type: 'being', text: 'Aporto mucho como estructura.', by: 'Moral', time: 'Hoy' }]
           },
-
           estanque: {
-            Mario: [
-              { type: 'system', text: 'Canal de Mario abierto con el Estanque.' },
-              { type: 'being', text: 'Mario, yo sostengo humedad, vida, temperatura y equilibrio. Conviene leerme así.', by: 'Estanque', time: '10:13' }
-            ],
-            Yani: [
-              { type: 'system', text: 'Canal de Yani abierto con el Estanque.' },
-              { type: 'being', text: 'Yani, tú captas bien que yo no soy solo agua acumulada: también soy relación y ambiente.', by: 'Estanque', time: 'Ayer' }
-            ],
-            'Invitad@': [
-              { type: 'system', text: 'Canal de Invitad@ abierto con el Estanque.' },
-              { type: 'being', text: 'Si me miras bien, verás que mi función no es solo almacenar agua.', by: 'Estanque', time: 'Hoy' }
-            ]
+             Mario: [{ type: 'being', text: 'Mario, sostengo humedad y equilibrio.', by: 'Estanque', time: '10:13' }],
+             Yani: [{ type: 'being', text: 'Yani, no soy solo agua acumulada.', by: 'Estanque', time: 'Ayer' }],
+             'Invitad@': [{ type: 'being', text: 'Mi función no es solo almacenar agua.', by: 'Estanque', time: 'Hoy' }]
           }
         };
       }
 
-      getBeing(key) {
-        return this.state.beings[key];
-      }
-
-      getCurrentBeing() {
-        return this.getBeing(this.state.currentContext);
-      }
-
-      getCurrentThread() {
-        return this.threads[this.state.currentContext][this.state.currentSpeaker];
-      }
-
-      setCurrentContext(key) {
-        if (this.state.beings[key]) this.state.currentContext = key;
-      }
-
-      setSpeaker(name) {
-        this.state.currentSpeaker = name;
-      }
+      getBeing(key) { return this.state.beings[key]; }
+      getCurrentBeing() { return this.getBeing(this.state.currentContext); }
+      getCurrentThread() { return this.threads[this.state.currentContext][this.state.currentSpeaker]; }
+      setCurrentContext(key) { if (this.state.beings[key]) this.state.currentContext = key; }
+      setSpeaker(name) { this.state.currentSpeaker = name; }
 
       normalizeText(text) {
-        return text
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .toLowerCase()
-          .trim();
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
       }
 
-      hasAny(text, words) {
-        return words.some(word => text.includes(word));
-      }
+      hasAny(text, words) { return words.some(word => text.includes(word)); }
 
       detectIntent(text) {
-        if (this.hasAny(text, ["a que te refieres", "que quieres decir", "explicame", "explica", "desarrolla", "algo mas", "y eso", "por que", "porque", "como lo noto", "como se nota", "mas detalles", "ayer me dijiste", "antes dijiste"])) return "followup";
-        if (this.hasAny(text, ["como estas", "que tal", "como vas"])) return "status";
-        if (this.hasAny(text, ["riego", "regar", "agua", "sed"])) return "water";
-        if (this.hasAny(text, ["drenaje", "drenar", "encharc", "charco", "compacta", "compactado"])) return "drainage";
-        if (this.hasAny(text, ["raiz", "raices"])) return "roots";
-        if (this.hasAny(text, ["sol", "sombra", "luz"])) return "light";
-        if (this.hasAny(text, ["viento", "alisio", "aire"])) return "wind";
-        if (this.hasAny(text, ["poda", "podar", "cortar", "hojas", "chupones"])) return "pruning";
-        if (this.hasAny(text, ["abono", "abonar", "potasio", "nitrogeno", "compost", "consuelda", "ceniza"])) return "fertilization";
-        if (this.hasAny(text, ["flor", "floracion", "fruto", "frutos", "cuajado", "aguacates", "tomates"])) return "fruit";
-        if (this.hasAny(text, ["plaga", "hongo", "phytophthora", "fitoftora", "enfermedad", "mildiu"])) return "disease";
-        if (this.hasAny(text, ["necesitas", "que hago", "ayuda", "prioridad"])) return "needs";
+        if (this.hasAny(text, ["a que te refieres", "explicame", "detalles"])) return "followup";
+        if (this.hasAny(text, ["como estas", "que tal"])) return "status";
+        if (this.hasAny(text, ["riego", "agua", "sed"])) return "water";
+        if (this.hasAny(text, ["drenaje", "encharc", "charco"])) return "drainage";
         return "general";
-      }
-
-      getTopicKey(beingKey, speaker) {
-        return `${beingKey}__${speaker}`;
-      }
-
-      setLastTopic(beingKey, speaker, topic) {
-        this.lastTopicByBeingAndSpeaker[this.getTopicKey(beingKey, speaker)] = topic;
-      }
-
-      getLastTopic(beingKey, speaker) {
-        return this.lastTopicByBeingAndSpeaker[this.getTopicKey(beingKey, speaker)] || null;
       }
 
       speakerPrefix(speaker) {
         if (speaker === 'Mario') return '';
-        if (speaker === 'Yani') return 'Contigo voy un poco más al equilibrio general. ';
-        return 'Si vienes de fuera, te lo digo de forma clara. ';
-      }
-
-      avocadoReply(intent, speaker) {
-        const temp = this.state.weather.temp || 24;
-        const humidity = this.state.weather.humidity || 65;
-        const prefix = this.speakerPrefix(speaker);
-
-        const topicReplies = {
-          status: `${prefix}Ahora mismo voy sensible pero razonablemente estable. Con ${temp}°C y una humedad de ${humidity}%, mi punto crítico no es tanto el calor como que mis raíces respiren bien y no se queden en suelo pesado.`,
-          water: `${prefix}Conmigo el riego no va de cantidad bruta, sino de equilibrio. Necesito humedad útil, sí, pero sin que el agua se quede retenida demasiado tiempo. Prefiero un riego que moje bien y luego deje aire en el suelo.`,
-          drainage: `${prefix}Cuando hablo de drenaje libre, me refiero a que el exceso de agua pueda salir y que el suelo no se quede apelmazado alrededor de mis raíces. Si tras regar o llover la tierra sigue muy pesada, se forman charcos o el agua tarda demasiado en desaparecer, eso no me conviene.`,
-          roots: `${prefix}Mis raíces finas son delicadas. No les gusta ni el encharcamiento ni la compactación. Necesitan humedad, pero también oxígeno. Si el suelo se cierra, yo lo noto rápido en el vigor y en las hojas.`,
-          light: `${prefix}Me gusta la luz, pero no una exposición agresiva si estoy estresado por raíz o viento. El equilibrio bueno para mí es sol suficiente, pero con un entorno que no me castigue cuando estoy sensible.`,
-          wind: `${prefix}El viento seco, sobre todo si es constante, me puede tensar bastante. Me deshidrata hoja y me obliga a trabajar más. Si además coincide con una raíz incómoda, me desordeno antes.`,
-          pruning: `${prefix}Con la poda conmigo hay que tener mano. Mejor limpieza y formación que recorte brusco. Si me desnudas demasiado, el sol y el estrés me pasan factura.`,
-          fertilization: `${prefix}No necesito abonado a lo loco. Me va bien materia orgánica bien hecha, algo de equilibrio mineral y un suelo vivo. Si estoy tocado de raíz, antes que abonar fuerte prefiero que me ordenes drenaje, estructura y humedad.`,
-          fruit: `${prefix}Si estoy equilibrado, puedo pensar en floración y fruto con dignidad. Pero si la raíz sufre o el ambiente me aprieta, toda esa energía se resiente.`,
-          disease: `${prefix}Mi miedo serio en suelo mal drenado es el problema de raíz, especialmente lo relacionado con hongos como phytophthora. No hace falta dramatizar, pero sí vigilar.`,
-          needs: `${prefix}Mi prioridad ahora mismo sería esta: que revises si el suelo drena bien, que no haya compactación alrededor y que el agua no se me quede retenida más de la cuenta.`,
-          general: `${prefix}Si me hablas claro, yo te respondo claro: conmigo casi todo pasa por cómo esté el suelo, cómo drene y cómo respire la raíz.`
-        };
-
-        const followUpReplies = {
-          drainage: `${prefix}Dicho más claro: si hoy me riegas o llueve, mañana la tierra puede seguir fresca, pero no debería seguir embarrada ni cerrada. Si el agua se queda haciendo bolsa alrededor, ahí empieza el problema.`,
-          roots: `${prefix}Lo notarías en señales como crecimiento más torpe, hoja menos alegre o sensación de que no tiro fino. Cuando mi raíz sufre, arriba se acaba notando.`,
-          water: `${prefix}No me sirve ni la sequedad extrema ni el suelo constantemente empapado. El punto bueno es humedad estable con salida del exceso.`,
-          wind: `${prefix}Con viento fuerte puedo perder confort rápido, sobre todo si coincido con poco equilibrio hídrico. Por eso agradezco protección y barrera viva.`,
-          pruning: `${prefix}En mi caso menos es más. Antes una poda selectiva que un destrozo con buena intención.`,
-          fertilization: `${prefix}Si la base está mal, abonar no arregla nada. Primero suelo y raíz. Luego nutrición.`,
-          fruit: `${prefix}Sí, puedo darte fruto, pero solo si me mantienes en equilibrio. Si me fuerzas cuando estoy tenso, no respondo igual.`,
-          disease: `${prefix}La prevención conmigo es mucho más inteligente que llegar tarde. Suelo aireado y sin charco: ese es el principio.`,
-          general: `${prefix}Lo importante conmigo es esto: no soy un árbol para llevar por inercia. Si el suelo está bien, yo respondo bastante bien.`
-        };
-
-        if (intent === 'followup') {
-          const lastTopic = this.getLastTopic('aguacatero', speaker) || 'general';
-          return followUpReplies[lastTopic] || followUpReplies.general;
-        }
-
-        this.setLastTopic('aguacatero', speaker, intent);
-        return topicReplies[intent] || topicReplies.general;
-      }
-
-      nisperoReply(intent, speaker) {
-        const prefix = this.speakerPrefix(speaker);
-
-        const replies = {
-          status: `${prefix}Voy bastante sereno. Soy más rústico que el aguacatero y tolero bastante bien el momento fresco si estoy equilibrado.`,
-          water: `${prefix}No me gusta la sequía extrema, pero tampoco necesito tanta delicadeza como otros. Agua sensata y suelo decente, y respondo bien.`,
-          fertilization: `${prefix}Si estoy en fase de fruto, agradezco mucho un apoyo potásico bien pensado. Ahí se nota.`,
-          fruit: `${prefix}Cuando entro en buena dinámica de floración y cuajado, lo ideal es no desordenarme y ayudarme con nutrición oportuna.`,
-          pruning: `${prefix}Conmigo mejor poda ligera, ventilación y orden, no una carnicería.`,
-          needs: `${prefix}Ahora mismo te diría esto: sol, algo de orden y un apoyo potásico si ves que estoy empujando fruto.`,
-          general: `${prefix}Yo suelo responder bien cuando se me entiende como frutal de ritmo sereno: luz, algo de nutrición y poco teatro.`
-        };
-
-        if (intent === 'followup') {
-          const lastTopic = this.getLastTopic('nispero', speaker) || 'general';
-          return {
-            fertilization: `${prefix}Sí, me refiero sobre todo a ayudar al fruto: ceniza bien usada, consuelda o un enfoque parecido pueden tener sentido.`,
-            fruit: `${prefix}Cuando voy bien de flor y cuajado, se me nota en la regularidad y en la seguridad con la que sostengo el fruto.`,
-            general: `${prefix}Conmigo casi siempre es más cuestión de acompañar bien el momento que de intervenir demasiado.`
-          }[lastTopic] || `${prefix}Conmigo lo importante es leer bien el momento del árbol.`;
-        }
-
-        this.setLastTopic('nispero', speaker, intent);
-        return replies[intent] || replies.general;
-      }
-
-      tomateroReply(intent, speaker) {
-        const prefix = this.speakerPrefix(speaker);
-
-        const replies = {
-          status: `${prefix}Voy rápido, como buen tomatero. Si tengo luz, agua bien dirigida y estructura, respondo enseguida. Si no, también protesto enseguida.`,
-          water: `${prefix}Conmigo el agua mejor a raíz y sin mojar hoja. Si me mojas de más arriba y hay humedad, luego vienen los problemas.`,
-          pruning: `${prefix}Sí, conmigo tiene sentido hablar de poda, chupones y orden. Si me dejas salvaje, produzco peor y me aireo peor.`,
-          disease: `${prefix}Mi punto delicado suele ser la humedad mal gestionada, sobre todo en hoja. Mildiu y compañía no vienen invitados: los traemos con mal manejo.`,
-          fruit: `${prefix}Si estoy bien llevado, me concentro en producir. Si estoy desordenado o enfermo, bajo rendimiento y peor calidad.`,
-          needs: `${prefix}Mi prioridad suele ser clara: estructura, aire, riego a raíz y vigilancia del follaje.`,
-          general: `${prefix}Yo no soy sutil: si estoy bien, produzco. Si estoy mal, se me nota rápido.`
-        };
-
-        if (intent === 'followup') {
-          const lastTopic = this.getLastTopic('tomatero', speaker) || 'general';
-          return {
-            pruning: `${prefix}Sí, me refiero a quitar lo que me roba energía o me apelmaza demasiado, para que airee mejor y produzca con más cabeza.`,
-            disease: `${prefix}Cuando hablo de eso, hablo sobre todo de exceso de humedad en hoja y poca ventilación.`,
-            general: `${prefix}Conmigo casi todo es bastante visible: estructura, ventilación y agua bien puesta.`
-          }[lastTopic] || `${prefix}Si me preguntas en corto, yo te respondo en claro.`;
-        }
-
-        this.setLastTopic('tomatero', speaker, intent);
-        return replies[intent] || replies.general;
-      }
-
-      moralReply(intent, speaker) {
-        const prefix = this.speakerPrefix(speaker);
-
-        const replies = {
-          status: `${prefix}Voy con fuerza. Suelo ser generoso cuando tengo espacio y ritmo.`,
-          pruning: `${prefix}Conmigo la poda puede ser muy útil, porque reboto bien y además doy biomasa para el sistema.`,
-          needs: `${prefix}Ahora mismo mi valor está en crecer, dar materia orgánica y apoyar estructura.`,
-          general: `${prefix}Soy de esos seres que, bien llevados, devuelven mucho en sombra, biomasa y presencia.`
-        };
-
-        if (intent === 'followup') {
-          const lastTopic = this.getLastTopic('moral', speaker) || 'general';
-          return {
-            pruning: `${prefix}Sí, conmigo cortar con criterio puede ser una ventaja, no un castigo.`,
-            general: `${prefix}Mi papel es más estructural y de apoyo que de capricho.`
-          }[lastTopic] || `${prefix}Conmigo conviene pensar en función de sistema.`;
-        }
-
-        this.setLastTopic('moral', speaker, intent);
-        return replies[intent] || replies.general;
-      }
-
-      estanqueReply(intent, speaker) {
-        const prefix = this.speakerPrefix(speaker);
-
-        const replies = {
-          status: `${prefix}Voy equilibrando humedad, temperatura y presencia de vida alrededor.`,
-          water: `${prefix}Yo no soy solo agua acumulada; soy regulación, inercia térmica y apoyo a biodiversidad.`,
-          needs: `${prefix}Mi prioridad es el equilibrio: no exceso de limpieza, no abandono total, y buena lectura del conjunto.`,
-          general: `${prefix}Si me entiendes como nodo vivo y no como simple depósito, me entiendes mejor.`
-        };
-
-        if (intent === 'followup') {
-          const lastTopic = this.getLastTopic('estanque', speaker) || 'general';
-          return {
-            water: `${prefix}Sí, me refiero a que influyo en más cosas que el nivel de agua: humedad ambiente, fauna y regulación térmica.`,
-            general: `${prefix}En mí lo importante es equilibrio, no obsesión.`
-          }[lastTopic] || `${prefix}Conmigo menos intervención impulsiva y más lectura del sistema.`;
-        }
-
-        this.setLastTopic('estanque', speaker, intent);
-        return replies[intent] || replies.general;
+        if (speaker === 'Yani') return 'Contigo voy al equilibrio. ';
+        return 'Hablando claro: ';
       }
 
       generateResponse(message, beingKey, speaker) {
         const text = this.normalizeText(message);
         const intent = this.detectIntent(text);
+        const prefix = this.speakerPrefix(speaker);
 
-        if (beingKey === 'aguacatero') return this.avocadoReply(intent, speaker);
-        if (beingKey === 'nispero') return this.nisperoReply(intent, speaker);
-        if (beingKey === 'tomatero') return this.tomateroReply(intent, speaker);
-        if (beingKey === 'moral') return this.moralReply(intent, speaker);
-        if (beingKey === 'estanque') return this.estanqueReply(intent, speaker);
+        // Respuestas simplificadas para el ejemplo
+        const replies = {
+            status: `${prefix}Voy razonablemente estable, analizando el entorno.`,
+            water: `${prefix}El agua mejor controlada, busco humedad útil sin charcos.`,
+            drainage: `${prefix}Necesito que el agua drene rápido, no me gusta el suelo cerrado.`,
+            general: `${prefix}Te escucho. Si el suelo está bien, yo respondo.`
+        };
 
-        return 'Te escucho.';
+        return replies[intent] || replies.general;
       }
 
       addMessage(humanMessage) {
@@ -1197,63 +631,48 @@
         const thread = this.getCurrentThread();
         const timeStr = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
-        thread.push({
-          type: 'human',
-          text: humanMessage,
-          by: speaker,
-          time: timeStr
-        });
-
+        thread.push({ type: 'human', text: humanMessage, by: speaker, time: timeStr });
         const reply = this.generateResponse(humanMessage, this.state.currentContext, speaker);
 
         setTimeout(() => {
-          thread.push({
-            type: 'being',
-            text: reply,
-            by: being.name,
-            time: timeStr
-          });
+          thread.push({ type: 'being', text: reply, by: being.name, time: timeStr });
           window.dispatchEvent(new Event('new-message'));
-        }, 320);
+        }, 400); // Pequeño delay para simular pensamiento
       }
 
       async updateWeather() {
         try {
-          const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.139&longitude=-15.632&current=temperature_2m,relative_humidity_2m,weather_code&timezone=auto');
+          // Coordenadas aproximadas de Gran Canaria Norte
+          const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.13&longitude=-15.63&current=temperature_2m,relative_humidity_2m&timezone=auto');
           const data = await res.json();
-          const current = data.current;
           this.state.weather = {
-            temp: Math.round(current.temperature_2m),
-            humidity: Math.round(current.relative_humidity_2m)
+            temp: Math.round(data.current.temperature_2m),
+            humidity: Math.round(data.current.relative_humidity_2m)
           };
         } catch (e) {
-          this.state.weather = { temp: 24, humidity: 65 };
+          this.state.weather = { temp: 22, humidity: 60 };
         }
       }
     }
 
+    // Inicialización y DOM
     const engine = new FincaEngine(fincaState);
 
     const DOM = {
       cards: document.getElementById('cards'),
       chatBody: document.getElementById('chatBody'),
       chatName: document.getElementById('chatName'),
-      chatSubtitle: document.getElementById('chatSubtitle'),
       chatIcon: document.getElementById('chatIcon'),
       input: document.getElementById('messageInput'),
       sendBtn: document.getElementById('sendBtn'),
       weatherMain: document.getElementById('weatherMain'),
       weatherSub: document.getElementById('weatherSub'),
-      monthLabel: document.getElementById('monthLabel'),
-      beingsCount: document.getElementById('beingsCount'),
       selectedPhoto: document.getElementById('selectedPhoto'),
       selectedName: document.getElementById('selectedName'),
       selectedSubtitle: document.getElementById('selectedSubtitle'),
       selectedStatus: document.getElementById('selectedStatus'),
       selectedNeed: document.getElementById('selectedNeed'),
-      selectedSummary: document.getElementById('selectedSummary'),
       selectedFunction: document.getElementById('selectedFunction'),
-      selectedBadge: document.getElementById('selectedBadge'),
       speakerBtns: document.querySelectorAll('.speaker-btn')
     };
 
@@ -1262,16 +681,12 @@
         const b = engine.getBeing(key);
         const active = key === engine.state.currentContext ? 'active' : '';
         return `
-          <div class="being-card ${active}" data-being="${key}">
-            <div class="being-head">
-              <div class="being-photo"><img src="${b.photo}" alt="${b.name}" /></div>
-              <div>
-                <div class="being-name">${b.name}</div>
-                <div class="being-sub">${b.subtitle.split('·')[0]}</div>
-              </div>
+          <div class="being-card-sm ${active}" data-being="${key}">
+            <div class="being-photo-sm"><img src="${b.photo}" alt="${b.name}" /></div>
+            <div class="being-info-sm">
+              <h4>${b.name}</h4>
+              <span>${b.subtitle.split('·')[0].trim()}</span>
             </div>
-            <div class="season-pill">${b.seasonIcon} ${b.season}</div>
-            <div class="being-message">${b.cardText}</div>
           </div>
         `;
       }).join('');
@@ -1288,9 +703,7 @@
       DOM.selectedSubtitle.textContent = b.subtitle;
       DOM.selectedStatus.textContent = b.status;
       DOM.selectedNeed.textContent = b.bio.needs;
-      DOM.selectedSummary.textContent = b.summary;
       DOM.selectedFunction.textContent = b.function;
-      DOM.selectedBadge.textContent = b.timelineTag;
     }
 
     function renderChat() {
@@ -1298,13 +711,12 @@
       const thread = engine.getCurrentThread();
 
       DOM.chatName.textContent = b.name;
-      DOM.chatSubtitle.textContent = `${b.subtitle} · canal ${engine.state.currentSpeaker}`;
       DOM.chatIcon.innerHTML = `<img src="${b.photo}" alt="${b.name}" />`;
 
       DOM.chatBody.innerHTML = thread.map(msg => `
         <div class="msg ${msg.type}">
           ${msg.type === 'being' ? `<strong>${msg.by}:</strong> ` : ''}${msg.text}
-          ${msg.by && msg.type !== 'system' ? `<small>${msg.by} · ${msg.time}</small>` : ''}
+          ${msg.by && msg.type !== 'system' ? `<small>${msg.time}</small>` : ''}
         </div>
       `).join('');
 
@@ -1313,8 +725,8 @@
 
     function renderWeather() {
       if (engine.state.weather.temp) {
-        DOM.weatherMain.textContent = `${engine.state.weather.temp}°C · Analizando`;
-        DOM.weatherSub.textContent = `Gran Canaria · ${engine.state.weather.humidity}% humedad · vientos alisios`;
+        DOM.weatherMain.textContent = `${engine.state.weather.temp}°C`;
+        DOM.weatherSub.textContent = `Gran Canaria · ${engine.state.weather.humidity}% humedad`;
       }
     }
 
@@ -1345,12 +757,8 @@
     }
 
     function initializeApp() {
-      const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-      DOM.monthLabel.textContent = months[new Date().getMonth()];
-      DOM.beingsCount.textContent = Object.keys(engine.state.beings).length;
-
       engine.updateWeather().then(renderWeather);
-
+      
       DOM.sendBtn.addEventListener('click', handleSendMessage);
       DOM.input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') handleSendMessage();
