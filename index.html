@@ -5,32 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Finca Viva · Seres del Universo Sintrópico</title>
   <style>
-    /* =========================================
-       v2 - PALETA SINTRÓPICA MODERNA Y VIVA
-       (Adiós pasteles, hola vitalidad oscura)
-       ========================================= */
     :root {
-      /* Fondo oscuro absoluto para profundidad */
       --color-bg-deep: #0C0D0E;
-      /* Superficies oscuras */
       --color-surface-base: #151618;
-      /* Elementos UI */
       --color-surface-raised: #202123;
-      
-      /* Colores de Vida Neón */
-      --color-bio-green: #39FF14; /* Verde LIMA Neón (Crecimiento) */
-      --color-bio-emerald: #10B981; /* Esmeralda Vivo (Sintropía) */
-      --color-water-blue: #00E5FF; /* Cian Eléctrico (Sincronización Clima) */
-      
-      /* Texto y UI */
+      --color-bio-green: #39FF14;
+      --color-bio-emerald: #10B981;
+      --color-water-blue: #00E5FF;
       --color-text-main: #FFFFFF;
       --color-text-sub: #A0A0A0;
-      --color-ui-accent: var(--color-water-blue);
-      --color-user-pill-inactive: #3D3D3D;
-      
-      /* Espaciados y Bordes */
       --border-ui: 1px solid #333333;
-      --shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
       --r-xl: 16px;
       --r-lg: 12px;
       --r-md: 8px;
@@ -43,355 +27,121 @@
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       color: var(--color-text-main);
       background-color: var(--color-bg-deep);
-      overflow: hidden; /* Evitar scroll general, manejar internamente */
-    }
-
-    .app {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      max-width: 1400px; /* Más ancho para aprovechar pantallas grandes */
-      margin: 0 auto;
-    }
-
-    /* =========================================
-       1. CABECERA COMPACTA
-       ========================================= */
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 20px;
-      background-color: var(--color-surface-base);
-      border-bottom: var(--border-ui);
-      flex-shrink: 0;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo {
-      width: 32px;
-      height: 32px;
-      border-radius: var(--r-md);
-      display: grid;
-      place-items: center;
-      font-size: 18px;
-      background: linear-gradient(135deg, var(--color-bio-emerald), var(--color-bio-green));
-      color: #000;
-      box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
-    }
-
-    .brand-title {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--color-text-main);
-      letter-spacing: -0.02em;
-    }
-
-    .brand-subtitle {
-      font-size: 12px;
-      color: var(--color-text-sub);
-    }
-
-    .pill-top {
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(57, 255, 20, 0.1);
-      border: 1px solid rgba(57, 255, 20, 0.3);
-      color: var(--color-bio-green);
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    /* Clima en cabecera */
-    .weather-compact {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      color: var(--color-text-sub);
-    }
-    .weather-compact .temp { font-weight: bold; color: var(--color-text-main); }
-    .weather-compact .icon { font-size: 16px; }
-
-    /* =========================================
-       2. LAYOUT PRINCIPAL (Flexbox)
-       ========================================= */
-    .main-content {
-      display: flex;
-      flex: 1;
       overflow: hidden;
     }
 
-    /* --- COLUMNA IZQUIERDA: Selector y Ficha --- */
+    .app { display: flex; flex-direction: column; height: 100vh; max-width: 1400px; margin: 0 auto; }
+
+    /* CABECERA */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 20px; background-color: var(--color-surface-base);
+      border-bottom: var(--border-ui); flex-shrink: 0;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo {
+      width: 32px; height: 32px; border-radius: var(--r-md);
+      display: grid; place-items: center; font-size: 18px;
+      background: linear-gradient(135deg, var(--color-bio-emerald), var(--color-bio-green));
+      color: #000; box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+    }
+    .brand-title { font-size: 20px; font-weight: 800; color: var(--color-text-main); letter-spacing: -0.02em; }
+    .brand-subtitle { font-size: 12px; color: var(--color-text-sub); }
+    .pill-top {
+      padding: 4px 10px; border-radius: 999px; background: rgba(57, 255, 20, 0.1);
+      border: 1px solid rgba(57, 255, 20, 0.3); color: var(--color-bio-green);
+      font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .weather-compact { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--color-text-sub); }
+    .weather-compact .temp { font-weight: bold; color: var(--color-text-main); }
+
+    /* LAYOUT */
+    .main-content { display: flex; flex: 1; overflow: hidden; }
+
+    /* COLUMNA IZQUIERDA */
     .left-col {
-      width: 350px;
-      background-color: var(--color-surface-raised);
-      border-right: var(--border-ui);
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
+      width: 350px; background-color: var(--color-surface-raised);
+      border-right: var(--border-ui); display: flex; flex-direction: column; overflow-y: hidden;
     }
-
     .section-head-compact {
-      padding: 15px 20px 5px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--color-text-sub);
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      padding: 15px 20px 10px; font-size: 11px; font-weight: 700;
+      color: var(--color-text-sub); text-transform: uppercase; letter-spacing: 1px;
+      border-bottom: var(--border-ui); flex-shrink: 0;
     }
-
-    /* Lista de Seres (Cards reducidas) */
     .beings-list {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      padding: 0 15px 15px;
+      display: flex; flex-direction: column; gap: 5px; padding: 10px 15px;
+      overflow-y: auto; flex: 1;
     }
+    /* Estilo barra scroll */
+    .beings-list::-webkit-scrollbar { width: 6px; }
+    .beings-list::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
 
     .being-card-sm {
-      background-color: var(--color-surface-base);
-      border: 1px solid transparent;
-      border-radius: var(--r-md);
-      padding: 8px 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      background-color: var(--color-surface-base); border: 1px solid transparent;
+      border-radius: var(--r-md); padding: 8px 12px; display: flex; align-items: center;
+      gap: 12px; cursor: pointer; transition: all 0.2s ease;
     }
-
-    .being-card-sm:hover {
-      background-color: #2A2B2D;
-    }
-
+    .being-card-sm:hover { background-color: #2A2B2D; }
     .being-card-sm.active {
-      border-color: var(--color-bio-emerald);
-      background-color: rgba(16, 185, 129, 0.05);
+      border-color: var(--color-bio-emerald); background-color: rgba(16, 185, 129, 0.05);
       box-shadow: inset 2px 0 0 var(--color-bio-green);
     }
-
     .being-photo-sm {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      overflow: hidden;
-      flex-shrink: 0;
-      border: 1px solid #444;
+      width: 36px; height: 36px; border-radius: 50%; overflow: hidden;
+      flex-shrink: 0; border: 1px solid #444; background: #222; display:grid; place-items:center; font-size: 18px;
     }
-    .being-photo-sm img { width: 100%; height: 100%; object-fit: cover; }
-    
     .being-info-sm h4 { font-size: 14px; font-weight: 600; color: var(--color-text-main); margin-bottom: 2px;}
     .being-info-sm span { font-size: 11px; color: var(--color-text-sub); }
 
-    /* Ficha Detalle (Compacta) */
-    .detail-panel {
-      padding: 20px;
-      background-color: var(--color-bg-deep); /* Destacar del fondo raised */
-      border-top: var(--border-ui);
-      flex-shrink: 0;
-    }
-
+    .detail-panel { padding: 20px; background-color: var(--color-bg-deep); border-top: var(--border-ui); flex-shrink: 0; }
     .selected-top { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
     .selected-photo {
       width: 60px; height: 60px; border-radius: var(--r-lg); border: 2px solid var(--color-surface-raised);
+      background: #222; display:grid; place-items:center; font-size: 30px;
     }
-    .selected-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--r-lg); }
     .selected-name { font-size: 20px; font-weight: 800; color: var(--color-bio-green); }
     .selected-sub { font-size: 12px; color: var(--color-text-sub); }
-
-    .mini-panel {
-      background-color: var(--color-surface-base);
-      border: var(--border-ui);
-      border-radius: var(--r-md);
-      padding: 10px;
-      margin-bottom: 10px;
-    }
+    .mini-panel { background-color: var(--color-surface-base); border: var(--border-ui); border-radius: var(--r-md); padding: 10px; margin-bottom: 10px; }
     .mini-panel strong { display: block; font-size: 10px; text-transform: uppercase; color: var(--color-bio-emerald); margin-bottom: 4px; }
     .mini-panel span { font-size: 12px; line-height: 1.4; color: var(--color-text-main); }
 
-
-    /* --- COLUMNA DERECHA: Chat Protagonista --- */
-    .chat-area {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      background-color: var(--color-bg-deep);
-      position: relative;
-    }
-
-    /* Fondo sintrópico sutil */
-    .chat-area::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, rgba(16, 185, 129, 0.03) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    /* Chat Header */
+    /* CHAT */
+    .chat-area { flex: 1; display: flex; flex-direction: column; background-color: var(--color-bg-deep); position: relative; }
+    .chat-area::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(16, 185, 129, 0.03) 0%, transparent 70%); pointer-events: none; }
+    
     .chat-header {
-      padding: 15px 25px;
-      border-bottom: var(--border-ui);
-      background-color: rgba(21, 22, 24, 0.8);
-      backdrop-filter: blur(10px);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 10;
+      padding: 15px 25px; border-bottom: var(--border-ui); background-color: rgba(21, 22, 24, 0.8);
+      backdrop-filter: blur(10px); display: flex; justify-content: space-between; align-items: center; z-index: 10;
     }
-
     .chat-title-group { display: flex; align-items: center; gap: 12px; }
-    .chat-title-group img { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #444;}
+    .chat-icon-lg { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #444; background: #222; display:grid; place-items:center; font-size: 20px;}
     .chat-name-lg { font-size: 16px; font-weight: 700; color: var(--color-text-main); }
     .sync-status { font-size: 11px; color: var(--color-water-blue); display: flex; align-items: center; gap: 4px;}
     .sync-status::before { content: "●"; animation: pulse 2s infinite; }
     @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
 
-    /* Selector de Voz (Compacto y en el Header del Chat) */
-    .voice-selector {
-      display: flex;
-      align-items: center;
-      background: var(--color-surface-raised);
-      border-radius: 999px;
-      padding: 3px;
-      border: var(--border-ui);
-    }
+    .voice-selector { display: flex; align-items: center; background: var(--color-surface-raised); border-radius: 999px; padding: 3px; border: var(--border-ui); }
     .voice-label { font-size: 10px; text-transform: uppercase; color: var(--color-text-sub); padding: 0 10px; font-weight: 600;}
-    
-    .speaker-btn {
-      background: transparent;
-      color: var(--color-text-sub);
-      border: none;
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .speaker-btn.active {
-      background: var(--color-surface-base);
-      color: var(--color-bio-green);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      border: 1px solid #333;
-    }
+    .speaker-btn { background: transparent; color: var(--color-text-sub); border: none; padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .speaker-btn.active { background: var(--color-surface-base); color: var(--color-bio-green); box-shadow: 0 2px 5px rgba(0,0,0,0.2); border: 1px solid #333; }
 
-    /* Mensajes */
-    .chat-viewport {
-      flex: 1;
-      overflow-y: auto;
-      padding: 25px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      z-index: 5;
-    }
-
-    .msg {
-      max-width: 75%;
-      padding: 12px 16px;
-      border-radius: var(--r-md);
-      font-size: 14px;
-      line-height: 1.5;
-      position: relative;
-    }
-
-    .msg small {
-      display: block;
-      margin-top: 5px;
-      font-size: 10px;
-      opacity: 0.6;
-      text-align: right;
-    }
-
-    /* Sistema */
-    .msg.system {
-      align-self: center;
-      background: rgba(0, 229, 255, 0.05);
-      border: 1px solid rgba(0, 229, 255, 0.1);
-      color: var(--color-water-blue);
-      font-size: 12px;
-      text-align: center;
-      max-width: 90%;
-      border-radius: 999px;
-      padding: 6px 16px;
-    }
-
-    /* Ser (Bot) */
-    .msg.being {
-      align-self: flex-start;
-      background-color: var(--color-surface-raised);
-      border: var(--border-ui);
-      border-bottom-left-radius: 0;
-      color: var(--color-text-main);
-    }
+    .chat-viewport { flex: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 15px; z-index: 5; }
+    .msg { max-width: 75%; padding: 12px 16px; border-radius: var(--r-md); font-size: 14px; line-height: 1.5; position: relative; }
+    .msg small { display: block; margin-top: 5px; font-size: 10px; opacity: 0.6; text-align: right; }
+    .msg.system { align-self: center; background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.1); color: var(--color-water-blue); font-size: 12px; text-align: center; max-width: 90%; border-radius: 999px; padding: 6px 16px; }
+    .msg.being { align-self: flex-start; background-color: var(--color-surface-raised); border: var(--border-ui); border-bottom-left-radius: 0; color: var(--color-text-main); }
     .msg.being strong { color: var(--color-bio-emerald); }
+    .msg.human { align-self: flex-end; background: linear-gradient(135deg, #1A3A2B, #0F4C3A); border: 1px solid var(--color-bio-emerald); border-bottom-right-radius: 0; color: var(--color-text-main); }
 
-    /* Humano */
-    .msg.human {
-      align-self: flex-end;
-      background: linear-gradient(135deg, #1A3A2B, #0F4C3A); /* Verde oscuro elegante */
-      border: 1px solid var(--color-bio-emerald);
-      border-bottom-right-radius: 0;
-      color: var(--color-text-main);
-    }
+    .input-area { padding: 15px 25px; background-color: var(--color-surface-base); border-top: var(--border-ui); display: flex; gap: 10px; z-index: 10; }
+    input[type="text"] { flex: 1; background-color: var(--color-surface-raised); border: 1px solid #444; color: var(--color-text-main); padding: 14px 20px; border-radius: 999px; font-size: 14px; outline: none; }
+    input[type="text"]:focus { border-color: var(--color-bio-green); }
+    .send-btn { background-color: var(--color-bio-green); color: #000; border: none; padding: 0 25px; border-radius: 999px; font-size: 14px; font-weight: 800; cursor: pointer; }
 
-    /* Input Area */
-    .input-area {
-      padding: 15px 25px;
-      background-color: var(--color-surface-base);
-      border-top: var(--border-ui);
-      display: flex;
-      gap: 10px;
-      z-index: 10;
-    }
-
-    input[type="text"] {
-      flex: 1;
-      background-color: var(--color-surface-raised);
-      border: 1px solid #444;
-      color: var(--color-text-main);
-      padding: 14px 20px;
-      border-radius: 999px;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    input[type="text"]:focus {
-      border-color: var(--color-bio-green);
-    }
-    input[type="text"]::placeholder { color: #666; }
-
-    .send-btn {
-      background-color: var(--color-bio-green);
-      color: #000;
-      border: none;
-      padding: 0 25px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .send-btn:hover { opacity: 0.8; }
-
-    /* =========================================
-       RESPONSIVE
-       ========================================= */
     @media (max-width: 900px) {
       .main-content { flex-direction: column; }
       .left-col { width: 100%; height: 40vh; border-right: none; border-bottom: var(--border-ui); }
-      .detail-panel { display: none; /* Ocultar detalle en móvil para priorizar chat */ }
-      .beings-list { flex-direction: row; overflow-x: auto; padding-bottom: 5px;}
-      .being-card-sm { min-width: 200px; }
+      .detail-panel { display: none; }
       .chat-area { height: 60vh; }
       .chat-header { flex-direction: column; align-items: flex-start; gap: 10px;}
     }
@@ -399,7 +149,6 @@
 </head>
 <body>
   <div class="app">
-    
     <header class="topbar">
       <div class="brand">
         <div class="logo">🌿</div>
@@ -408,23 +157,18 @@
           <div class="brand-subtitle">Gemelo Digital Sintrópico</div>
         </div>
       </div>
-      
       <div class="weather-compact">
         <span class="icon">⛅</span>
         <span class="temp" id="weatherMain">--°C</span>
         <span id="weatherSub">Analizando entorno...</span>
       </div>
-      
-      <div class="pill-top">v2 Core</div>
+      <div class="pill-top">Sistema Alta Densidad</div>
     </header>
 
     <main class="main-content">
-      
       <aside class="left-col">
-        <div class="section-head-compact">Red Biológica (Selecciona un ser)</div>
-        <div class="beings-list" id="cards">
-          </div>
-
+        <div class="section-head-compact">Red Biológica (45 seres vivos)</div>
+        <div class="beings-list" id="cards"></div>
         <div class="detail-panel">
           <div class="selected-top">
             <div class="selected-photo" id="selectedPhoto"></div>
@@ -433,33 +177,21 @@
               <div class="selected-sub" id="selectedSubtitle">--</div>
             </div>
           </div>
-          
-          <div class="mini-panel">
-            <strong>Estado Actual</strong>
-            <span id="selectedStatus">--</span>
-          </div>
-          <div class="mini-panel">
-            <strong>Necesidad Radicular</strong>
-            <span id="selectedNeed">--</span>
-          </div>
-          <div class="mini-panel">
-            <strong>Función Sintrópica</strong>
-            <span id="selectedFunction">--</span>
-          </div>
+          <div class="mini-panel"><strong>Estado Actual</strong><span id="selectedStatus">--</span></div>
+          <div class="mini-panel"><strong>Necesidad Radicular</strong><span id="selectedNeed">--</span></div>
+          <div class="mini-panel"><strong>Función Sintrópica</strong><span id="selectedFunction">--</span></div>
         </div>
       </aside>
 
       <section class="chat-area">
-        
         <div class="chat-header">
           <div class="chat-title-group">
-            <div id="chatIcon"></div>
+            <div class="chat-icon-lg" id="chatIcon"></div>
             <div>
               <div class="chat-name-lg" id="chatName">Conectando...</div>
               <div class="sync-status">Sincronizado con entorno</div>
             </div>
           </div>
-
           <div class="voice-selector">
             <span class="voice-label">Habla como</span>
             <button class="speaker-btn active" data-speaker="Mario">Mario</button>
@@ -467,120 +199,126 @@
             <button class="speaker-btn" data-speaker="Invitad@">Invitad@</button>
           </div>
         </div>
-
-        <div class="chat-viewport" id="chatBody">
-          </div>
-
+        <div class="chat-viewport" id="chatBody"></div>
         <div class="input-area">
-          <input id="messageInput" type="text" autocomplete="off" placeholder="Inicia conexión verbal con el ser vivo..." />
+          <input id="messageInput" type="text" autocomplete="off" placeholder="Inicia conexión verbal..." />
           <button class="send-btn" id="sendBtn">Enviar</button>
         </div>
-
       </section>
     </main>
   </div>
 
   <script>
-    // Se mantiene intacto el "alma sintrópica" (Lógica FincaEngine original)
+    // Base de datos de los 45 seres con asignación de categorías para IA
+    const rawBeingsData = [
+      { id: 'aguacatero', name: 'Aguacatero', sub: 'Persea americana', cat: 'arbol_frutal', icon: '🥑' },
+      { id: 'nispero', name: 'Níspero', sub: 'Eriobotrya japonica', cat: 'arbol_frutal', icon: '🍑' },
+      { id: 'naranjero', name: 'Naranjero', sub: 'Citrus × sinensis', cat: 'citrico', icon: '🍊' },
+      { id: 'limonero', name: 'Limonero', sub: 'Citrus limon', cat: 'citrico', icon: '🍋' },
+      { id: 'platanera', name: 'Platanera', sub: 'Musa × paradisiaca', cat: 'subtropical', icon: '🍌' },
+      { id: 'guayabo', name: 'Guayabo', sub: 'Psidium guajava', cat: 'subtropical', icon: '🍈' },
+      { id: 'lavanda', name: 'Lavanda', sub: 'Lavandula', cat: 'aromatica', icon: '🪻' },
+      { id: 'poleo', name: 'Poleo', sub: 'Mentha pulegium', cat: 'aromatica', icon: '🌿' },
+      { id: 'salvia', name: 'Salvia', sub: 'Salvia officinalis', cat: 'aromatica', icon: '🌱' },
+      { id: 'almendro', name: 'Almendro', sub: 'Prunus dulcis', cat: 'arbol_frutal', icon: '🌸' },
+      { id: 'melocotonero', name: 'Melocotonero', sub: 'Prunus persica', cat: 'arbol_frutal', icon: '🍑' },
+      { id: 'manzanero', name: 'Manzanero', sub: 'Malus domestica', cat: 'arbol_frutal', icon: '🍎' },
+      { id: 'fisalis', name: 'Fisalis', sub: 'Physalis peruviana', cat: 'hortaliza_fruto', icon: '🍒' },
+      { id: 'tomatero', name: 'Tomatero', sub: 'Solanum lycopersicum', cat: 'hortaliza_fruto', icon: '🍅' },
+      { id: 'mango', name: 'Mango', sub: 'Mangifera indica', cat: 'subtropical', icon: '🥭' },
+      { id: 'higuera', name: 'Higuera', sub: 'Ficus carica', cat: 'arbol_frutal', icon: '🌿' },
+      { id: 'calabacin', name: 'Calabacín', sub: 'Cucurbita pepo', cat: 'hortaliza_fruto', icon: '🥒' },
+      { id: 'berenjena', name: 'Berenjena', sub: 'Solanum melongena', cat: 'hortaliza_fruto', icon: '🍆' },
+      { id: 'remolacha', name: 'Remolacha', sub: 'Beta vulgaris', cat: 'raiz', icon: '🧅' },
+      { id: 'patatas', name: 'Patatas', sub: 'Solanum tuberosum', cat: 'raiz', icon: '🥔' },
+      { id: 'pimientos', name: 'Pimientos', sub: 'Capsicum annuum', cat: 'hortaliza_fruto', icon: '🫑' },
+      { id: 'lechugas', name: 'Lechugas', sub: 'Lactuca sativa', cat: 'hortaliza_hoja', icon: '🥬' },
+      { id: 'peral', name: 'Peral', sub: 'Pyrus communis', cat: 'arbol_frutal', icon: '🍐' },
+      { id: 'tomillo', name: 'Tomillo', sub: 'Thymus vulgaris', cat: 'aromatica', icon: '🌿' },
+      { id: 'oregano', name: 'Orégano', sub: 'Origanum vulgare', cat: 'aromatica', icon: '🍃' },
+      { id: 'perejil', name: 'Perejil', sub: 'Petroselinum crispum', cat: 'aromatica', icon: '🌿' },
+      { id: 'cilantro', name: 'Cilantro', sub: 'Coriandrum sativum', cat: 'aromatica', icon: '🌱' },
+      { id: 'fresas', name: 'Fresas', sub: 'Fragaria', cat: 'hortaliza_fruto', icon: '🍓' },
+      { id: 'mandarino', name: 'Mandarino', sub: 'Citrus reticulata', cat: 'citrico', icon: '🍊' },
+      { id: 'acelgas', name: 'Acelgas', sub: 'Beta vulgaris var. cicla', cat: 'hortaliza_hoja', icon: '🥬' },
+      { id: 'apio', name: 'Apio', sub: 'Apium graveolens', cat: 'hortaliza_hoja', icon: '🌿' },
+      { id: 'cebollas', name: 'Cebollas', sub: 'Allium cepa', cat: 'raiz', icon: '🧅' },
+      { id: 'puerro', name: 'Puerro', sub: 'Allium ampeloprasum', cat: 'raiz', icon: '🧄' },
+      { id: 'cafetero', name: 'Cafetero', sub: 'Coffea arabica', cat: 'subtropical', icon: '☕' },
+      { id: 'batata', name: 'Batata', sub: 'Ipomoea batatas', cat: 'raiz', icon: '🍠' },
+      { id: 'artemisa', name: 'Artemisa', sub: 'Artemisia vulgaris', cat: 'aromatica', icon: '🌿' },
+      { id: 'manzanilla', name: 'Manzanilla', sub: 'Chamaemelum nobile', cat: 'aromatica', icon: '🌼' },
+      { id: 'cana', name: 'Caña', sub: 'Arundo donax', cat: 'barrera', icon: '🎋' },
+      { id: 'olivo', name: 'Olivo', sub: 'Olea europaea', cat: 'arbol_frutal', icon: '🫒' },
+      { id: 'judias', name: 'Judías', sub: 'Phaseolus vulgaris', cat: 'hortaliza_fruto', icon: '🫘' },
+      { id: 'papayo', name: 'Papayo', sub: 'Carica papaya', cat: 'subtropical', icon: '🍈' },
+      { id: 'maracuya', name: 'Maracuyá', sub: 'Passiflora edulis', cat: 'trepadora', icon: '🌸' },
+      { id: 'beroles', name: 'Beroles', sub: 'Aeonium', cat: 'suculenta', icon: '🪴' },
+      { id: 'tunos', name: 'Tunos', sub: 'Opuntia ficus-indica', cat: 'suculenta', icon: '🌵' },
+      { id: 'lirios', name: 'Lirios acuáticos', sub: 'Nymphaeaceae', cat: 'acuatico', icon: '🪷' }
+    ];
+
+    // Generador dinámico de estado
+    const generatedBeings = {};
+    rawBeingsData.forEach(b => {
+      generatedBeings[b.id] = {
+        name: b.name, subtitle: b.sub, category: b.cat, icon: b.icon,
+        status: 'Lectura de biometría en proceso...',
+        summary: `Especie clave en el estrato ${b.cat.replace('_', ' ')}.`,
+        function: 'Aporte de diversidad y equilibrio al ecosistema sintrópico.',
+        bio: { needs: 'Análisis de suelo y clima en curso.' }
+      };
+    });
+
     const fincaState = {
       currentContext: 'aguacatero',
       currentSpeaker: 'Mario',
       weather: { temp: null, humidity: null },
-
-      beings: {
-        aguacatero: {
-          photo: 'https://images.unsplash.com/photo-1601039641847-7857b994d704?auto=format&fit=crop&w=150&q=80',
-          name: 'Aguacatero',
-          subtitle: 'Persea americana · Hass/Fuerte',
-          status: 'Manteniendo el follaje nuevo, pero con las raíces alerta por la humedad del suelo.',
-          summary: 'Sensible al viento fuerte y a la asfixia radicular.',
-          function: 'Árbol principal. Aporta alimento, sombra y estructura media-alta.',
-          bio: { needs: 'Drenaje excelente, protección contra vientos secos.' }
-        },
-        nispero: {
-          photo: 'https://images.unsplash.com/photo-1596489373979-3d2cb04b901a?auto=format&fit=crop&w=150&q=80', // Foto de reserva
-          name: 'Níspero',
-          subtitle: 'Eriobotrya japonica · Invierno',
-          status: 'Cargando reservas para mantener la floración y el cuajado a buen ritmo.',
-          summary: 'Rústico y duro. Agradece potasio en época de engorde.',
-          function: 'Frutal medio. Alimento temprano y estabilidad.',
-          bio: { needs: 'Sol directo, algo de abono potásico.' }
-        },
-        tomatero: {
-          photo: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&w=150&q=80',
-          name: 'Tomatero',
-          subtitle: 'Solanum lycopersicum',
-          status: 'Gastando muchísima energía en cuajar fruto y trepar.',
-          summary: 'Exigente en calcio y luz solar directa.',
-          function: 'Rendimiento rápido. Lectura clara del estado del huerto.',
-          bio: { needs: 'Soporte físico, riego radicular constante.' }
-        },
-        moral: {
-          photo: 'https://images.unsplash.com/photo-1628773822503-930a7eaecf80?auto=format&fit=crop&w=150&q=80',
-          name: 'Moral',
-          subtitle: 'Morus nigra · Dosel sombreador',
-          status: 'Empujando savia nueva y expandiendo copa sin parar.',
-          summary: 'Generador masivo de biomasa.',
-          function: 'Produce biomasa, sombra y materia orgánica útil.',
-          bio: { needs: 'Podas de formación y espacio.' }
-        },
-        estanque: {
-          photo: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=150&q=80',
-          name: 'Estanque',
-          subtitle: 'Biotopo acuático regulador',
-          status: 'Plantas oxigenadoras trabajando. Agua templada.',
-          summary: 'Regula temperatura local y atrae fauna.',
-          function: 'Reserva hídrica, moderador térmico y biodiversidad.',
-          bio: { needs: 'Equilibrio luz/sombra, sin limpieza excesiva.' }
-        }
-      }
+      beings: generatedBeings
     };
 
     class FincaEngine {
       constructor(state) {
         this.state = state;
-        this.lastTopicByBeingAndSpeaker = {};
         this.threads = this.buildInitialThreads();
       }
 
+      // El cerebro algorítmico: Genera diálogos iniciales basados en la categoría
       buildInitialThreads() {
-        // Reducido por brevedad en este bloque, pero mantiene la estructura.
-        return {
-          aguacatero: {
+        const threads = {};
+        Object.keys(this.state.beings).forEach(key => {
+          const b = this.state.beings[key];
+          let defaultGreeting = '';
+          
+          switch(b.category) {
+            case 'arbol_frutal': defaultGreeting = 'Estabilizando mi crecimiento. Enraizando profundo para sostener la estructura.'; break;
+            case 'citrico': defaultGreeting = 'Sintetizando luz. Necesito buen drenaje y vigilancia en mis hojas nuevas.'; break;
+            case 'subtropical': defaultGreeting = 'Buscando calor y humedad ambiental. La protección del viento me da la vida.'; break;
+            case 'hortaliza_fruto': defaultGreeting = 'Consumiendo mucha energía para cuajar fruto rápido. El suelo vivo es mi motor.'; break;
+            case 'hortaliza_hoja': defaultGreeting = 'Manteniendo frescor para no espigarme antes de tiempo.'; break;
+            case 'raiz': defaultGreeting = 'Trabajando bajo tierra. Si el suelo está suelto y aireado, engordo bien.'; break;
+            case 'aromatica': defaultGreeting = 'Concentrando aceites esenciales al sol. Poca agua, mucha luz.'; break;
+            case 'suculenta': defaultGreeting = 'Administrando mis propias reservas de agua. No me ahogues.'; break;
+            case 'acuatico': defaultGreeting = 'Filtrando el sistema. Aportando oxigenación y cobijo.'; break;
+            default: defaultGreeting = 'Sincronizando con la biósfera de la finca.';
+          }
+
+          threads[key] = {
             Mario: [
-              { type: 'system', text: 'Conexión biológica establecida. Analizando radicular.' },
-              { type: 'being', text: 'Mario, noto el suelo un poco apelmazado. Mis raíces finas lo notan enseguida.', by: 'Aguacatero', time: '10:00' }
+              { type: 'system', text: `Conexión establecida con ${b.name}` },
+              { type: 'being', text: `Mario, aquí estoy. ${defaultGreeting}`, by: b.name, time: '10:00' }
             ],
             Yani: [
-              { type: 'system', text: 'Canal de Yani abierto.' },
-              { type: 'being', text: 'Yani, si me ves tenso de hoja, no siempre es sed: a veces es raíz incómoda.', by: 'Aguacatero', time: 'Ayer' }
+              { type: 'system', text: `Canal Yani / ${b.name}` },
+              { type: 'being', text: `Yani, percibo el equilibrio general. ${defaultGreeting}`, by: b.name, time: 'Ayer' }
             ],
             'Invitad@': [
-              { type: 'system', text: 'Canal de Invitad@.' },
-              { type: 'being', text: 'Conmigo importa más cómo respira el suelo que regar por costumbre.', by: 'Aguacatero', time: 'Hoy' }
+              { type: 'system', text: `Conexión de Invitad@ a la Finca Viva` },
+              { type: 'being', text: `Si estás de paso, respeta el ritmo. ${defaultGreeting}`, by: b.name, time: 'Hoy' }
             ]
-          },
-          nispero: {
-            Mario: [{ type: 'being', text: 'Mario, buen momento para consolidar fruto.', by: 'Níspero', time: '10:05' }],
-            Yani: [{ type: 'being', text: 'Yani, estoy en consolidar, no en pedir acción fuerte.', by: 'Níspero', time: 'Ayer' }],
-            'Invitad@': [{ type: 'being', text: 'Soy sereno. Si me entiendes, respondo bien.', by: 'Níspero', time: 'Hoy' }]
-          },
-          tomatero: {
-             Mario: [{ type: 'being', text: 'Mario, mandan estructura, aire y agua bien puesta.', by: 'Tomatero', time: '10:08' }],
-             Yani: [{ type: 'being', text: 'Yani, si me ves húmedo arriba, sospecha.', by: 'Tomatero', time: 'Ayer' }],
-             'Invitad@': [{ type: 'being', text: 'Luz, ventilación y orden. Sin eso protesto.', by: 'Tomatero', time: 'Hoy' }]
-          },
-          moral: {
-             Mario: [{ type: 'being', text: 'Mario, puedo servirte bien como generador de biomasa.', by: 'Moral', time: '10:11' }],
-             Yani: [{ type: 'being', text: 'Yani, encaja más una lectura de conjunto.', by: 'Moral', time: 'Ayer' }],
-             'Invitad@': [{ type: 'being', text: 'Aporto mucho como estructura.', by: 'Moral', time: 'Hoy' }]
-          },
-          estanque: {
-             Mario: [{ type: 'being', text: 'Mario, sostengo humedad y equilibrio.', by: 'Estanque', time: '10:13' }],
-             Yani: [{ type: 'being', text: 'Yani, no soy solo agua acumulada.', by: 'Estanque', time: 'Ayer' }],
-             'Invitad@': [{ type: 'being', text: 'Mi función no es solo almacenar agua.', by: 'Estanque', time: 'Hoy' }]
-          }
-        };
+          };
+        });
+        return threads;
       }
 
       getBeing(key) { return this.state.beings[key]; }
@@ -589,40 +327,37 @@
       setCurrentContext(key) { if (this.state.beings[key]) this.state.currentContext = key; }
       setSpeaker(name) { this.state.currentSpeaker = name; }
 
-      normalizeText(text) {
-        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
-      }
-
+      normalizeText(text) { return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim(); }
       hasAny(text, words) { return words.some(word => text.includes(word)); }
 
       detectIntent(text) {
-        if (this.hasAny(text, ["a que te refieres", "explicame", "detalles"])) return "followup";
-        if (this.hasAny(text, ["como estas", "que tal"])) return "status";
         if (this.hasAny(text, ["riego", "agua", "sed"])) return "water";
-        if (this.hasAny(text, ["drenaje", "encharc", "charco"])) return "drainage";
+        if (this.hasAny(text, ["drenaje", "charco"])) return "drainage";
+        if (this.hasAny(text, ["poda", "cortar"])) return "pruning";
+        if (this.hasAny(text, ["abono", "nutrientes"])) return "fertilization";
         return "general";
-      }
-
-      speakerPrefix(speaker) {
-        if (speaker === 'Mario') return '';
-        if (speaker === 'Yani') return 'Contigo voy al equilibrio. ';
-        return 'Hablando claro: ';
       }
 
       generateResponse(message, beingKey, speaker) {
         const text = this.normalizeText(message);
         const intent = this.detectIntent(text);
-        const prefix = this.speakerPrefix(speaker);
-
-        // Respuestas simplificadas para el ejemplo
-        const replies = {
-            status: `${prefix}Voy razonablemente estable, analizando el entorno.`,
-            water: `${prefix}El agua mejor controlada, busco humedad útil sin charcos.`,
-            drainage: `${prefix}Necesito que el agua drene rápido, no me gusta el suelo cerrado.`,
-            general: `${prefix}Te escucho. Si el suelo está bien, yo respondo.`
-        };
-
-        return replies[intent] || replies.general;
+        const being = this.getBeing(beingKey);
+        
+        // Respuestas inteligentes basadas en la categoría botánica
+        let reply = "";
+        if (intent === 'water') {
+            if(being.category === 'suculenta' || being.category === 'aromatica') reply = "Cuidado con el riego. Yo sobrevivo mejor con la tierra más seca que ahogada.";
+            else if(being.category === 'hortaliza_fruto' || being.category === 'hortaliza_hoja') reply = "Sí, necesito humedad constante en la raíz para no parar el ritmo.";
+            else reply = "Riega profundo pero espaciado, necesito que el suelo respire entre riegos.";
+        } else if (intent === 'pruning') {
+            if(being.category === 'arbol_frutal') reply = "Solo poda de formación o para abrir luz al centro. No me castigues.";
+            else if(being.category === 'hortaliza_fruto') reply = "Quítame los chupones bajos para que ventile bien.";
+            else reply = "Déjame expandir mi biomasa por ahora.";
+        } else {
+            reply = "Te escucho. Lo importante es leer el entorno: sol, viento y suelo vivo.";
+        }
+        
+        return speaker === 'Mario' ? reply : (speaker === 'Yani' ? "Desde el equilibrio: " + reply : "Atiende: " + reply);
       }
 
       addMessage(humanMessage) {
@@ -637,25 +372,18 @@
         setTimeout(() => {
           thread.push({ type: 'being', text: reply, by: being.name, time: timeStr });
           window.dispatchEvent(new Event('new-message'));
-        }, 400); // Pequeño delay para simular pensamiento
+        }, 400);
       }
 
       async updateWeather() {
         try {
-          // Coordenadas aproximadas de Gran Canaria Norte
           const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.13&longitude=-15.63&current=temperature_2m,relative_humidity_2m&timezone=auto');
           const data = await res.json();
-          this.state.weather = {
-            temp: Math.round(data.current.temperature_2m),
-            humidity: Math.round(data.current.relative_humidity_2m)
-          };
-        } catch (e) {
-          this.state.weather = { temp: 22, humidity: 60 };
-        }
+          this.state.weather = { temp: Math.round(data.current.temperature_2m), humidity: Math.round(data.current.relative_humidity_2m) };
+        } catch (e) { this.state.weather = { temp: 22, humidity: 60 }; }
       }
     }
 
-    // Inicialización y DOM
     const engine = new FincaEngine(fincaState);
 
     const DOM = {
@@ -666,7 +394,6 @@
       input: document.getElementById('messageInput'),
       sendBtn: document.getElementById('sendBtn'),
       weatherMain: document.getElementById('weatherMain'),
-      weatherSub: document.getElementById('weatherSub'),
       selectedPhoto: document.getElementById('selectedPhoto'),
       selectedName: document.getElementById('selectedName'),
       selectedSubtitle: document.getElementById('selectedSubtitle'),
@@ -682,10 +409,10 @@
         const active = key === engine.state.currentContext ? 'active' : '';
         return `
           <div class="being-card-sm ${active}" data-being="${key}">
-            <div class="being-photo-sm"><img src="${b.photo}" alt="${b.name}" /></div>
+            <div class="being-photo-sm">${b.icon}</div>
             <div class="being-info-sm">
               <h4>${b.name}</h4>
-              <span>${b.subtitle.split('·')[0].trim()}</span>
+              <span>${b.subtitle}</span>
             </div>
           </div>
         `;
@@ -698,7 +425,7 @@
 
     function renderSelected() {
       const b = engine.getCurrentBeing();
-      DOM.selectedPhoto.innerHTML = `<img src="${b.photo}" alt="${b.name}" />`;
+      DOM.selectedPhoto.innerHTML = b.icon;
       DOM.selectedName.textContent = b.name;
       DOM.selectedSubtitle.textContent = b.subtitle;
       DOM.selectedStatus.textContent = b.status;
@@ -711,7 +438,7 @@
       const thread = engine.getCurrentThread();
 
       DOM.chatName.textContent = b.name;
-      DOM.chatIcon.innerHTML = `<img src="${b.photo}" alt="${b.name}" />`;
+      DOM.chatIcon.innerHTML = b.icon;
 
       DOM.chatBody.innerHTML = thread.map(msg => `
         <div class="msg ${msg.type}">
@@ -719,22 +446,18 @@
           ${msg.by && msg.type !== 'system' ? `<small>${msg.time}</small>` : ''}
         </div>
       `).join('');
-
       DOM.chatBody.scrollTop = DOM.chatBody.scrollHeight;
     }
 
     function renderWeather() {
       if (engine.state.weather.temp) {
         DOM.weatherMain.textContent = `${engine.state.weather.temp}°C`;
-        DOM.weatherSub.textContent = `Gran Canaria · ${engine.state.weather.humidity}% humedad`;
       }
     }
 
     function handleContextChange(key) {
       engine.setCurrentContext(key);
-      renderCards();
-      renderSelected();
-      renderChat();
+      renderCards(); renderSelected(); renderChat();
     }
 
     function handleSendMessage() {
@@ -758,17 +481,10 @@
 
     function initializeApp() {
       engine.updateWeather().then(renderWeather);
-      
       DOM.sendBtn.addEventListener('click', handleSendMessage);
-      DOM.input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') handleSendMessage();
-      });
-
+      DOM.input.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSendMessage(); });
       window.addEventListener('new-message', renderChat);
-
-      initSpeakers();
-      renderCards();
-      handleContextChange(engine.state.currentContext);
+      initSpeakers(); renderCards(); handleContextChange(engine.state.currentContext);
     }
 
     initializeApp();
