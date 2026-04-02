@@ -5,19 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Finca Viva · Seres del Universo Sintrópico</title>
   <style>
+    /* =========================================
+       v3 - PALETA VIBRANTE Y DIVERTIDA
+       (Cero pasteles, luz, color puro y contraste)
+       ========================================= */
     :root {
-      --color-bg-deep: #0C0D0E;
-      --color-surface-base: #151618;
-      --color-surface-raised: #202123;
-      --color-bio-green: #39FF14;
-      --color-bio-emerald: #10B981;
-      --color-water-blue: #00E5FF;
-      --color-text-main: #FFFFFF;
-      --color-text-sub: #A0A0A0;
-      --border-ui: 1px solid #333333;
-      --r-xl: 16px;
-      --r-lg: 12px;
-      --r-md: 8px;
+      /* Fondos luminosos */
+      --color-bg-base: #F4F7F6; 
+      --color-surface: #FFFFFF;
+      --color-surface-chat: #F9FAFB;
+      
+      /* Fondos oscuros SOLO para resaltar iconos */
+      --color-icon-bg: #13151A; 
+      
+      /* Colores Vivos y Saturados */
+      --color-vibrant-green: #00D632; /* Verde Sintrópico Puro */
+      --color-vibrant-blue: #0077FF; /* Azul Eléctrico */
+      --color-vibrant-orange: #FF5E00; /* Naranja Energía */
+      --color-vibrant-pink: #FF0066; /* Rosa Fuerte para acentos */
+      
+      /* Texto */
+      --color-text-main: #111827; /* Casi negro para máxima legibilidad */
+      --color-text-sub: #4B5563; /* Gris medio */
+      
+      /* UI */
+      --border-light: 2px solid #E5E7EB;
+      --border-strong: 2px solid #111827;
+      --shadow-fun: 0 8px 24px rgba(0, 214, 50, 0.15);
+      --r-xl: 20px;
+      --r-lg: 14px;
+      --r-md: 10px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,124 +43,147 @@
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       color: var(--color-text-main);
-      background-color: var(--color-bg-deep);
+      background-color: var(--color-bg-base);
       overflow: hidden;
     }
 
-    .app { display: flex; flex-direction: column; height: 100vh; max-width: 1400px; margin: 0 auto; }
+    .app { display: flex; flex-direction: column; height: 100vh; max-width: 1400px; margin: 0 auto; background: var(--color-surface); box-shadow: 0 0 40px rgba(0,0,0,0.05);}
 
-    /* CABECERA */
+    /* CABECERA VIBRANTE */
     .topbar {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 20px; background-color: var(--color-surface-base);
-      border-bottom: var(--border-ui); flex-shrink: 0;
+      padding: 12px 24px; 
+      background: linear-gradient(90deg, var(--color-vibrant-green), #00E676);
+      border-bottom: var(--border-strong); flex-shrink: 0;
     }
     .brand { display: flex; align-items: center; gap: 12px; }
     .logo {
-      width: 32px; height: 32px; border-radius: var(--r-md);
-      display: grid; place-items: center; font-size: 18px;
-      background: linear-gradient(135deg, var(--color-bio-emerald), var(--color-bio-green));
-      color: #000; box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+      width: 36px; height: 36px; border-radius: var(--r-md);
+      display: grid; place-items: center; font-size: 20px;
+      background: var(--color-icon-bg); /* Fondo oscuro para el logo */
+      border: 2px solid #FFF;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
-    .brand-title { font-size: 20px; font-weight: 800; color: var(--color-text-main); letter-spacing: -0.02em; }
-    .brand-subtitle { font-size: 12px; color: var(--color-text-sub); }
+    .brand-title { font-size: 22px; font-weight: 900; color: #FFFFFF; letter-spacing: -0.02em; text-shadow: 1px 1px 0px rgba(0,0,0,0.2);}
+    .brand-subtitle { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); }
     .pill-top {
-      padding: 4px 10px; border-radius: 999px; background: rgba(57, 255, 20, 0.1);
-      border: 1px solid rgba(57, 255, 20, 0.3); color: var(--color-bio-green);
-      font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+      padding: 6px 12px; border-radius: 999px; background: var(--color-icon-bg);
+      border: 2px solid #FFF; color: var(--color-vibrant-green);
+      font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px;
     }
-    .weather-compact { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--color-text-sub); }
-    .weather-compact .temp { font-weight: bold; color: var(--color-text-main); }
+    .weather-compact { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; color: #FFF; background: rgba(0,0,0,0.15); padding: 6px 14px; border-radius: 999px;}
 
     /* LAYOUT */
     .main-content { display: flex; flex: 1; overflow: hidden; }
 
     /* COLUMNA IZQUIERDA */
     .left-col {
-      width: 350px; background-color: var(--color-surface-raised);
-      border-right: var(--border-ui); display: flex; flex-direction: column; overflow-y: hidden;
+      width: 360px; background-color: var(--color-surface);
+      border-right: var(--border-light); display: flex; flex-direction: column; overflow-y: hidden;
+      z-index: 2;
     }
     .section-head-compact {
-      padding: 15px 20px 10px; font-size: 11px; font-weight: 700;
-      color: var(--color-text-sub); text-transform: uppercase; letter-spacing: 1px;
-      border-bottom: var(--border-ui); flex-shrink: 0;
+      padding: 18px 20px 12px; font-size: 12px; font-weight: 800;
+      color: var(--color-vibrant-blue); text-transform: uppercase; letter-spacing: 1px;
+      border-bottom: var(--border-light); flex-shrink: 0; background: var(--color-surface);
     }
     .beings-list {
-      display: flex; flex-direction: column; gap: 5px; padding: 10px 15px;
-      overflow-y: auto; flex: 1;
+      display: flex; flex-direction: column; gap: 8px; padding: 15px;
+      overflow-y: auto; flex: 1; background: var(--color-bg-base);
     }
-    /* Estilo barra scroll */
-    .beings-list::-webkit-scrollbar { width: 6px; }
-    .beings-list::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
+    .beings-list::-webkit-scrollbar { width: 8px; }
+    .beings-list::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
 
+    /* TARJETAS DE SERES */
     .being-card-sm {
-      background-color: var(--color-surface-base); border: 1px solid transparent;
-      border-radius: var(--r-md); padding: 8px 12px; display: flex; align-items: center;
-      gap: 12px; cursor: pointer; transition: all 0.2s ease;
+      background-color: var(--color-surface); 
+      border: 2px solid #E5E7EB;
+      border-radius: var(--r-lg); padding: 10px 12px; display: flex; align-items: center;
+      gap: 14px; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
-    .being-card-sm:hover { background-color: #2A2B2D; }
+    .being-card-sm:hover { transform: translateY(-2px); border-color: var(--color-vibrant-blue); box-shadow: 0 6px 12px rgba(0, 119, 255, 0.1); }
     .being-card-sm.active {
-      border-color: var(--color-bio-emerald); background-color: rgba(16, 185, 129, 0.05);
-      box-shadow: inset 2px 0 0 var(--color-bio-green);
+      border-color: var(--color-vibrant-green); background-color: #F0FDF4;
+      box-shadow: 0 4px 15px rgba(0, 214, 50, 0.15);
     }
+    
+    /* EL ICONO RESALTADO (Fondo oscuro) */
     .being-photo-sm {
-      width: 36px; height: 36px; border-radius: 50%; overflow: hidden;
-      flex-shrink: 0; border: 1px solid #444; background: #222; display:grid; place-items:center; font-size: 18px;
+      width: 44px; height: 44px; border-radius: 12px; overflow: hidden;
+      flex-shrink: 0; background: var(--color-icon-bg); display:grid; place-items:center; font-size: 24px;
+      border: 2px solid var(--color-surface); box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-    .being-info-sm h4 { font-size: 14px; font-weight: 600; color: var(--color-text-main); margin-bottom: 2px;}
-    .being-info-sm span { font-size: 11px; color: var(--color-text-sub); }
+    .being-card-sm.active .being-photo-sm { border-color: var(--color-vibrant-green); }
 
-    .detail-panel { padding: 20px; background-color: var(--color-bg-deep); border-top: var(--border-ui); flex-shrink: 0; }
+    .being-info-sm h4 { font-size: 15px; font-weight: 800; color: var(--color-text-main); margin-bottom: 2px;}
+    .being-info-sm span { font-size: 12px; font-weight: 500; color: var(--color-text-sub); }
+
+    /* PANEL DE DETALLE INFERIOR */
+    .detail-panel { padding: 20px; background-color: var(--color-surface); border-top: var(--border-light); flex-shrink: 0; box-shadow: 0 -4px 15px rgba(0,0,0,0.03);}
     .selected-top { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
     .selected-photo {
-      width: 60px; height: 60px; border-radius: var(--r-lg); border: 2px solid var(--color-surface-raised);
-      background: #222; display:grid; place-items:center; font-size: 30px;
+      width: 60px; height: 60px; border-radius: var(--r-lg); border: 3px solid var(--color-vibrant-orange);
+      background: var(--color-icon-bg); display:grid; place-items:center; font-size: 30px;
+      box-shadow: 0 4px 10px rgba(255, 94, 0, 0.2);
     }
-    .selected-name { font-size: 20px; font-weight: 800; color: var(--color-bio-green); }
-    .selected-sub { font-size: 12px; color: var(--color-text-sub); }
-    .mini-panel { background-color: var(--color-surface-base); border: var(--border-ui); border-radius: var(--r-md); padding: 10px; margin-bottom: 10px; }
-    .mini-panel strong { display: block; font-size: 10px; text-transform: uppercase; color: var(--color-bio-emerald); margin-bottom: 4px; }
-    .mini-panel span { font-size: 12px; line-height: 1.4; color: var(--color-text-main); }
+    .selected-name { font-size: 22px; font-weight: 900; color: var(--color-text-main); }
+    .selected-sub { font-size: 13px; font-weight: 600; color: var(--color-vibrant-blue); }
+    .mini-panel { background-color: var(--color-bg-base); border: 2px solid #E5E7EB; border-radius: var(--r-md); padding: 12px; margin-bottom: 10px; }
+    .mini-panel strong { display: block; font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--color-vibrant-orange); margin-bottom: 4px; }
+    .mini-panel span { font-size: 13px; font-weight: 500; line-height: 1.4; color: var(--color-text-main); }
 
-    /* CHAT */
-    .chat-area { flex: 1; display: flex; flex-direction: column; background-color: var(--color-bg-deep); position: relative; }
-    .chat-area::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(16, 185, 129, 0.03) 0%, transparent 70%); pointer-events: none; }
+    /* CHAT PROTAGONISTA */
+    .chat-area { flex: 1; display: flex; flex-direction: column; background-color: var(--color-surface-chat); position: relative; }
     
     .chat-header {
-      padding: 15px 25px; border-bottom: var(--border-ui); background-color: rgba(21, 22, 24, 0.8);
-      backdrop-filter: blur(10px); display: flex; justify-content: space-between; align-items: center; z-index: 10;
+      padding: 15px 25px; border-bottom: var(--border-light); background-color: var(--color-surface);
+      display: flex; justify-content: space-between; align-items: center; z-index: 10;
     }
-    .chat-title-group { display: flex; align-items: center; gap: 12px; }
-    .chat-icon-lg { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #444; background: #222; display:grid; place-items:center; font-size: 20px;}
-    .chat-name-lg { font-size: 16px; font-weight: 700; color: var(--color-text-main); }
-    .sync-status { font-size: 11px; color: var(--color-water-blue); display: flex; align-items: center; gap: 4px;}
-    .sync-status::before { content: "●"; animation: pulse 2s infinite; }
-    @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+    .chat-title-group { display: flex; align-items: center; gap: 14px; }
+    .chat-icon-lg { width: 48px; height: 48px; border-radius: 14px; border: 2px solid var(--color-vibrant-blue); background: var(--color-icon-bg); display:grid; place-items:center; font-size: 24px; box-shadow: 0 4px 10px rgba(0, 119, 255, 0.2);}
+    .chat-name-lg { font-size: 18px; font-weight: 900; color: var(--color-text-main); }
+    .sync-status { font-size: 12px; font-weight: 700; color: var(--color-vibrant-green); display: flex; align-items: center; gap: 6px;}
+    .sync-status::before { content: "●"; font-size: 16px; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { opacity: 0.2; } 50% { opacity: 1; } 100% { opacity: 0.2; } }
 
-    .voice-selector { display: flex; align-items: center; background: var(--color-surface-raised); border-radius: 999px; padding: 3px; border: var(--border-ui); }
-    .voice-label { font-size: 10px; text-transform: uppercase; color: var(--color-text-sub); padding: 0 10px; font-weight: 600;}
-    .speaker-btn { background: transparent; color: var(--color-text-sub); border: none; padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-    .speaker-btn.active { background: var(--color-surface-base); color: var(--color-bio-green); box-shadow: 0 2px 5px rgba(0,0,0,0.2); border: 1px solid #333; }
+    /* SELECTOR DE VOZ VIBRANTE */
+    .voice-selector { display: flex; align-items: center; background: #E5E7EB; border-radius: 999px; padding: 4px; border: 2px solid #D1D5DB; }
+    .voice-label { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--color-text-sub); padding: 0 12px;}
+    .speaker-btn { background: transparent; color: var(--color-text-sub); border: none; padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+    .speaker-btn.active { background: var(--color-surface); color: var(--color-vibrant-blue); box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 2px solid var(--color-vibrant-blue); }
 
-    .chat-viewport { flex: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 15px; z-index: 5; }
-    .msg { max-width: 75%; padding: 12px 16px; border-radius: var(--r-md); font-size: 14px; line-height: 1.5; position: relative; }
-    .msg small { display: block; margin-top: 5px; font-size: 10px; opacity: 0.6; text-align: right; }
-    .msg.system { align-self: center; background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.1); color: var(--color-water-blue); font-size: 12px; text-align: center; max-width: 90%; border-radius: 999px; padding: 6px 16px; }
-    .msg.being { align-self: flex-start; background-color: var(--color-surface-raised); border: var(--border-ui); border-bottom-left-radius: 0; color: var(--color-text-main); }
-    .msg.being strong { color: var(--color-bio-emerald); }
-    .msg.human { align-self: flex-end; background: linear-gradient(135deg, #1A3A2B, #0F4C3A); border: 1px solid var(--color-bio-emerald); border-bottom-right-radius: 0; color: var(--color-text-main); }
+    .chat-viewport { flex: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 18px; z-index: 5; }
+    
+    /* BURBUJAS DE MENSAJE DIVERTIDAS */
+    .msg { max-width: 75%; padding: 14px 18px; border-radius: var(--r-xl); font-size: 15px; font-weight: 500; line-height: 1.5; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .msg small { display: block; margin-top: 6px; font-size: 11px; font-weight: 700; opacity: 0.5; text-align: right; }
+    
+    .msg.system { align-self: center; background: #FFFBEB; border: 2px solid #FCD34D; color: #D97706; font-size: 12px; font-weight: 800; text-align: center; max-width: 90%; border-radius: 999px; padding: 8px 20px; box-shadow: none;}
+    
+    /* Mensaje Bot (Planta) */
+    .msg.being { align-self: flex-start; background-color: var(--color-surface); border: 2px solid #E5E7EB; border-bottom-left-radius: 4px; color: var(--color-text-main); }
+    .msg.being strong { color: var(--color-vibrant-green); font-weight: 900;}
+    
+    /* Mensaje Humano */
+    .msg.human { align-self: flex-end; background: var(--color-vibrant-blue); border: 2px solid var(--color-vibrant-blue); border-bottom-right-radius: 4px; color: #FFFFFF; }
+    .msg.human small { color: rgba(255,255,255,0.8); }
 
-    .input-area { padding: 15px 25px; background-color: var(--color-surface-base); border-top: var(--border-ui); display: flex; gap: 10px; z-index: 10; }
-    input[type="text"] { flex: 1; background-color: var(--color-surface-raised); border: 1px solid #444; color: var(--color-text-main); padding: 14px 20px; border-radius: 999px; font-size: 14px; outline: none; }
-    input[type="text"]:focus { border-color: var(--color-bio-green); }
-    .send-btn { background-color: var(--color-bio-green); color: #000; border: none; padding: 0 25px; border-radius: 999px; font-size: 14px; font-weight: 800; cursor: pointer; }
+    /* INPUT AREA */
+    .input-area { padding: 20px 25px; background-color: var(--color-surface); border-top: var(--border-light); display: flex; gap: 12px; z-index: 10; }
+    input[type="text"] { flex: 1; background-color: var(--color-bg-base); border: 2px solid #D1D5DB; color: var(--color-text-main); padding: 16px 24px; border-radius: 999px; font-size: 15px; font-weight: 500; outline: none; transition: all 0.2s; }
+    input[type="text"]:focus { border-color: var(--color-vibrant-green); background: var(--color-surface); box-shadow: 0 0 0 4px rgba(0, 214, 50, 0.1);}
+    input[type="text"]::placeholder { color: #9CA3AF; font-weight: 500;}
+    
+    .send-btn { background-color: var(--color-icon-bg); color: var(--color-vibrant-green); border: 2px solid var(--color-vibrant-green); padding: 0 30px; border-radius: 999px; font-size: 15px; font-weight: 900; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px;}
+    .send-btn:hover { background-color: var(--color-vibrant-green); color: var(--color-icon-bg); transform: scale(1.02); }
 
     @media (max-width: 900px) {
       .main-content { flex-direction: column; }
-      .left-col { width: 100%; height: 40vh; border-right: none; border-bottom: var(--border-ui); }
+      .left-col { width: 100%; height: 40vh; border-right: none; border-bottom: var(--border-strong); }
       .detail-panel { display: none; }
       .chat-area { height: 60vh; }
-      .chat-header { flex-direction: column; align-items: flex-start; gap: 10px;}
+      .chat-header { flex-direction: column; align-items: flex-start; gap: 15px;}
     }
   </style>
 </head>
@@ -160,9 +200,8 @@
       <div class="weather-compact">
         <span class="icon">⛅</span>
         <span class="temp" id="weatherMain">--°C</span>
-        <span id="weatherSub">Analizando entorno...</span>
       </div>
-      <div class="pill-top">Sistema Alta Densidad</div>
+      <div class="pill-top">Sistema Activo</div>
     </header>
 
     <main class="main-content">
@@ -201,7 +240,7 @@
         </div>
         <div class="chat-viewport" id="chatBody"></div>
         <div class="input-area">
-          <input id="messageInput" type="text" autocomplete="off" placeholder="Inicia conexión verbal..." />
+          <input id="messageInput" type="text" autocomplete="off" placeholder="Escribe aquí para hablar con la planta..." />
           <button class="send-btn" id="sendBtn">Enviar</button>
         </div>
       </section>
@@ -258,7 +297,6 @@
       { id: 'lirios', name: 'Lirios acuáticos', sub: 'Nymphaeaceae', cat: 'acuatico', icon: '🪷' }
     ];
 
-    // Generador dinámico de estado
     const generatedBeings = {};
     rawBeingsData.forEach(b => {
       generatedBeings[b.id] = {
@@ -283,7 +321,6 @@
         this.threads = this.buildInitialThreads();
       }
 
-      // El cerebro algorítmico: Genera diálogos iniciales basados en la categoría
       buildInitialThreads() {
         const threads = {};
         Object.keys(this.state.beings).forEach(key => {
@@ -291,14 +328,14 @@
           let defaultGreeting = '';
           
           switch(b.category) {
-            case 'arbol_frutal': defaultGreeting = 'Estabilizando mi crecimiento. Enraizando profundo para sostener la estructura.'; break;
-            case 'citrico': defaultGreeting = 'Sintetizando luz. Necesito buen drenaje y vigilancia en mis hojas nuevas.'; break;
-            case 'subtropical': defaultGreeting = 'Buscando calor y humedad ambiental. La protección del viento me da la vida.'; break;
-            case 'hortaliza_fruto': defaultGreeting = 'Consumiendo mucha energía para cuajar fruto rápido. El suelo vivo es mi motor.'; break;
+            case 'arbol_frutal': defaultGreeting = 'Estabilizando crecimiento. Enraizando para sostener estructura.'; break;
+            case 'citrico': defaultGreeting = 'Sintetizando luz. Necesito buen drenaje en mis raíces.'; break;
+            case 'subtropical': defaultGreeting = 'Buscando calor. La protección del viento me da la vida.'; break;
+            case 'hortaliza_fruto': defaultGreeting = 'Consumiendo energía para cuajar fruto. El suelo vivo es mi motor.'; break;
             case 'hortaliza_hoja': defaultGreeting = 'Manteniendo frescor para no espigarme antes de tiempo.'; break;
-            case 'raiz': defaultGreeting = 'Trabajando bajo tierra. Si el suelo está suelto y aireado, engordo bien.'; break;
+            case 'raiz': defaultGreeting = 'Trabajando bajo tierra. Si el suelo está suelto, engordo bien.'; break;
             case 'aromatica': defaultGreeting = 'Concentrando aceites esenciales al sol. Poca agua, mucha luz.'; break;
-            case 'suculenta': defaultGreeting = 'Administrando mis propias reservas de agua. No me ahogues.'; break;
+            case 'suculenta': defaultGreeting = 'Administrando mis propias reservas. No me ahogues.'; break;
             case 'acuatico': defaultGreeting = 'Filtrando el sistema. Aportando oxigenación y cobijo.'; break;
             default: defaultGreeting = 'Sincronizando con la biósfera de la finca.';
           }
@@ -310,10 +347,10 @@
             ],
             Yani: [
               { type: 'system', text: `Canal Yani / ${b.name}` },
-              { type: 'being', text: `Yani, percibo el equilibrio general. ${defaultGreeting}`, by: b.name, time: 'Ayer' }
+              { type: 'being', text: `Yani, percibo el equilibrio. ${defaultGreeting}`, by: b.name, time: 'Ayer' }
             ],
             'Invitad@': [
-              { type: 'system', text: `Conexión de Invitad@ a la Finca Viva` },
+              { type: 'system', text: `Conexión a la Finca Viva` },
               { type: 'being', text: `Si estás de paso, respeta el ritmo. ${defaultGreeting}`, by: b.name, time: 'Hoy' }
             ]
           };
@@ -343,14 +380,13 @@
         const intent = this.detectIntent(text);
         const being = this.getBeing(beingKey);
         
-        // Respuestas inteligentes basadas en la categoría botánica
         let reply = "";
         if (intent === 'water') {
-            if(being.category === 'suculenta' || being.category === 'aromatica') reply = "Cuidado con el riego. Yo sobrevivo mejor con la tierra más seca que ahogada.";
-            else if(being.category === 'hortaliza_fruto' || being.category === 'hortaliza_hoja') reply = "Sí, necesito humedad constante en la raíz para no parar el ritmo.";
-            else reply = "Riega profundo pero espaciado, necesito que el suelo respire entre riegos.";
+            if(being.category === 'suculenta' || being.category === 'aromatica') reply = "Cuidado con el riego. Sobrevivo mejor con la tierra seca que ahogada.";
+            else if(being.category === 'hortaliza_fruto' || being.category === 'hortaliza_hoja') reply = "Sí, necesito humedad constante en la raíz para mantener el ritmo.";
+            else reply = "Riega profundo pero espaciado, necesito respirar entre riegos.";
         } else if (intent === 'pruning') {
-            if(being.category === 'arbol_frutal') reply = "Solo poda de formación o para abrir luz al centro. No me castigues.";
+            if(being.category === 'arbol_frutal') reply = "Solo poda de formación o para abrir luz. No me castigues.";
             else if(being.category === 'hortaliza_fruto') reply = "Quítame los chupones bajos para que ventile bien.";
             else reply = "Déjame expandir mi biomasa por ahora.";
         } else {
@@ -380,7 +416,7 @@
           const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.13&longitude=-15.63&current=temperature_2m,relative_humidity_2m&timezone=auto');
           const data = await res.json();
           this.state.weather = { temp: Math.round(data.current.temperature_2m), humidity: Math.round(data.current.relative_humidity_2m) };
-        } catch (e) { this.state.weather = { temp: 22, humidity: 60 }; }
+        } catch (e) { this.state.weather = { temp: 24, humidity: 65 }; }
       }
     }
 
