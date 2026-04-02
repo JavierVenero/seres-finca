@@ -3,35 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Finca Viva · Seres del Universo Sintrópico</title>
+  <title>Finca Viva · Panel de Biodiversidad</title>
   <style>
     /* =========================================
-       v3 - PALETA VIBRANTE Y DIVERTIDA
-       (Cero pasteles, luz, color puro y contraste)
+       v4 - TABLERO DE ALTA DENSIDAD Y COLOR
+       (Grid total, sin scroll, gestión de seres)
        ========================================= */
     :root {
-      /* Fondos luminosos */
       --color-bg-base: #F4F7F6; 
       --color-surface: #FFFFFF;
-      --color-surface-chat: #F9FAFB;
+      --color-surface-grid: #Eef2f0; /* Fondo sutil para el grid */
       
-      /* Fondos oscuros SOLO para resaltar iconos */
       --color-icon-bg: #13151A; 
       
-      /* Colores Vivos y Saturados */
-      --color-vibrant-green: #00D632; /* Verde Sintrópico Puro */
-      --color-vibrant-blue: #0077FF; /* Azul Eléctrico */
-      --color-vibrant-orange: #FF5E00; /* Naranja Energía */
-      --color-vibrant-pink: #FF0066; /* Rosa Fuerte para acentos */
+      --color-vibrant-green: #00D632; 
+      --color-vibrant-blue: #0077FF; 
+      --color-vibrant-orange: #FF5E00; 
+      --color-vibrant-red: #FF0033; /* Para eliminar */
       
-      /* Texto */
-      --color-text-main: #111827; /* Casi negro para máxima legibilidad */
-      --color-text-sub: #4B5563; /* Gris medio */
+      --color-text-main: #111827; 
+      --color-text-sub: #4B5563; 
       
-      /* UI */
       --border-light: 2px solid #E5E7EB;
       --border-strong: 2px solid #111827;
-      --shadow-fun: 0 8px 24px rgba(0, 214, 50, 0.15);
       --r-xl: 20px;
       --r-lg: 14px;
       --r-md: 10px;
@@ -47,7 +41,7 @@
       overflow: hidden;
     }
 
-    .app { display: flex; flex-direction: column; height: 100vh; max-width: 1400px; margin: 0 auto; background: var(--color-surface); box-shadow: 0 0 40px rgba(0,0,0,0.05);}
+    .app { display: flex; flex-direction: column; height: 100vh; max-width: 1600px; margin: 0 auto; background: var(--color-surface); box-shadow: 0 0 40px rgba(0,0,0,0.05);}
 
     /* CABECERA VIBRANTE */
     .topbar {
@@ -60,130 +54,119 @@
     .logo {
       width: 36px; height: 36px; border-radius: var(--r-md);
       display: grid; place-items: center; font-size: 20px;
-      background: var(--color-icon-bg); /* Fondo oscuro para el logo */
-      border: 2px solid #FFF;
+      background: var(--color-icon-bg); border: 2px solid #FFF;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
     .brand-title { font-size: 22px; font-weight: 900; color: #FFFFFF; letter-spacing: -0.02em; text-shadow: 1px 1px 0px rgba(0,0,0,0.2);}
     .brand-subtitle { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); }
-    .pill-top {
-      padding: 6px 12px; border-radius: 999px; background: var(--color-icon-bg);
-      border: 2px solid #FFF; color: var(--color-vibrant-green);
-      font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px;
-    }
+    
+    .header-actions { display: flex; gap: 10px; align-items: center; }
     .weather-compact { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; color: #FFF; background: rgba(0,0,0,0.15); padding: 6px 14px; border-radius: 999px;}
+    .btn-add-main { 
+      background: var(--color-icon-bg); color: var(--color-vibrant-green); 
+      border: 2px solid #FFF; padding: 6px 16px; border-radius: 999px; 
+      font-size: 13px; font-weight: 900; cursor: pointer; text-transform: uppercase;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s;
+    }
+    .btn-add-main:hover { transform: scale(1.05); }
 
-    /* LAYOUT */
+    /* LAYOUT: GRID + DETALLE */
     .main-content { display: flex; flex: 1; overflow: hidden; }
 
-    /* COLUMNA IZQUIERDA */
-    .left-col {
-      width: 360px; background-color: var(--color-surface);
-      border-right: var(--border-light); display: flex; flex-direction: column; overflow-y: hidden;
-      z-index: 2;
+    /* PANEL LATERAL DE DETALLE (Izquierda) */
+    .detail-col {
+      width: 320px; background-color: var(--color-surface);
+      border-right: var(--border-light); display: flex; flex-direction: column; 
+      z-index: 2; overflow-y: auto;
     }
-    .section-head-compact {
-      padding: 18px 20px 12px; font-size: 12px; font-weight: 800;
-      color: var(--color-vibrant-blue); text-transform: uppercase; letter-spacing: 1px;
-      border-bottom: var(--border-light); flex-shrink: 0; background: var(--color-surface);
+    .detail-header {
+      padding: 20px; border-bottom: var(--border-light); text-align: center;
+      background: var(--color-bg-base);
     }
-    .beings-list {
-      display: flex; flex-direction: column; gap: 8px; padding: 15px;
-      overflow-y: auto; flex: 1; background: var(--color-bg-base);
-    }
-    .beings-list::-webkit-scrollbar { width: 8px; }
-    .beings-list::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
-
-    /* TARJETAS DE SERES */
-    .being-card-sm {
-      background-color: var(--color-surface); 
-      border: 2px solid #E5E7EB;
-      border-radius: var(--r-lg); padding: 10px 12px; display: flex; align-items: center;
-      gap: 14px; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-    }
-    .being-card-sm:hover { transform: translateY(-2px); border-color: var(--color-vibrant-blue); box-shadow: 0 6px 12px rgba(0, 119, 255, 0.1); }
-    .being-card-sm.active {
-      border-color: var(--color-vibrant-green); background-color: #F0FDF4;
-      box-shadow: 0 4px 15px rgba(0, 214, 50, 0.15);
-    }
-    
-    /* EL ICONO RESALTADO (Fondo oscuro) */
-    .being-photo-sm {
-      width: 44px; height: 44px; border-radius: 12px; overflow: hidden;
-      flex-shrink: 0; background: var(--color-icon-bg); display:grid; place-items:center; font-size: 24px;
-      border: 2px solid var(--color-surface); box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-    .being-card-sm.active .being-photo-sm { border-color: var(--color-vibrant-green); }
-
-    .being-info-sm h4 { font-size: 15px; font-weight: 800; color: var(--color-text-main); margin-bottom: 2px;}
-    .being-info-sm span { font-size: 12px; font-weight: 500; color: var(--color-text-sub); }
-
-    /* PANEL DE DETALLE INFERIOR */
-    .detail-panel { padding: 20px; background-color: var(--color-surface); border-top: var(--border-light); flex-shrink: 0; box-shadow: 0 -4px 15px rgba(0,0,0,0.03);}
-    .selected-top { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
     .selected-photo {
-      width: 60px; height: 60px; border-radius: var(--r-lg); border: 3px solid var(--color-vibrant-orange);
-      background: var(--color-icon-bg); display:grid; place-items:center; font-size: 30px;
-      box-shadow: 0 4px 10px rgba(255, 94, 0, 0.2);
+      width: 90px; height: 90px; border-radius: var(--r-lg); border: 4px solid var(--color-vibrant-orange);
+      background: var(--color-icon-bg); display:grid; place-items:center; font-size: 45px;
+      margin: 0 auto 15px; box-shadow: 0 6px 15px rgba(255, 94, 0, 0.2);
     }
-    .selected-name { font-size: 22px; font-weight: 900; color: var(--color-text-main); }
-    .selected-sub { font-size: 13px; font-weight: 600; color: var(--color-vibrant-blue); }
-    .mini-panel { background-color: var(--color-bg-base); border: 2px solid #E5E7EB; border-radius: var(--r-md); padding: 12px; margin-bottom: 10px; }
-    .mini-panel strong { display: block; font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--color-vibrant-orange); margin-bottom: 4px; }
-    .mini-panel span { font-size: 13px; font-weight: 500; line-height: 1.4; color: var(--color-text-main); }
-
-    /* CHAT PROTAGONISTA */
-    .chat-area { flex: 1; display: flex; flex-direction: column; background-color: var(--color-surface-chat); position: relative; }
+    .selected-name { font-size: 26px; font-weight: 900; color: var(--color-text-main); line-height: 1.1;}
+    .selected-sub { font-size: 14px; font-weight: 700; color: var(--color-vibrant-blue); margin-top: 4px;}
     
-    .chat-header {
-      padding: 15px 25px; border-bottom: var(--border-light); background-color: var(--color-surface);
-      display: flex; justify-content: space-between; align-items: center; z-index: 10;
+    .detail-body { padding: 20px; flex: 1; }
+    .mini-panel { background-color: var(--color-surface); border: 2px solid #E5E7EB; border-radius: var(--r-md); padding: 14px; margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+    .mini-panel strong { display: block; font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--color-vibrant-orange); margin-bottom: 6px; }
+    .mini-panel span { font-size: 14px; font-weight: 500; line-height: 1.5; color: var(--color-text-main); }
+
+    .detail-footer { padding: 20px; border-top: var(--border-light); background: #FFF9FA; }
+    .btn-delete {
+      width: 100%; background: #FFF; border: 2px solid var(--color-vibrant-red);
+      color: var(--color-vibrant-red); padding: 12px; border-radius: var(--r-md);
+      font-size: 13px; font-weight: 800; cursor: pointer; text-transform: uppercase;
+      transition: all 0.2s;
     }
-    .chat-title-group { display: flex; align-items: center; gap: 14px; }
-    .chat-icon-lg { width: 48px; height: 48px; border-radius: 14px; border: 2px solid var(--color-vibrant-blue); background: var(--color-icon-bg); display:grid; place-items:center; font-size: 24px; box-shadow: 0 4px 10px rgba(0, 119, 255, 0.2);}
-    .chat-name-lg { font-size: 18px; font-weight: 900; color: var(--color-text-main); }
-    .sync-status { font-size: 12px; font-weight: 700; color: var(--color-vibrant-green); display: flex; align-items: center; gap: 6px;}
-    .sync-status::before { content: "●"; font-size: 16px; animation: pulse 2s infinite; }
-    @keyframes pulse { 0% { opacity: 0.2; } 50% { opacity: 1; } 100% { opacity: 0.2; } }
+    .btn-delete:hover { background: var(--color-vibrant-red); color: #FFF; }
 
-    /* SELECTOR DE VOZ VIBRANTE */
-    .voice-selector { display: flex; align-items: center; background: #E5E7EB; border-radius: 999px; padding: 4px; border: 2px solid #D1D5DB; }
-    .voice-label { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--color-text-sub); padding: 0 12px;}
-    .speaker-btn { background: transparent; color: var(--color-text-sub); border: none; padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 800; cursor: pointer; transition: all 0.2s; }
-    .speaker-btn.active { background: var(--color-surface); color: var(--color-vibrant-blue); box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 2px solid var(--color-vibrant-blue); }
+    /* ÁREA DEL GRID (Derecha) */
+    .grid-area {
+      flex: 1; background-color: var(--color-surface-grid); 
+      padding: 20px; overflow-y: auto;
+      /* Configuración clave para ver todo sin scroll */
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+      grid-auto-rows: 95px;
+      gap: 12px;
+      align-content: start;
+    }
 
-    .chat-viewport { flex: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 18px; z-index: 5; }
+    /* TARJETA / TILE DEL SER */
+    .being-tile {
+      background: var(--color-surface); border: 2px solid #D1D5DB;
+      border-radius: var(--r-md); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 8px;
+      cursor: pointer; transition: all 0.15s ease; position: relative;
+    }
+    .being-tile:hover { border-color: var(--color-vibrant-blue); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,119,255,0.15);}
+    .being-tile.active {
+      border-color: var(--color-vibrant-green); background: #F0FDF4;
+      box-shadow: 0 4px 12px rgba(0,214,50,0.2);
+    }
+    .tile-icon { font-size: 34px; line-height: 1; margin-bottom: 6px; }
+    .tile-name { 
+      font-size: 11px; font-weight: 800; color: var(--color-text-main); 
+      text-align: center; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
     
-    /* BURBUJAS DE MENSAJE DIVERTIDAS */
-    .msg { max-width: 75%; padding: 14px 18px; border-radius: var(--r-xl); font-size: 15px; font-weight: 500; line-height: 1.5; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .msg small { display: block; margin-top: 6px; font-size: 11px; font-weight: 700; opacity: 0.5; text-align: right; }
+    /* MODAL AÑADIR SER */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(17, 24, 39, 0.8);
+      display: flex; justify-content: center; align-items: center; z-index: 100;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
+    .modal-content {
+      background: var(--color-surface); width: 400px; border-radius: var(--r-xl);
+      padding: 30px; border: var(--border-strong); box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      transform: translateY(20px); transition: transform 0.2s;
+    }
+    .modal-overlay.open .modal-content { transform: translateY(0); }
+    .modal-header { font-size: 20px; font-weight: 900; margin-bottom: 20px; color: var(--color-vibrant-blue);}
     
-    .msg.system { align-self: center; background: #FFFBEB; border: 2px solid #FCD34D; color: #D97706; font-size: 12px; font-weight: 800; text-align: center; max-width: 90%; border-radius: 999px; padding: 8px 20px; box-shadow: none;}
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 800; margin-bottom: 6px; color: var(--color-text-sub); text-transform: uppercase;}
+    .form-group input, .form-group select {
+      width: 100%; padding: 12px; border: 2px solid #D1D5DB; border-radius: var(--r-md);
+      font-size: 14px; font-weight: 500; font-family: inherit;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--color-vibrant-green); outline: none; }
     
-    /* Mensaje Bot (Planta) */
-    .msg.being { align-self: flex-start; background-color: var(--color-surface); border: 2px solid #E5E7EB; border-bottom-left-radius: 4px; color: var(--color-text-main); }
-    .msg.being strong { color: var(--color-vibrant-green); font-weight: 900;}
-    
-    /* Mensaje Humano */
-    .msg.human { align-self: flex-end; background: var(--color-vibrant-blue); border: 2px solid var(--color-vibrant-blue); border-bottom-right-radius: 4px; color: #FFFFFF; }
-    .msg.human small { color: rgba(255,255,255,0.8); }
+    .modal-actions { display: flex; gap: 10px; margin-top: 25px; }
+    .btn-cancel { flex: 1; padding: 12px; background: #F3F4F6; border: none; border-radius: var(--r-md); font-weight: 800; cursor: pointer; color: var(--color-text-sub); }
+    .btn-save { flex: 1; padding: 12px; background: var(--color-vibrant-green); border: none; border-radius: var(--r-md); font-weight: 900; cursor: pointer; color: #111827; }
 
-    /* INPUT AREA */
-    .input-area { padding: 20px 25px; background-color: var(--color-surface); border-top: var(--border-light); display: flex; gap: 12px; z-index: 10; }
-    input[type="text"] { flex: 1; background-color: var(--color-bg-base); border: 2px solid #D1D5DB; color: var(--color-text-main); padding: 16px 24px; border-radius: 999px; font-size: 15px; font-weight: 500; outline: none; transition: all 0.2s; }
-    input[type="text"]:focus { border-color: var(--color-vibrant-green); background: var(--color-surface); box-shadow: 0 0 0 4px rgba(0, 214, 50, 0.1);}
-    input[type="text"]::placeholder { color: #9CA3AF; font-weight: 500;}
-    
-    .send-btn { background-color: var(--color-icon-bg); color: var(--color-vibrant-green); border: 2px solid var(--color-vibrant-green); padding: 0 30px; border-radius: 999px; font-size: 15px; font-weight: 900; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px;}
-    .send-btn:hover { background-color: var(--color-vibrant-green); color: var(--color-icon-bg); transform: scale(1.02); }
-
+    /* RESPONSIVE MÍNIMO */
     @media (max-width: 900px) {
       .main-content { flex-direction: column; }
-      .left-col { width: 100%; height: 40vh; border-right: none; border-bottom: var(--border-strong); }
-      .detail-panel { display: none; }
-      .chat-area { height: 60vh; }
-      .chat-header { flex-direction: column; align-items: flex-start; gap: 15px;}
+      .detail-col { width: 100%; height: 40vh; border-right: none; border-bottom: var(--border-strong); }
+      .grid-area { height: 60vh; }
     }
   </style>
 </head>
@@ -197,58 +180,74 @@
           <div class="brand-subtitle">Gemelo Digital Sintrópico</div>
         </div>
       </div>
-      <div class="weather-compact">
-        <span class="icon">⛅</span>
-        <span class="temp" id="weatherMain">--°C</span>
+      <div class="header-actions">
+        <div class="weather-compact"><span class="icon">⛅</span><span class="temp" id="weatherMain">--°C</span></div>
+        <button class="btn-add-main" onclick="openModal()">+ Añadir Ser</button>
       </div>
-      <div class="pill-top">Sistema Activo</div>
     </header>
 
     <main class="main-content">
-      <aside class="left-col">
-        <div class="section-head-compact">Red Biológica (45 seres vivos)</div>
-        <div class="beings-list" id="cards"></div>
-        <div class="detail-panel">
-          <div class="selected-top">
-            <div class="selected-photo" id="selectedPhoto"></div>
-            <div>
-              <div class="selected-name" id="selectedName">--</div>
-              <div class="selected-sub" id="selectedSubtitle">--</div>
-            </div>
-          </div>
+      <aside class="detail-col">
+        <div class="detail-header">
+          <div class="selected-photo" id="selectedPhoto">--</div>
+          <div class="selected-name" id="selectedName">Selecciona un ser</div>
+          <div class="selected-sub" id="selectedSubtitle">Panel de inspección</div>
+        </div>
+        
+        <div class="detail-body" id="detailBody" style="display: none;">
           <div class="mini-panel"><strong>Estado Actual</strong><span id="selectedStatus">--</span></div>
-          <div class="mini-panel"><strong>Necesidad Radicular</strong><span id="selectedNeed">--</span></div>
+          <div class="mini-panel"><strong>Necesidad</strong><span id="selectedNeed">--</span></div>
           <div class="mini-panel"><strong>Función Sintrópica</strong><span id="selectedFunction">--</span></div>
+        </div>
+
+        <div class="detail-footer" id="detailFooter" style="display: none;">
+          <button class="btn-delete" onclick="deleteCurrentBeing()">Eliminar de la finca</button>
         </div>
       </aside>
 
-      <section class="chat-area">
-        <div class="chat-header">
-          <div class="chat-title-group">
-            <div class="chat-icon-lg" id="chatIcon"></div>
-            <div>
-              <div class="chat-name-lg" id="chatName">Conectando...</div>
-              <div class="sync-status">Sincronizado con entorno</div>
-            </div>
-          </div>
-          <div class="voice-selector">
-            <span class="voice-label">Habla como</span>
-            <button class="speaker-btn active" data-speaker="Mario">Mario</button>
-            <button class="speaker-btn" data-speaker="Yani">Yani</button>
-            <button class="speaker-btn" data-speaker="Invitad@">Invitad@</button>
-          </div>
-        </div>
-        <div class="chat-viewport" id="chatBody"></div>
-        <div class="input-area">
-          <input id="messageInput" type="text" autocomplete="off" placeholder="Escribe aquí para hablar con la planta..." />
-          <button class="send-btn" id="sendBtn">Enviar</button>
-        </div>
-      </section>
+      <section class="grid-area" id="gridArea">
+        </section>
     </main>
   </div>
 
+  <div class="modal-overlay" id="addModal">
+    <div class="modal-content">
+      <div class="modal-header">Integrar nuevo ser</div>
+      <div class="form-group">
+        <label>Icono / Emoji</label>
+        <input type="text" id="newIcon" placeholder="Ej: 🌻" maxlength="2">
+      </div>
+      <div class="form-group">
+        <label>Nombre común</label>
+        <input type="text" id="newName" placeholder="Ej: Girasol">
+      </div>
+      <div class="form-group">
+        <label>Nombre Científico / Subtítulo</label>
+        <input type="text" id="newSub" placeholder="Ej: Helianthus annuus">
+      </div>
+      <div class="form-group">
+        <label>Estrato / Categoría</label>
+        <select id="newCat">
+          <option value="arbol_frutal">Árbol Frutal</option>
+          <option value="citrico">Cítrico</option>
+          <option value="hortaliza_fruto">Hortaliza (Fruto)</option>
+          <option value="hortaliza_hoja">Hortaliza (Hoja)</option>
+          <option value="raiz">Raíz / Tubérculo</option>
+          <option value="aromatica">Aromática / Medicinal</option>
+          <option value="subtropical">Subtropical</option>
+          <option value="barrera">Barrera / Cortaviento</option>
+          <option value="suculenta">Suculenta</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+        <button class="btn-save" onclick="saveNewBeing()">Integrar</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Base de datos de los 45 seres con asignación de categorías para IA
+    // Datos iniciales
     const rawBeingsData = [
       { id: 'aguacatero', name: 'Aguacatero', sub: 'Persea americana', cat: 'arbol_frutal', icon: '🥑' },
       { id: 'nispero', name: 'Níspero', sub: 'Eriobotrya japonica', cat: 'arbol_frutal', icon: '🍑' },
@@ -297,233 +296,126 @@
       { id: 'lirios', name: 'Lirios acuáticos', sub: 'Nymphaeaceae', cat: 'acuatico', icon: '🪷' }
     ];
 
-    const generatedBeings = {};
+    // Estado de la aplicación
+    let beingsMap = {};
+    let currentSelection = 'aguacatero';
+
+    // Inicializar mapa de seres
     rawBeingsData.forEach(b => {
-      generatedBeings[b.id] = {
-        name: b.name, subtitle: b.sub, category: b.cat, icon: b.icon,
-        status: 'Lectura de biometría en proceso...',
-        summary: `Especie clave en el estrato ${b.cat.replace('_', ' ')}.`,
-        function: 'Aporte de diversidad y equilibrio al ecosistema sintrópico.',
-        bio: { needs: 'Análisis de suelo y clima en curso.' }
+      beingsMap[b.id] = { ...b, 
+        status: 'Lectura de biometría estable.',
+        function: `Especie clave en el estrato ${b.cat.replace('_', ' ')}.`,
+        needs: 'Análisis de suelo y clima en curso.'
       };
     });
 
-    const fincaState = {
-      currentContext: 'aguacatero',
-      currentSpeaker: 'Mario',
-      weather: { temp: null, humidity: null },
-      beings: generatedBeings
-    };
-
-    class FincaEngine {
-      constructor(state) {
-        this.state = state;
-        this.threads = this.buildInitialThreads();
-      }
-
-      buildInitialThreads() {
-        const threads = {};
-        Object.keys(this.state.beings).forEach(key => {
-          const b = this.state.beings[key];
-          let defaultGreeting = '';
-          
-          switch(b.category) {
-            case 'arbol_frutal': defaultGreeting = 'Estabilizando crecimiento. Enraizando para sostener estructura.'; break;
-            case 'citrico': defaultGreeting = 'Sintetizando luz. Necesito buen drenaje en mis raíces.'; break;
-            case 'subtropical': defaultGreeting = 'Buscando calor. La protección del viento me da la vida.'; break;
-            case 'hortaliza_fruto': defaultGreeting = 'Consumiendo energía para cuajar fruto. El suelo vivo es mi motor.'; break;
-            case 'hortaliza_hoja': defaultGreeting = 'Manteniendo frescor para no espigarme antes de tiempo.'; break;
-            case 'raiz': defaultGreeting = 'Trabajando bajo tierra. Si el suelo está suelto, engordo bien.'; break;
-            case 'aromatica': defaultGreeting = 'Concentrando aceites esenciales al sol. Poca agua, mucha luz.'; break;
-            case 'suculenta': defaultGreeting = 'Administrando mis propias reservas. No me ahogues.'; break;
-            case 'acuatico': defaultGreeting = 'Filtrando el sistema. Aportando oxigenación y cobijo.'; break;
-            default: defaultGreeting = 'Sincronizando con la biósfera de la finca.';
-          }
-
-          threads[key] = {
-            Mario: [
-              { type: 'system', text: `Conexión establecida con ${b.name}` },
-              { type: 'being', text: `Mario, aquí estoy. ${defaultGreeting}`, by: b.name, time: '10:00' }
-            ],
-            Yani: [
-              { type: 'system', text: `Canal Yani / ${b.name}` },
-              { type: 'being', text: `Yani, percibo el equilibrio. ${defaultGreeting}`, by: b.name, time: 'Ayer' }
-            ],
-            'Invitad@': [
-              { type: 'system', text: `Conexión a la Finca Viva` },
-              { type: 'being', text: `Si estás de paso, respeta el ritmo. ${defaultGreeting}`, by: b.name, time: 'Hoy' }
-            ]
-          };
-        });
-        return threads;
-      }
-
-      getBeing(key) { return this.state.beings[key]; }
-      getCurrentBeing() { return this.getBeing(this.state.currentContext); }
-      getCurrentThread() { return this.threads[this.state.currentContext][this.state.currentSpeaker]; }
-      setCurrentContext(key) { if (this.state.beings[key]) this.state.currentContext = key; }
-      setSpeaker(name) { this.state.currentSpeaker = name; }
-
-      normalizeText(text) { return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim(); }
-      hasAny(text, words) { return words.some(word => text.includes(word)); }
-
-      detectIntent(text) {
-        if (this.hasAny(text, ["riego", "agua", "sed"])) return "water";
-        if (this.hasAny(text, ["drenaje", "charco"])) return "drainage";
-        if (this.hasAny(text, ["poda", "cortar"])) return "pruning";
-        if (this.hasAny(text, ["abono", "nutrientes"])) return "fertilization";
-        return "general";
-      }
-
-      generateResponse(message, beingKey, speaker) {
-        const text = this.normalizeText(message);
-        const intent = this.detectIntent(text);
-        const being = this.getBeing(beingKey);
-        
-        let reply = "";
-        if (intent === 'water') {
-            if(being.category === 'suculenta' || being.category === 'aromatica') reply = "Cuidado con el riego. Sobrevivo mejor con la tierra seca que ahogada.";
-            else if(being.category === 'hortaliza_fruto' || being.category === 'hortaliza_hoja') reply = "Sí, necesito humedad constante en la raíz para mantener el ritmo.";
-            else reply = "Riega profundo pero espaciado, necesito respirar entre riegos.";
-        } else if (intent === 'pruning') {
-            if(being.category === 'arbol_frutal') reply = "Solo poda de formación o para abrir luz. No me castigues.";
-            else if(being.category === 'hortaliza_fruto') reply = "Quítame los chupones bajos para que ventile bien.";
-            else reply = "Déjame expandir mi biomasa por ahora.";
-        } else {
-            reply = "Te escucho. Lo importante es leer el entorno: sol, viento y suelo vivo.";
-        }
-        
-        return speaker === 'Mario' ? reply : (speaker === 'Yani' ? "Desde el equilibrio: " + reply : "Atiende: " + reply);
-      }
-
-      addMessage(humanMessage) {
-        const being = this.getCurrentBeing();
-        const speaker = this.state.currentSpeaker;
-        const thread = this.getCurrentThread();
-        const timeStr = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-
-        thread.push({ type: 'human', text: humanMessage, by: speaker, time: timeStr });
-        const reply = this.generateResponse(humanMessage, this.state.currentContext, speaker);
-
-        setTimeout(() => {
-          thread.push({ type: 'being', text: reply, by: being.name, time: timeStr });
-          window.dispatchEvent(new Event('new-message'));
-        }, 400);
-      }
-
-      async updateWeather() {
-        try {
-          const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.13&longitude=-15.63&current=temperature_2m,relative_humidity_2m&timezone=auto');
-          const data = await res.json();
-          this.state.weather = { temp: Math.round(data.current.temperature_2m), humidity: Math.round(data.current.relative_humidity_2m) };
-        } catch (e) { this.state.weather = { temp: 24, humidity: 65 }; }
-      }
-    }
-
-    const engine = new FincaEngine(fincaState);
-
     const DOM = {
-      cards: document.getElementById('cards'),
-      chatBody: document.getElementById('chatBody'),
-      chatName: document.getElementById('chatName'),
-      chatIcon: document.getElementById('chatIcon'),
-      input: document.getElementById('messageInput'),
-      sendBtn: document.getElementById('sendBtn'),
-      weatherMain: document.getElementById('weatherMain'),
-      selectedPhoto: document.getElementById('selectedPhoto'),
-      selectedName: document.getElementById('selectedName'),
-      selectedSubtitle: document.getElementById('selectedSubtitle'),
-      selectedStatus: document.getElementById('selectedStatus'),
-      selectedNeed: document.getElementById('selectedNeed'),
-      selectedFunction: document.getElementById('selectedFunction'),
-      speakerBtns: document.querySelectorAll('.speaker-btn')
+      gridArea: document.getElementById('gridArea'),
+      photo: document.getElementById('selectedPhoto'),
+      name: document.getElementById('selectedName'),
+      sub: document.getElementById('selectedSubtitle'),
+      status: document.getElementById('selectedStatus'),
+      need: document.getElementById('selectedNeed'),
+      func: document.getElementById('selectedFunction'),
+      bodyPanel: document.getElementById('detailBody'),
+      footerPanel: document.getElementById('detailFooter'),
+      modal: document.getElementById('addModal')
     };
 
-    function renderCards() {
-      DOM.cards.innerHTML = Object.keys(engine.state.beings).map(key => {
-        const b = engine.getBeing(key);
-        const active = key === engine.state.currentContext ? 'active' : '';
+    function renderGrid() {
+      DOM.gridArea.innerHTML = Object.keys(beingsMap).map(key => {
+        const b = beingsMap[key];
+        const activeClass = key === currentSelection ? 'active' : '';
         return `
-          <div class="being-card-sm ${active}" data-being="${key}">
-            <div class="being-photo-sm">${b.icon}</div>
-            <div class="being-info-sm">
-              <h4>${b.name}</h4>
-              <span>${b.subtitle}</span>
-            </div>
+          <div class="being-tile ${activeClass}" onclick="selectBeing('${key}')">
+            <div class="tile-icon">${b.icon}</div>
+            <div class="tile-name">${b.name}</div>
           </div>
         `;
       }).join('');
-
-      document.querySelectorAll('[data-being]').forEach(el => {
-        el.addEventListener('click', () => handleContextChange(el.dataset.being));
-      });
     }
 
-    function renderSelected() {
-      const b = engine.getCurrentBeing();
-      DOM.selectedPhoto.innerHTML = b.icon;
-      DOM.selectedName.textContent = b.name;
-      DOM.selectedSubtitle.textContent = b.subtitle;
-      DOM.selectedStatus.textContent = b.status;
-      DOM.selectedNeed.textContent = b.bio.needs;
-      DOM.selectedFunction.textContent = b.function;
+    function selectBeing(id) {
+      if (!beingsMap[id]) return;
+      currentSelection = id;
+      const b = beingsMap[id];
+      
+      DOM.photo.textContent = b.icon;
+      DOM.name.textContent = b.name;
+      DOM.sub.textContent = b.sub;
+      DOM.status.textContent = b.status;
+      DOM.need.textContent = b.needs;
+      DOM.func.textContent = b.function;
+      
+      DOM.bodyPanel.style.display = 'block';
+      DOM.footerPanel.style.display = 'block';
+      
+      renderGrid(); // Actualizar clase 'active'
     }
 
-    function renderChat() {
-      const b = engine.getCurrentBeing();
-      const thread = engine.getCurrentThread();
-
-      DOM.chatName.textContent = b.name;
-      DOM.chatIcon.innerHTML = b.icon;
-
-      DOM.chatBody.innerHTML = thread.map(msg => `
-        <div class="msg ${msg.type}">
-          ${msg.type === 'being' ? `<strong>${msg.by}:</strong> ` : ''}${msg.text}
-          ${msg.by && msg.type !== 'system' ? `<small>${msg.time}</small>` : ''}
-        </div>
-      `).join('');
-      DOM.chatBody.scrollTop = DOM.chatBody.scrollHeight;
-    }
-
-    function renderWeather() {
-      if (engine.state.weather.temp) {
-        DOM.weatherMain.textContent = `${engine.state.weather.temp}°C`;
+    function deleteCurrentBeing() {
+      if (confirm(`¿Seguro que quieres eliminar a ${beingsMap[currentSelection].name} de la finca?`)) {
+        delete beingsMap[currentSelection];
+        // Seleccionar el primero disponible o limpiar
+        const remainingKeys = Object.keys(beingsMap);
+        if (remainingKeys.length > 0) {
+          selectBeing(remainingKeys[0]);
+        } else {
+          DOM.photo.textContent = '🏜️';
+          DOM.name.textContent = 'Finca vacía';
+          DOM.sub.textContent = 'Añade nuevos seres';
+          DOM.bodyPanel.style.display = 'none';
+          DOM.footerPanel.style.display = 'none';
+          currentSelection = null;
+          renderGrid();
+        }
       }
     }
 
-    function handleContextChange(key) {
-      engine.setCurrentContext(key);
-      renderCards(); renderSelected(); renderChat();
+    /* Lógica del Modal */
+    function openModal() { DOM.modal.classList.add('open'); }
+    function closeModal() { 
+      DOM.modal.classList.remove('open'); 
+      document.getElementById('newName').value = '';
+      document.getElementById('newIcon').value = '';
+      document.getElementById('newSub').value = '';
     }
 
-    function handleSendMessage() {
-      const value = DOM.input.value.trim();
-      if (!value) return;
-      engine.addMessage(value);
-      DOM.input.value = '';
-      renderChat();
+    function saveNewBeing() {
+      const name = document.getElementById('newName').value.trim();
+      const icon = document.getElementById('newIcon').value.trim() || '🌱';
+      const sub = document.getElementById('newSub').value.trim() || 'Plantae';
+      const cat = document.getElementById('newCat').value;
+
+      if (!name) { alert('El nombre es obligatorio.'); return; }
+
+      const id = 'ser_' + Date.now();
+      beingsMap[id] = {
+        id, name, sub, cat, icon,
+        status: 'Recién plantado. Adaptándose al terreno.',
+        function: `Integración nueva en estrato ${cat.replace('_', ' ')}.`,
+        needs: 'Observación y primer riego de asiento.'
+      };
+
+      closeModal();
+      selectBeing(id);
     }
 
-    function initSpeakers() {
-      DOM.speakerBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          DOM.speakerBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          engine.setSpeaker(btn.dataset.speaker);
-          renderChat();
-        });
-      });
+    // Clima simulado rápido
+    async function updateWeather() {
+      try {
+        const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.13&longitude=-15.63&current=temperature_2m&timezone=auto');
+        const data = await res.json();
+        document.getElementById('weatherMain').textContent = Math.round(data.current.temperature_2m) + '°C';
+      } catch (e) {
+        document.getElementById('weatherMain').textContent = '24°C';
+      }
     }
 
-    function initializeApp() {
-      engine.updateWeather().then(renderWeather);
-      DOM.sendBtn.addEventListener('click', handleSendMessage);
-      DOM.input.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSendMessage(); });
-      window.addEventListener('new-message', renderChat);
-      initSpeakers(); renderCards(); handleContextChange(engine.state.currentContext);
-    }
+    // Inicializar
+    updateWeather();
+    selectBeing(currentSelection);
 
-    initializeApp();
   </script>
 </body>
 </html>
