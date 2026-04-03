@@ -1,145 +1,335 @@
-export const fincaInfo = {
-    location: "Las Palmas de Gran Canaria"
+import { state, appState, loadState, saveState } from './storage.js';
+import { rawBeingsData, zonesData, strataColors, strataOrder, extendedBeingsLibrary, massiveBeingsLibrary, ecologicalRules } from './data.js';
+
+// ==========================================
+// BIBLIOTECA UNIFICADA Y CACHÉ
+// ==========================================
+function getUnifiedLibrary() {
+    const cached = JSON.parse(localStorage.getItem("beings_cache") || "[]");
+    return [...rawBeingsData, ...extendedBeingsLibrary, ...massiveBeingsLibrary, ...cached];
+}
+
+function addToCache(being) {
+    const cache = JSON.parse(localStorage.getItem("beings_cache") || "[]");
+    if (!cache.find(b => b.name === being.name)) {
+        cache.push(being);
+        localStorage.setItem("beings_cache", JSON.stringify(cache));
+    }
+}
+
+function searchBeings(query) {
+    const library = getUnifiedLibrary();
+    const unique = library.filter((item, index, self) => index === self.findIndex(i => i.name === item.name));
+    return unique.filter(b => b.name.toLowerCase().includes(query.toLowerCase()));
+}
+
+// ==========================================
+// RESOLUCIÓN DE DATOS (Render)
+// ==========================================
+function resolveBeing(being) {
+    const library = getUnifiedLibrary();
+    const def = library.find(b => b.name === being.type || b.id === being.id || b.name === being.name);
+    if (def) return { ...being, name: def.name, icon: def.icon, cat: def.cat, role: def.role };
+    return being;
+}
+
+const getOrder = (cat) => strataOrder[cat] !== undefined ? strataOrder[cat] : 99;
+
+// ==========================================
+// LÓGICA CLIMÁTICA Y TEMPORAL
+// ==========================================
+async function updateWeatherAndDate() {
+    const lat = 28.1388; // Santa María de Guía
+    const lon = -15.6328;
+    const weatherEl = document.querySelector('.weather-compact');
+    if (!weatherEl) return;
+
+    const now = new Date();
+    const options = { weekday: 'long', day: 'numeric', month: 'long' };
+    const dateStr = now.toLocaleDateString('es-ES', options);
+
+    const month = now.getMonth() + 1;
+    let season = "Invierno";
+    let sIcon = "❄️";
+    if (month >= 3 && month <= 5) { season = "Primavera"; sIcon = "🌸"; }
+    else if (month >= 6 && month <= 8) { season = "Verano"; sIcon = "☀️"; }
+    else if (month >= 9 && month <= 11) { season = "Otoño"; sIcon = "🍂"; }
+
+    try {
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+        if (!response.ok) throw new Error();
+        const data = await response.json();
+        const temp = Math.round(data.current_weather.temperature);
+
+        weatherEl.innerHTML = `
+            <span class="icon">${sIcon}</span>
+            <div class="weather-info">
+                <span class="temp">${temp}°C · ${season}</span>
+                <span class="altitude-tag">${dateStr} · 445 msnm</span>
+            </div>
+        `;
+    } catch (e) {
+        weatherEl.innerHTML = `
+            <span class="icon">${sIcon}</span>
+            <div class="weather-info">
+                <span class="temp">--°C · ${season}</span>
+                <span class="altitude-tag">${dateStr} · 445 msnm</span>
+            </div>
+        `;
+    }
+}
+
+// ==========================================
+// RENDERIZADO
+// ==========================================
+function renderAllViews() {
+    const beingsArray = Object.values(state.beings).map(resolveBeing);
+    const unassigned = beingsArray.filter(b => !b.zoneId).sort((a,b) => getOrder(a.cat) - getOrder(b.cat));
+    const grid = document.getElementById('unassignedGrid');
+    if (grid) {
+        grid.innerHTML = unassigned.map(b => `
+            <div class="being-tile" data-id="${b.id}" draggable="true" onclick="openInspectModal('${b.id}')" style="--strata-color: ${strataColors[b.cat] || '#6BCB77'}">
+                <div class="tile-icon">${b.icon}</div>
+                <div class="tile-name">${b.name}</div>
+            </div>`).join('');
+    }
+    document.getElementById('unassignedCount').textContent = unassigned.length;
+
+    const container = document.getElementById('zonesGridContainer');
+    if (!container) return;
+
+    container.innerHTML = zonesData.map(zone => {
+        const nests = state.nests[zone.id] || [];
+        const nestsHTML = nests.map(n => {
+            const nestBeings = beingsArray.filter(b => b.zoneId === zone.id && b.nestId === n.id).sort((a,b) => getOrder(a.cat) - getOrder(b.cat));
+            return `
+                <div class="nest-card drop-zone" data-zone-id="${zone.id}" data-nest-id="${n.id}">
+                    <div class="nest-header">
+                        <div class="nest-title" contenteditable="true" onblur="updateNestName('${zone.id}', '${n.id}', this.innerText)">${n.name}</div>
+                        <button class="nest-delete" onclick="deleteNest('${zone.id}', '${n.id}')">✖</button>
+                    </div>
+                    <div class="nest-drop-area">
+                        ${nestBeings.map(b => `
+                            <div class="being-tile" data-id="${b.id}" draggable="true" onclick="openInspectModal('${b.id}')" style="--strata-color: ${strataColors[b.cat] || '#6BCB77'}">
+                                <div class="tile-icon">${b.icon}</div>
+                                <div class="tile-name">${b.name}</div>
+                            </div>`).join('')}
+                    </div>
+                </div>`;
+        }).join('');
+
+        return `
+            <div class="zone-card ${zone.cssClass} drop-zone" data-zone-id="${zone.id}">
+                <div class="zone-header"><h3>${zone.name}</h3><button class="btn-add-nest" onclick="addNest('${zone.id}')">+ Nido</button></div>
+                <div class="nests-container">${nestsHTML}</div>
+            </div>`;
+    }).join('');
+}
+
+// ==========================================
+// DRAG AND DROP
+// ==========================================
+function initDragAndDrop() {
+    document.addEventListener('dragstart', e => {
+        const tile = e.target.closest('.being-tile');
+        if (!tile) return;
+        e.dataTransfer.setData('text/plain', tile.dataset.id);
+        setTimeout(() => tile.classList.add('is-dragging'), 0);
+    });
+
+    document.addEventListener('dragover', e => {
+        const dropZone = e.target.closest('.drop-zone');
+        if (dropZone) {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        }
+    });
+
+    document.addEventListener('dragleave', e => {
+        const dropZone = e.target.closest('.drop-zone');
+        if (dropZone) dropZone.classList.remove('drag-over');
+    });
+
+    document.addEventListener('drop', e => {
+        const dropZone = e.target.closest('.drop-zone');
+        if (!dropZone) return;
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+        const beingId = e.dataTransfer.getData('text/plain');
+        if (!beingId || !state.beings[beingId]) return;
+        const zoneId = dropZone.dataset.zoneId || null;
+        const nestId = dropZone.dataset.nestId || null;
+
+        if (zoneId !== 'vivero' && zoneId && !nestId) {
+            const newNestId = 'nido_' + Date.now();
+            if (!state.nests[zoneId]) state.nests[zoneId] = [];
+            state.nests[zoneId].unshift({ id: newNestId, name: 'Nuevo Nido' });
+            state.beings[beingId].zoneId = zoneId;
+            state.beings[beingId].nestId = newNestId;
+        } else if (zoneId === 'vivero') {
+            state.beings[beingId].zoneId = null;
+            state.beings[beingId].nestId = null;
+        } else {
+            state.beings[beingId].zoneId = zoneId;
+            state.beings[beingId].nestId = nestId;
+        }
+        saveState();
+        renderAllViews();
+    });
+
+    document.addEventListener('dragend', () => {
+        document.querySelectorAll('.is-dragging').forEach(el => el.classList.remove('is-dragging'));
+        document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+    });
+}
+
+// ==========================================
+// MODAL DE CATÁLOGO Y ANÁLISIS
+// ==========================================
+window.filterCatalog = (query) => {
+    const results = searchBeings(query);
+    const container = document.getElementById('catalogResults');
+    container.innerHTML = results.map(r => `
+        <div onclick="selectFromCatalog('${r.name}')" onmouseover="this.style.background='#E8EFE1'" onmouseout="this.style.background='#F8FAF5'" style="display: flex; align-items: center; gap: 15px; padding: 10px; background: #F8FAF5; border: 1px solid #EBF4E5; border-radius: 8px; cursor: pointer; transition: background 0.2s;">
+            <span style="font-size: 24px;">${r.icon}</span>
+            <div style="display: flex; flex-direction: column;">
+                <strong style="font-size: 13px; color: #2D3748;">${r.name}</strong>
+                <span style="font-size: 11px; color: #718096;">${r.cat}</span>
+            </div>
+        </div>`).join('');
 };
 
-export const zonesData = [
-  { id: 'z_hogar', name: 'Hogar', cssClass: 'zone-hogar' },
-  { id: 'z_bienvenida', name: 'Bienvenida', cssClass: 'zone-bienvenida' },
-  { id: 'z_bosque', name: 'Bosque', cssClass: 'zone-bosque' },
-  { id: 'z_ocio', name: 'Ocio Cultivado', cssClass: 'zone-ocio' },
-  { id: 'z_sala', name: 'Sala de Actividades', cssClass: 'zone-sala' },
-  { id: 'z_biopiscina', name: 'Biopiscina / Estanque', cssClass: 'zone-biopiscina' }
-];
-
-export const strataColors = {
-  'Estrato Emergente': '#059669', 'Estrato Alto': '#10B981', 'Estrato Medio': '#EAB308',
-  'Estrato Bajo': '#84CC16', 'Estrato Subterráneo': '#D97706', 'Cobertura / Rastrero': '#65A30D',
-  'Funcionales': '#8B5CF6', 'Trepadoras / Verticales': '#EC4899', 'Casos Especiales': '#3B82F6',
-  'frutal': '#F59E0B', 'arbol': '#15803D', 'aromatica': '#8B5CF6', 'suculenta': '#10B981', 'flor': '#F43F5E', 'cereal': '#EAB308',
-  'leguminosa': '#84CC16', 'trepadora': '#EC4899', 'apoyo': '#6366F1'
+window.openAddModal = () => {
+    document.getElementById('catalogSearch').value = '';
+    window.filterCatalog(''); 
+    document.getElementById('addModal').classList.add('open');
 };
 
-export const strataOrder = {
-  'Estrato Emergente': 1, 'Estrato Alto': 2, 'Estrato Medio': 3, 'Estrato Bajo': 4,
-  'Estrato Subterráneo': 5, 'Cobertura / Rastrero': 6, 'Funcionales': 7, 'Trepadoras / Verticales': 8, 'Casos Especiales': 9
+window.closeAddModal = () => document.getElementById('addModal').classList.remove('open');
+
+window.selectFromCatalog = (typeName) => {
+    const library = getUnifiedLibrary();
+    const selected = library.find(b => b.name === typeName);
+    if (selected) {
+        addToCache(selected); 
+        const id = 'ins_' + Date.now();
+        state.beings[id] = { id, type: selected.name, zoneId: null, nestId: null, createdAt: Date.now() };
+        saveState();
+        window.closeAddModal();
+        renderAllViews();
+    }
 };
 
-export const rawBeingsData = [
-  { id: 'b_aguacatero', name: 'Aguacatero', cat: 'Estrato Emergente', icon: '🥑', role: 'Estructura.' },
-  { id: 'b_mango', name: 'Mango', cat: 'Estrato Emergente', icon: '🥭', role: 'Estructura.' },
-  { id: 'b_olivo', name: 'Olivo', cat: 'Estrato Emergente', icon: '🫒', role: 'Estructura.' },
-  { id: 'b_almendro', name: 'Almendro', cat: 'Estrato Emergente', icon: '🌸', role: 'Estructura.' },
-  { id: 'b_naranjero', name: 'Naranjero', cat: 'Estrato Emergente', icon: '🍊', role: 'Estructura.' },
-  { id: 'b_limonero', name: 'Limonero', cat: 'Estrato Emergente', icon: '🍋', role: 'Estructura.' },
-  { id: 'b_mandarino', name: 'Mandarino', cat: 'Estrato Emergente', icon: '🍊', role: 'Estructura.' },
-  { id: 'b_higuera', name: 'Higuera', cat: 'Estrato Alto', icon: '🌿', role: 'Productivo principal.' },
-  { id: 'b_manzanero', name: 'Manzanero', cat: 'Estrato Alto', icon: '🍎', role: 'Productivo principal.' },
-  { id: 'b_peral', name: 'Peral', cat: 'Estrato Alto', icon: '🍐', role: 'Productivo principal.' },
-  { id: 'b_melocotonero', name: 'Melocotonero', cat: 'Estrato Alto', icon: '🍑', role: 'Productivo principal.' },
-  { id: 'b_nispero', name: 'Níspero', cat: 'Estrato Alto', icon: '🍑', role: 'Productivo principal.' },
-  { id: 'b_guayabo', name: 'Guayabo', cat: 'Estrato Alto', icon: '🍈', role: 'Productivo principal.' },
-  { id: 'b_papayo', name: 'Papayo', cat: 'Estrato Alto', icon: '🍈', role: 'Productivo principal.' },
-  { id: 'b_cafetero', name: 'Cafetero', cat: 'Estrato Alto', icon: '☕', role: 'Productivo principal.' },
-  { id: 'b_lavanda', name: 'Lavanda', cat: 'Estrato Medio', icon: '🪻', role: 'Regulación.' },
-  { id: 'b_salvia', name: 'Salvia', cat: 'Estrato Medio', icon: '🌱', role: 'Regulación.' },
-  { id: 'b_artemisa', name: 'Artemisa', cat: 'Estrato Medio', icon: '🌿', role: 'Regulación.' },
-  { id: 'b_manzanilla', name: 'Manzanilla', cat: 'Estrato Medio', icon: '🌼', role: 'Regulación.' },
-  { id: 'b_lechugas', name: 'Lechugas', cat: 'Estrato Bajo', icon: '🥬', role: 'Ciclo corto.' },
-  { id: 'b_calabacin', name: 'Calabacín', cat: 'Estrato Bajo', icon: '🥒', role: 'Ciclo corto.' },
-  { id: 'b_berenjena', name: 'Berenjena', cat: 'Estrato Bajo', icon: '🍆', role: 'Ciclo corto.' },
-  { id: 'b_pimientos', name: 'Pimientos', cat: 'Estrato Bajo', icon: '🫑', role: 'Ciclo corto.' },
-  { id: 'b_acelgas', name: 'Acelgas', cat: 'Estrato Bajo', icon: '🥬', role: 'Ciclo corto.' },
-  { id: 'b_apio', name: 'Apio', cat: 'Estrato Bajo', icon: '🌿', role: 'Ciclo corto.' },
-  { id: 'b_beroles', name: 'Beroles', cat: 'Estrato Bajo', icon: '🪴', role: 'Ciclo corto.' },
-  { id: 'b_patatas', name: 'Patatas', cat: 'Estrato Subterráneo', icon: '🥔', role: 'Trabajo suelo.' },
-  { id: 'b_remolacha', name: 'Remolacha', cat: 'Estrato Subterráneo', icon: '🧅', role: 'Trabajo suelo.' },
-  { id: 'b_batata', name: 'Batata', cat: 'Estrato Subterráneo', icon: '🍠', role: 'Trabajo suelo.' },
-  { id: 'b_cebollas', name: 'Cebollas', cat: 'Estrato Subterráneo', icon: '🧅', role: 'Trabajo suelo.' },
-  { id: 'b_puerro', name: 'Puerro', cat: 'Estrato Subterráneo', icon: '🧄', role: 'Trabajo suelo.' },
-  { id: 'b_fresas', name: 'Fresas', cat: 'Cobertura / Rastrero', icon: '🍓', role: 'Protección suelo.' },
-  { id: 'b_tomillo', name: 'Tomillo', cat: 'Funcionales', icon: '🌿', role: 'Equilibrio.' },
-  { id: 'b_oregano', name: 'Orégano', cat: 'Funcionales', icon: '🍃', role: 'Equilibrio.' },
-  { id: 'b_perejil', name: 'Perejil', cat: 'Funcionales', icon: '🌿', role: 'Equilibrio.' },
-  { id: 'b_cilantro', name: 'Cilantro', cat: 'Funcionales', icon: '🌱', role: 'Equilibrio.' },
-  { id: 'b_poleo', name: 'Poleo', cat: 'Funcionales', icon: '🌿', role: 'Equilibrio.' },
-  { id: 'b_judias', name: 'Judías', cat: 'Trepadoras / Verticales', icon: '🫘', role: 'Vertical.' },
-  { id: 'b_tomatero', name: 'Tomatero', cat: 'Trepadoras / Verticales', icon: '🍅', role: 'Vertical.' },
-  { id: 'b_fisalis', name: 'Fisalis', cat: 'Trepadoras / Verticales', icon: '🍒', role: 'Vertical.' },
-  { id: 'b_maracuya', name: 'Maracuyá', cat: 'Trepadoras / Verticales', icon: '🌸', role: 'Vertical.' },
-  { id: 'b_platanera', name: 'Platanera', cat: 'Casos Especiales', icon: '🍌', role: 'Biomasa.' },
-  { id: 'b_cana', name: 'Caña', cat: 'Casos Especiales', icon: '🎋', role: 'Biomasa.' },
-  { id: 'b_tunos', name: 'Tunos', cat: 'Casos Especiales', icon: '🌵', role: 'Frontera.' },
-  { id: 'b_lirios', name: 'Lirios', cat: 'Casos Especiales', icon: '🪷', role: 'Agua.' }
-];
+window.analyzeEcosystem = () => {
+    const ecosystem = Object.values(state.beings).filter(b => b.zoneId !== null).map(resolveBeing);
+    let html = ``;
+    if (ecosystem.length === 0) {
+        html = `<div style="padding: 15px; background: #F8FAF5; border-radius: 8px;">Aún no hay seres ubicados en las zonas.</div>`;
+    } else {
+        const presentStrata = new Set(ecosystem.map(b => b.cat).filter(Boolean));
+        const essentialStrata = ['Estrato Emergente', 'Estrato Alto', 'Estrato Medio', 'Estrato Bajo', 'Estrato Subterráneo', 'Cobertura / Rastrero', 'Funcionales'];
+        const missingStrata = essentialStrata.filter(s => !presentStrata.has(s));
 
-export const extendedBeingsLibrary = [
-  { name: "Aguacatero", icon: "🥑", cat: "frutal", role: "emergente" },
-  { name: "Mango", icon: "🥭", cat: "frutal", role: "emergente" },
-  { name: "Roble", icon: "🌳", cat: "arbol", role: "alto" },
-  { name: "Lavanda", icon: "🌿", cat: "aromatica", role: "bajo" },
-  { name: "Romero", icon: "🌿", cat: "aromatica", role: "bajo" },
-  { name: "Aloe Vera", icon: "🌱", cat: "suculenta", role: "bajo" }
-];
+        if (!presentStrata.has('Cobertura / Rastrero')) {
+            html += `<div style="padding: 12px; background: #FED7D7; border-left: 4px solid #E53E3E; border-radius: 4px; margin-bottom: 15px;"><strong style="color: #9B2C2C;">⚠️ Alerta Hídrica:</strong> Falta cobertura para proteger el suelo.</div>`;
+        }
 
-export const massiveBeingsLibrary = [
-  { name: "Jazmín", icon: "💮", cat: "flor", role: "trepadora" },
-  { name: "Buganvilla", icon: "🌺", cat: "trepadora", role: "ornamental" },
-  { name: "Girasol", icon: "🌻", cat: "flor", role: "alto" },
-  { name: "Tajinaste", icon: "🗼", cat: "flor", role: "endemismo" },
-  { name: "Caléndula", icon: "🌼", cat: "flor", role: "apoyo" },
-  { name: "Capuchina", icon: "🏵️", cat: "flor", role: "rastrera" },
-  { name: "Tagete", icon: "🏵️", cat: "flor", role: "repelente" },
-  { name: "Glicinia", icon: "🪻", cat: "trepadora", role: "ornamental" },
-  { name: "Bignonia", icon: "🌺", cat: "trepadora", role: "ornamental" },
-  { name: "Rosal", icon: "🌹", cat: "flor", role: "bajo" },
-  { name: "Drago", icon: "🌴", cat: "arbol", role: "endemismo" },
-  { name: "Palmera Canaria", icon: "🌴", cat: "arbol", role: "emergente" },
-  { name: "Pino Canario", icon: "🌲", cat: "arbol", role: "emergente" },
-  { name: "Moringa", icon: "🌿", cat: "arbol", role: "biomasa rápida" },
-  { name: "Eucalipto", icon: "🌳", cat: "arbol", role: "biomasa" },
-  { name: "Laurel", icon: "🌳", cat: "arbol", role: "alto" },
-  { name: "Encina", icon: "🌳", cat: "arbol", role: "alto" },
-  { name: "Pino", icon: "🌲", cat: "arbol", role: "alto" },
-  { name: "Castaño", icon: "🌰", cat: "arbol", role: "alto" },
-  { name: "Nogal", icon: "🌳", cat: "arbol", role: "alto" },
-  { name: "Macadamia", icon: "🌳", cat: "arbol", role: "alto" },
-  { name: "Sauce", icon: "🌳", cat: "arbol", role: "agua" },
-  { name: "Vetiver", icon: "🌾", cat: "apoyo", role: "retención suelo" },
-  { name: "Consuelda", icon: "🍃", cat: "apoyo", role: "acumulador dinámico" },
-  { name: "Milenrama", icon: "🌿", cat: "apoyo", role: "acumulador dinámico" },
-  { name: "Menta", icon: "🌿", cat: "aromatica", role: "rastrera" },
-  { name: "Albahaca", icon: "🌱", cat: "aromatica", role: "bajo" },
-  { name: "Ruda", icon: "🌿", cat: "aromatica", role: "repelente" },
-  { name: "Hierbabuena", icon: "🌿", cat: "aromatica", role: "bajo" },
-  { name: "Zanahoria", icon: "🥕", cat: "Estrato Subterráneo", role: "ciclo corto" },
-  { name: "Rábano", icon: "🫥", cat: "Estrato Subterráneo", role: "descompactador" },
-  { name: "Ajo", icon: "🧄", cat: "Estrato Subterráneo", role: "repelente" },
-  { name: "Maíz", icon: "🌽", cat: "cereal", role: "vertical" },
-  { name: "Garbanzo", icon: "🌱", cat: "leguminosa", role: "fijador N" },
-  { name: "Lenteja", icon: "🌱", cat: "leguminosa", role: "fijador N" },
-  { name: "Sorgo", icon: "🌾", cat: "cereal", role: "biomasa" },
-  { name: "Passiflora", icon: "🌸", cat: "trepadora", role: "frutal" },
-  { name: "Kiwano", icon: "🍈", cat: "frutal", role: "trepadora" },
-  { name: "Frambueso", icon: "🍓", cat: "frutal", role: "medio" },
-  { name: "Zarzamora", icon: "🫐", cat: "frutal", role: "trepadora" },
-  { name: "Arándano", icon: "🫐", cat: "frutal", role: "bajo" },
-  { name: "Vid / Parra", icon: "🍇", cat: "trepadora", role: "frutal" },
-  { name: "Pitaya", icon: "🌵", cat: "suculenta", role: "frutal trepador" },
-  { name: "Nopal", icon: "🌵", cat: "suculenta", role: "frontera" },
-  { name: "Agave", icon: "🌵", cat: "suculenta", role: "frontera" },
-  { name: "Bambú", icon: "🎋", cat: "Casos Especiales", role: "biomasa extrema" },
-  { name: "Helecho", icon: "🌿", cat: "Estrato Bajo", role: "sombra" },
-  { name: "Loto", icon: "🪷", cat: "Casos Especiales", role: "agua" },
-  { name: "Nenúfar", icon: "🪷", cat: "Casos Especiales", role: "agua" }
-];
+        const diversityScore = presentStrata.size;
+        html += `<div style="padding: 12px; background: #EBF4E5; border-left: 4px solid #48BB78; border-radius: 4px; margin-bottom: 15px;"><strong>🟢 Salud:</strong> ${diversityScore} estratos detectados.</div>`;
 
-export const ecologicalRules = {
-  avoid: [
-    { target: "Eucalipto", affects: ["Estrato Bajo", "hortaliza"], msg: "El eucalipto extrae demasiada agua y tiene un efecto alelopático severo sobre estratos inferiores." },
-    { target: "Nogal", affects: ["Estrato Bajo", "Estrato Medio"], msg: "El nogal libera juglona en el suelo, lo cual es tóxico para la mayoría de plantas que crecen a su alrededor." }
-  ],
-  synergy: [
-    { catA: "leguminosa", catB: "Estrato Alto", msg: "Excelente asociación: Las leguminosas están fijando nitrógeno atmosférico para los árboles de gran porte." },
-    { catA: "aromatica", catB: "Estrato Bajo", msg: "Defensa natural: Las aromáticas están enmascarando olores y protegiendo los cultivos bajos contra plagas." }
-  ]
+        ecologicalRules.avoid.forEach(rule => {
+            if (ecosystem.map(b => b.name).includes(rule.target)) {
+                if (ecosystem.some(b => rule.affects.includes(b.cat))) {
+                    html += `<div style="padding: 10px; border-bottom: 1px dashed #CBD5E0; color: #DD6B20;"><strong>Conflicto:</strong> ${rule.msg}</div>`;
+                }
+            }
+        });
+
+        if (missingStrata.length > 0) {
+            html += `<div style="margin-top: 15px;"><strong>💡 Sugerencias:</strong><ul style="margin-top: 8px; padding-left: 20px; color: #4A5568;">`;
+            const suggestions = getUnifiedLibrary().filter(s => missingStrata.includes(s.cat)).slice(0, 5);
+            suggestions.forEach(s => { html += `<li>Añadir <strong>${s.name}</strong> ${s.icon}</li>`; });
+            html += `</ul></div>`;
+        }
+    }
+    document.getElementById('analysisResults').innerHTML = html;
+    document.getElementById('analysisModal').classList.add('open');
 };
+
+window.closeAnalysisModal = () => document.getElementById('analysisModal').classList.remove('open');
+
+// ==========================================
+// FUNCIONES GLOBALES RESTANTES
+// ==========================================
+window.openInspectModal = (id) => {
+    let b = state.beings[id];
+    if (!b) return;
+    b = resolveBeing(b);
+    appState.currentSelection = id;
+    document.getElementById('inspectPhoto').textContent = b.icon;
+    document.getElementById('inspectName').textContent = b.name;
+    document.getElementById('inspectEstrato').textContent = b.cat;
+    document.getElementById('inspectRole').textContent = b.role || 'En desarrollo';
+    let loc = b.zoneId ? "UBICADO EN FINCA" : "EN BANDEJA DE VIVERO";
+    document.getElementById('inspectLocationBadge').textContent = loc;
+    document.getElementById('inspectModal').classList.add('open');
+};
+
+window.closeInspectModal = () => document.getElementById('inspectModal').classList.remove('open');
+
+window.deleteCurrentBeing = () => {
+    if (confirm("¿Retirar ser?")) {
+        delete state.beings[appState.currentSelection];
+        saveState();
+        window.closeInspectModal();
+        renderAllViews();
+    }
+};
+
+window.addNest = (zoneId) => {
+    if (!state.nests[zoneId]) state.nests[zoneId] = [];
+    state.nests[zoneId].unshift({ id: 'nido_' + Date.now(), name: 'Nuevo nido' });
+    saveState();
+    renderAllViews();
+};
+
+window.updateNestName = (zoneId, nestId, newName) => {
+    const nest = state.nests[zoneId]?.find(n => n.id === nestId);
+    if (nest) { nest.name = newName; saveState(); }
+};
+
+window.deleteNest = (zoneId, nestId) => {
+    if (confirm("¿Deshacer nido?")) {
+        Object.values(state.beings).forEach(b => { if (b.nestId === nestId) { b.zoneId = null; b.nestId = null; } });
+        state.nests[zoneId] = state.nests[zoneId].filter(n => n.id !== nestId);
+        saveState();
+        renderAllViews();
+    }
+};
+
+window.filterBeings = (term) => {
+    const t = term.toLowerCase();
+    document.querySelectorAll('.being-tile').forEach(tile => {
+        const name = tile.querySelector('.tile-name').textContent.toLowerCase();
+        tile.classList.toggle('hidden', !name.includes(t));
+    });
+};
+
+// ==========================================
+// ARRANQUE SEGURO
+// ==========================================
+function initApp() {
+    loadState();
+    updateWeatherAndDate();
+    if (Object.keys(state.beings).length === 0) {
+        rawBeingsData.forEach(b => { state.beings[b.id] = { id: b.id, type: b.name, zoneId: null, nestId: null }; });
+        state.nests['z_bosque'] = [{ id: 'n_ini_1', name: 'Nido Estructural' }];
+        state.nests['z_bienvenida'] = [{ id: 'n_ini_2', name: 'Seto Aromático' }];
+        if (state.beings['b_aguacatero']) { state.beings['b_aguacatero'].zoneId = 'z_bosque'; state.beings['b_aguacatero'].nestId = 'n_ini_1'; }
+        if (state.beings['b_lavanda']) { state.beings['b_lavanda'].zoneId = 'z_bienvenida'; state.beings['b_lavanda'].nestId = 'n_ini_2'; }
+        saveState();
+    }
+    renderAllViews();
+    initDragAndDrop();
+}
+document.addEventListener('DOMContentLoaded', initApp);
