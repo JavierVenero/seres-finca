@@ -3,419 +3,90 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Finca Viva · Panel de Biodiversidad</title>
-  <style>
-    /* =========================================
-       v4 - TABLERO DE ALTA DENSIDAD Y COLOR
-       (Grid total, sin scroll, gestión de seres)
-       ========================================= */
-    :root {
-      --color-bg-base: #F4F7F6; 
-      --color-surface: #FFFFFF;
-      --color-surface-grid: #Eef2f0; /* Fondo sutil para el grid */
-      
-      --color-icon-bg: #13151A; 
-      
-      --color-vibrant-green: #00D632; 
-      --color-vibrant-blue: #0077FF; 
-      --color-vibrant-orange: #FF5E00; 
-      --color-vibrant-red: #FF0033; /* Para eliminar */
-      
-      --color-text-main: #111827; 
-      --color-text-sub: #4B5563; 
-      
-      --border-light: 2px solid #E5E7EB;
-      --border-strong: 2px solid #111827;
-      --r-xl: 20px;
-      --r-lg: 14px;
-      --r-md: 10px;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
-    
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      color: var(--color-text-main);
-      background-color: var(--color-bg-base);
-      overflow: hidden;
-    }
-
-    .app { display: flex; flex-direction: column; height: 100vh; max-width: 1600px; margin: 0 auto; background: var(--color-surface); box-shadow: 0 0 40px rgba(0,0,0,0.05);}
-
-    /* CABECERA VIBRANTE */
-    .topbar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 24px; 
-      background: linear-gradient(90deg, var(--color-vibrant-green), #00E676);
-      border-bottom: var(--border-strong); flex-shrink: 0;
-    }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .logo {
-      width: 36px; height: 36px; border-radius: var(--r-md);
-      display: grid; place-items: center; font-size: 20px;
-      background: var(--color-icon-bg); border: 2px solid #FFF;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    .brand-title { font-size: 22px; font-weight: 900; color: #FFFFFF; letter-spacing: -0.02em; text-shadow: 1px 1px 0px rgba(0,0,0,0.2);}
-    .brand-subtitle { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); }
-    
-    .header-actions { display: flex; gap: 10px; align-items: center; }
-    .weather-compact { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; color: #FFF; background: rgba(0,0,0,0.15); padding: 6px 14px; border-radius: 999px;}
-    .btn-add-main { 
-      background: var(--color-icon-bg); color: var(--color-vibrant-green); 
-      border: 2px solid #FFF; padding: 6px 16px; border-radius: 999px; 
-      font-size: 13px; font-weight: 900; cursor: pointer; text-transform: uppercase;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s;
-    }
-    .btn-add-main:hover { transform: scale(1.05); }
-
-    /* LAYOUT: GRID + DETALLE */
-    .main-content { display: flex; flex: 1; overflow: hidden; }
-
-    /* PANEL LATERAL DE DETALLE (Izquierda) */
-    .detail-col {
-      width: 320px; background-color: var(--color-surface);
-      border-right: var(--border-light); display: flex; flex-direction: column; 
-      z-index: 2; overflow-y: auto;
-    }
-    .detail-header {
-      padding: 20px; border-bottom: var(--border-light); text-align: center;
-      background: var(--color-bg-base);
-    }
-    .selected-photo {
-      width: 90px; height: 90px; border-radius: var(--r-lg); border: 4px solid var(--color-vibrant-orange);
-      background: var(--color-icon-bg); display:grid; place-items:center; font-size: 45px;
-      margin: 0 auto 15px; box-shadow: 0 6px 15px rgba(255, 94, 0, 0.2);
-    }
-    .selected-name { font-size: 26px; font-weight: 900; color: var(--color-text-main); line-height: 1.1;}
-    .selected-sub { font-size: 14px; font-weight: 700; color: var(--color-vibrant-blue); margin-top: 4px;}
-    
-    .detail-body { padding: 20px; flex: 1; }
-    .mini-panel { background-color: var(--color-surface); border: 2px solid #E5E7EB; border-radius: var(--r-md); padding: 14px; margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
-    .mini-panel strong { display: block; font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--color-vibrant-orange); margin-bottom: 6px; }
-    .mini-panel span { font-size: 14px; font-weight: 500; line-height: 1.5; color: var(--color-text-main); }
-
-    .detail-footer { padding: 20px; border-top: var(--border-light); background: #FFF9FA; }
-    .btn-delete {
-      width: 100%; background: #FFF; border: 2px solid var(--color-vibrant-red);
-      color: var(--color-vibrant-red); padding: 12px; border-radius: var(--r-md);
-      font-size: 13px; font-weight: 800; cursor: pointer; text-transform: uppercase;
-      transition: all 0.2s;
-    }
-    .btn-delete:hover { background: var(--color-vibrant-red); color: #FFF; }
-
-    /* ÁREA DEL GRID (Derecha) */
-    .grid-area {
-      flex: 1; background-color: var(--color-surface-grid); 
-      padding: 20px; overflow-y: auto;
-      /* Configuración clave para ver todo sin scroll */
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
-      grid-auto-rows: 95px;
-      gap: 12px;
-      align-content: start;
-    }
-
-    /* TARJETA / TILE DEL SER */
-    .being-tile {
-      background: var(--color-surface); border: 2px solid #D1D5DB;
-      border-radius: var(--r-md); display: flex; flex-direction: column;
-      align-items: center; justify-content: center; padding: 8px;
-      cursor: pointer; transition: all 0.15s ease; position: relative;
-    }
-    .being-tile:hover { border-color: var(--color-vibrant-blue); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,119,255,0.15);}
-    .being-tile.active {
-      border-color: var(--color-vibrant-green); background: #F0FDF4;
-      box-shadow: 0 4px 12px rgba(0,214,50,0.2);
-    }
-    .tile-icon { font-size: 34px; line-height: 1; margin-bottom: 6px; }
-    .tile-name { 
-      font-size: 11px; font-weight: 800; color: var(--color-text-main); 
-      text-align: center; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    }
-    
-    /* MODAL AÑADIR SER */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(17, 24, 39, 0.8);
-      display: flex; justify-content: center; align-items: center; z-index: 100;
-      opacity: 0; pointer-events: none; transition: opacity 0.2s;
-    }
-    .modal-overlay.open { opacity: 1; pointer-events: auto; }
-    .modal-content {
-      background: var(--color-surface); width: 400px; border-radius: var(--r-xl);
-      padding: 30px; border: var(--border-strong); box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-      transform: translateY(20px); transition: transform 0.2s;
-    }
-    .modal-overlay.open .modal-content { transform: translateY(0); }
-    .modal-header { font-size: 20px; font-weight: 900; margin-bottom: 20px; color: var(--color-vibrant-blue);}
-    
-    .form-group { margin-bottom: 15px; }
-    .form-group label { display: block; font-size: 12px; font-weight: 800; margin-bottom: 6px; color: var(--color-text-sub); text-transform: uppercase;}
-    .form-group input, .form-group select {
-      width: 100%; padding: 12px; border: 2px solid #D1D5DB; border-radius: var(--r-md);
-      font-size: 14px; font-weight: 500; font-family: inherit;
-    }
-    .form-group input:focus, .form-group select:focus { border-color: var(--color-vibrant-green); outline: none; }
-    
-    .modal-actions { display: flex; gap: 10px; margin-top: 25px; }
-    .btn-cancel { flex: 1; padding: 12px; background: #F3F4F6; border: none; border-radius: var(--r-md); font-weight: 800; cursor: pointer; color: var(--color-text-sub); }
-    .btn-save { flex: 1; padding: 12px; background: var(--color-vibrant-green); border: none; border-radius: var(--r-md); font-weight: 900; cursor: pointer; color: #111827; }
-
-    /* RESPONSIVE MÍNIMO */
-    @media (max-width: 900px) {
-      .main-content { flex-direction: column; }
-      .detail-col { width: 100%; height: 40vh; border-right: none; border-bottom: var(--border-strong); }
-      .grid-area { height: 60vh; }
-    }
-  </style>
+  <title>Finca Viva · Universo Sintrópico</title>
+  <link rel="stylesheet" href="./css/styles.css" />
 </head>
 <body>
+  <div class="app-overlay"></div>
   <div class="app">
+    
     <header class="topbar">
       <div class="brand">
-        <div class="logo">🌿</div>
-        <div>
+        <div class="brand-titles">
           <h1 class="brand-title">Finca Viva</h1>
-          <div class="brand-subtitle">Gemelo Digital Sintrópico</div>
+          <div class="brand-subtitle">Universo sintrópico de seres</div>
+          <div class="brand-location">Caserío de Vergara, Nº 33, El Ojito - Desaguaderos. Santa María de Guía.</div>
         </div>
       </div>
       <div class="header-actions">
-        <div class="weather-compact"><span class="icon">⛅</span><span class="temp" id="weatherMain">--°C</span></div>
-        <button class="btn-add-main" onclick="openModal()">+ Añadir Ser</button>
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar ser..." onkeyup="filterBeings(this.value)" />
+        <div class="weather-widget" id="weatherWidget">
+          <div class="weather-compact">
+            <span class="icon">⛅</span>
+            <div class="weather-info">
+              <span class="temp">--°C</span>
+              <span class="altitude-tag">445 msnm · Medianía Baja</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn-add-main" style="background-color: #3182CE; border-color: #2B6CB0; margin-right: 10px;" onclick="analyzeEcosystem()">Analizar Ecosistema</button>
+        <button class="btn-add-main" onclick="openAddModal()">Integrar Ser</button>
       </div>
     </header>
 
     <main class="main-content">
-      <aside class="detail-col">
-        <div class="detail-header">
-          <div class="selected-photo" id="selectedPhoto">--</div>
-          <div class="selected-name" id="selectedName">Selecciona un ser</div>
-          <div class="selected-sub" id="selectedSubtitle">Panel de inspección</div>
+      <div class="nursery-container">
+        <div class="nursery-header">
+          <div class="nursery-title">
+            <span>🌱 Bandeja de Seres por Ubicar</span>
+            <span class="nursery-count" id="unassignedCount">0</span>
+          </div>
         </div>
-        
-        <div class="detail-body" id="detailBody" style="display: none;">
-          <div class="mini-panel"><strong>Estado Actual</strong><span id="selectedStatus">--</span></div>
-          <div class="mini-panel"><strong>Necesidad</strong><span id="selectedNeed">--</span></div>
-          <div class="mini-panel"><strong>Función Sintrópica</strong><span id="selectedFunction">--</span></div>
-        </div>
-
-        <div class="detail-footer" id="detailFooter" style="display: none;">
-          <button class="btn-delete" onclick="deleteCurrentBeing()">Eliminar de la finca</button>
-        </div>
-      </aside>
-
-      <section class="grid-area" id="gridArea">
-        </section>
+        <div class="drop-grid drop-zone" id="unassignedGrid" data-zone-id="vivero"></div>
+      </div>
+      <div class="zones-grid" id="zonesGridContainer"></div>
     </main>
+  </div>
+
+  <div class="modal-overlay" id="analysisModal">
+    <div class="modal-content" style="max-width: 600px; width: 90%;">
+      <div class="modal-header">Inteligencia Ecológica de la Finca</div>
+      <div id="analysisResults" style="max-height: 65vh; overflow-y: auto; padding-right: 10px; display: flex; flex-direction: column; gap: 15px; text-align: left; font-size: 0.95rem;">
+        </div>
+      <div class="modal-actions" style="margin-top: 20px;">
+        <button class="btn-cancel" onclick="closeAnalysisModal()">Cerrar Informe</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="big-modal-overlay" id="inspectModal">
+    <div class="big-modal-content">
+      <button class="close-modal-btn" onclick="closeInspectModal()">✕</button>
+      <div class="bm-photo" id="inspectPhoto">--</div>
+      <div class="bm-name" id="inspectName">--</div>
+      <div class="bm-sub" id="inspectSub">--</div>
+      <div class="bm-location-badge" id="inspectLocationBadge">--</div>
+      <div class="bm-grid">
+        <div class="bm-panel"><strong>Estrato</strong><span id="inspectEstrato">--</span></div>
+        <div class="bm-panel"><strong>Fase</strong><span id="inspectRole">--</span></div>
+      </div>
+      <button class="bm-delete" onclick="deleteCurrentBeing()">Retirar del ecosistema</button>
+    </div>
   </div>
 
   <div class="modal-overlay" id="addModal">
     <div class="modal-content">
       <div class="modal-header">Integrar nuevo ser</div>
       <div class="form-group">
-        <label>Icono / Emoji</label>
-        <input type="text" id="newIcon" placeholder="Ej: 🌻" maxlength="2">
+        <input type="text" id="catalogSearch" class="search-input" style="width: 100%" placeholder="🔍 Buscar especie en el catálogo..." onkeyup="filterCatalog(this.value)">
       </div>
-      <div class="form-group">
-        <label>Nombre común</label>
-        <input type="text" id="newName" placeholder="Ej: Girasol">
-      </div>
-      <div class="form-group">
-        <label>Nombre Científico / Subtítulo</label>
-        <input type="text" id="newSub" placeholder="Ej: Helianthus annuus">
-      </div>
-      <div class="form-group">
-        <label>Estrato / Categoría</label>
-        <select id="newCat">
-          <option value="arbol_frutal">Árbol Frutal</option>
-          <option value="citrico">Cítrico</option>
-          <option value="hortaliza_fruto">Hortaliza (Fruto)</option>
-          <option value="hortaliza_hoja">Hortaliza (Hoja)</option>
-          <option value="raiz">Raíz / Tubérculo</option>
-          <option value="aromatica">Aromática / Medicinal</option>
-          <option value="subtropical">Subtropical</option>
-          <option value="barrera">Barrera / Cortaviento</option>
-          <option value="suculenta">Suculenta</option>
-        </select>
-      </div>
+      <div id="catalogResults" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-top: 15px; padding-right: 5px;"></div>
       <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-        <button class="btn-save" onclick="saveNewBeing()">Integrar</button>
+        <button class="btn-cancel" onclick="closeAddModal()">Cancelar</button>
       </div>
     </div>
   </div>
 
-  <script>
-    // Datos iniciales
-    const rawBeingsData = [
-      { id: 'aguacatero', name: 'Aguacatero', sub: 'Persea americana', cat: 'arbol_frutal', icon: '🥑' },
-      { id: 'nispero', name: 'Níspero', sub: 'Eriobotrya japonica', cat: 'arbol_frutal', icon: '🍑' },
-      { id: 'naranjero', name: 'Naranjero', sub: 'Citrus × sinensis', cat: 'citrico', icon: '🍊' },
-      { id: 'limonero', name: 'Limonero', sub: 'Citrus limon', cat: 'citrico', icon: '🍋' },
-      { id: 'platanera', name: 'Platanera', sub: 'Musa × paradisiaca', cat: 'subtropical', icon: '🍌' },
-      { id: 'guayabo', name: 'Guayabo', sub: 'Psidium guajava', cat: 'subtropical', icon: '🍈' },
-      { id: 'lavanda', name: 'Lavanda', sub: 'Lavandula', cat: 'aromatica', icon: '🪻' },
-      { id: 'poleo', name: 'Poleo', sub: 'Mentha pulegium', cat: 'aromatica', icon: '🌿' },
-      { id: 'salvia', name: 'Salvia', sub: 'Salvia officinalis', cat: 'aromatica', icon: '🌱' },
-      { id: 'almendro', name: 'Almendro', sub: 'Prunus dulcis', cat: 'arbol_frutal', icon: '🌸' },
-      { id: 'melocotonero', name: 'Melocotonero', sub: 'Prunus persica', cat: 'arbol_frutal', icon: '🍑' },
-      { id: 'manzanero', name: 'Manzanero', sub: 'Malus domestica', cat: 'arbol_frutal', icon: '🍎' },
-      { id: 'fisalis', name: 'Fisalis', sub: 'Physalis peruviana', cat: 'hortaliza_fruto', icon: '🍒' },
-      { id: 'tomatero', name: 'Tomatero', sub: 'Solanum lycopersicum', cat: 'hortaliza_fruto', icon: '🍅' },
-      { id: 'mango', name: 'Mango', sub: 'Mangifera indica', cat: 'subtropical', icon: '🥭' },
-      { id: 'higuera', name: 'Higuera', sub: 'Ficus carica', cat: 'arbol_frutal', icon: '🌿' },
-      { id: 'calabacin', name: 'Calabacín', sub: 'Cucurbita pepo', cat: 'hortaliza_fruto', icon: '🥒' },
-      { id: 'berenjena', name: 'Berenjena', sub: 'Solanum melongena', cat: 'hortaliza_fruto', icon: '🍆' },
-      { id: 'remolacha', name: 'Remolacha', sub: 'Beta vulgaris', cat: 'raiz', icon: '🧅' },
-      { id: 'patatas', name: 'Patatas', sub: 'Solanum tuberosum', cat: 'raiz', icon: '🥔' },
-      { id: 'pimientos', name: 'Pimientos', sub: 'Capsicum annuum', cat: 'hortaliza_fruto', icon: '🫑' },
-      { id: 'lechugas', name: 'Lechugas', sub: 'Lactuca sativa', cat: 'hortaliza_hoja', icon: '🥬' },
-      { id: 'peral', name: 'Peral', sub: 'Pyrus communis', cat: 'arbol_frutal', icon: '🍐' },
-      { id: 'tomillo', name: 'Tomillo', sub: 'Thymus vulgaris', cat: 'aromatica', icon: '🌿' },
-      { id: 'oregano', name: 'Orégano', sub: 'Origanum vulgare', cat: 'aromatica', icon: '🍃' },
-      { id: 'perejil', name: 'Perejil', sub: 'Petroselinum crispum', cat: 'aromatica', icon: '🌿' },
-      { id: 'cilantro', name: 'Cilantro', sub: 'Coriandrum sativum', cat: 'aromatica', icon: '🌱' },
-      { id: 'fresas', name: 'Fresas', sub: 'Fragaria', cat: 'hortaliza_fruto', icon: '🍓' },
-      { id: 'mandarino', name: 'Mandarino', sub: 'Citrus reticulata', cat: 'citrico', icon: '🍊' },
-      { id: 'acelgas', name: 'Acelgas', sub: 'Beta vulgaris var. cicla', cat: 'hortaliza_hoja', icon: '🥬' },
-      { id: 'apio', name: 'Apio', sub: 'Apium graveolens', cat: 'hortaliza_hoja', icon: '🌿' },
-      { id: 'cebollas', name: 'Cebollas', sub: 'Allium cepa', cat: 'raiz', icon: '🧅' },
-      { id: 'puerro', name: 'Puerro', sub: 'Allium ampeloprasum', cat: 'raiz', icon: '🧄' },
-      { id: 'cafetero', name: 'Cafetero', sub: 'Coffea arabica', cat: 'subtropical', icon: '☕' },
-      { id: 'batata', name: 'Batata', sub: 'Ipomoea batatas', cat: 'raiz', icon: '🍠' },
-      { id: 'artemisa', name: 'Artemisa', sub: 'Artemisia vulgaris', cat: 'aromatica', icon: '🌿' },
-      { id: 'manzanilla', name: 'Manzanilla', sub: 'Chamaemelum nobile', cat: 'aromatica', icon: '🌼' },
-      { id: 'cana', name: 'Caña', sub: 'Arundo donax', cat: 'barrera', icon: '🎋' },
-      { id: 'olivo', name: 'Olivo', sub: 'Olea europaea', cat: 'arbol_frutal', icon: '🫒' },
-      { id: 'judias', name: 'Judías', sub: 'Phaseolus vulgaris', cat: 'hortaliza_fruto', icon: '🫘' },
-      { id: 'papayo', name: 'Papayo', sub: 'Carica papaya', cat: 'subtropical', icon: '🍈' },
-      { id: 'maracuya', name: 'Maracuyá', sub: 'Passiflora edulis', cat: 'trepadora', icon: '🌸' },
-      { id: 'beroles', name: 'Beroles', sub: 'Aeonium', cat: 'suculenta', icon: '🪴' },
-      { id: 'tunos', name: 'Tunos', sub: 'Opuntia ficus-indica', cat: 'suculenta', icon: '🌵' },
-      { id: 'lirios', name: 'Lirios acuáticos', sub: 'Nymphaeaceae', cat: 'acuatico', icon: '🪷' }
-    ];
-
-    // Estado de la aplicación
-    let beingsMap = {};
-    let currentSelection = 'aguacatero';
-
-    // Inicializar mapa de seres
-    rawBeingsData.forEach(b => {
-      beingsMap[b.id] = { ...b, 
-        status: 'Lectura de biometría estable.',
-        function: `Especie clave en el estrato ${b.cat.replace('_', ' ')}.`,
-        needs: 'Análisis de suelo y clima en curso.'
-      };
-    });
-
-    const DOM = {
-      gridArea: document.getElementById('gridArea'),
-      photo: document.getElementById('selectedPhoto'),
-      name: document.getElementById('selectedName'),
-      sub: document.getElementById('selectedSubtitle'),
-      status: document.getElementById('selectedStatus'),
-      need: document.getElementById('selectedNeed'),
-      func: document.getElementById('selectedFunction'),
-      bodyPanel: document.getElementById('detailBody'),
-      footerPanel: document.getElementById('detailFooter'),
-      modal: document.getElementById('addModal')
-    };
-
-    function renderGrid() {
-      DOM.gridArea.innerHTML = Object.keys(beingsMap).map(key => {
-        const b = beingsMap[key];
-        const activeClass = key === currentSelection ? 'active' : '';
-        return `
-          <div class="being-tile ${activeClass}" onclick="selectBeing('${key}')">
-            <div class="tile-icon">${b.icon}</div>
-            <div class="tile-name">${b.name}</div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function selectBeing(id) {
-      if (!beingsMap[id]) return;
-      currentSelection = id;
-      const b = beingsMap[id];
-      
-      DOM.photo.textContent = b.icon;
-      DOM.name.textContent = b.name;
-      DOM.sub.textContent = b.sub;
-      DOM.status.textContent = b.status;
-      DOM.need.textContent = b.needs;
-      DOM.func.textContent = b.function;
-      
-      DOM.bodyPanel.style.display = 'block';
-      DOM.footerPanel.style.display = 'block';
-      
-      renderGrid(); // Actualizar clase 'active'
-    }
-
-    function deleteCurrentBeing() {
-      if (confirm(`¿Seguro que quieres eliminar a ${beingsMap[currentSelection].name} de la finca?`)) {
-        delete beingsMap[currentSelection];
-        // Seleccionar el primero disponible o limpiar
-        const remainingKeys = Object.keys(beingsMap);
-        if (remainingKeys.length > 0) {
-          selectBeing(remainingKeys[0]);
-        } else {
-          DOM.photo.textContent = '🏜️';
-          DOM.name.textContent = 'Finca vacía';
-          DOM.sub.textContent = 'Añade nuevos seres';
-          DOM.bodyPanel.style.display = 'none';
-          DOM.footerPanel.style.display = 'none';
-          currentSelection = null;
-          renderGrid();
-        }
-      }
-    }
-
-    /* Lógica del Modal */
-    function openModal() { DOM.modal.classList.add('open'); }
-    function closeModal() { 
-      DOM.modal.classList.remove('open'); 
-      document.getElementById('newName').value = '';
-      document.getElementById('newIcon').value = '';
-      document.getElementById('newSub').value = '';
-    }
-
-    function saveNewBeing() {
-      const name = document.getElementById('newName').value.trim();
-      const icon = document.getElementById('newIcon').value.trim() || '🌱';
-      const sub = document.getElementById('newSub').value.trim() || 'Plantae';
-      const cat = document.getElementById('newCat').value;
-
-      if (!name) { alert('El nombre es obligatorio.'); return; }
-
-      const id = 'ser_' + Date.now();
-      beingsMap[id] = {
-        id, name, sub, cat, icon,
-        status: 'Recién plantado. Adaptándose al terreno.',
-        function: `Integración nueva en estrato ${cat.replace('_', ' ')}.`,
-        needs: 'Observación y primer riego de asiento.'
-      };
-
-      closeModal();
-      selectBeing(id);
-    }
-
-    // Clima simulado rápido
-    async function updateWeather() {
-      try {
-        const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.13&longitude=-15.63&current=temperature_2m&timezone=auto');
-        const data = await res.json();
-        document.getElementById('weatherMain').textContent = Math.round(data.current.temperature_2m) + '°C';
-      } catch (e) {
-        document.getElementById('weatherMain').textContent = '24°C';
-      }
-    }
-
-    // Inicializar
-    updateWeather();
-    selectBeing(currentSelection);
-
-  </script>
+  <script type="module" src="./js/app.js"></script>
 </body>
 </html>
