@@ -6,12 +6,7 @@ import { rawBeingsData, zonesData, strataColors, strataOrder, extendedBeingsLibr
 // ==========================================
 function getUnifiedLibrary() {
     const cached = JSON.parse(localStorage.getItem("beings_cache") || "[]");
-    return [
-        ...rawBeingsData,
-        ...extendedBeingsLibrary,
-        ...massiveBeingsLibrary,
-        ...cached
-    ];
+    return [...rawBeingsData, ...extendedBeingsLibrary, ...massiveBeingsLibrary, ...cached];
 }
 
 function addToCache(being) {
@@ -24,9 +19,7 @@ function addToCache(being) {
 
 function searchBeings(query) {
     const library = getUnifiedLibrary();
-    const unique = library.filter((item, index, self) =>
-        index === self.findIndex(i => i.name === item.name)
-    );
+    const unique = library.filter((item, index, self) => index === self.findIndex(i => i.name === item.name));
     return unique.filter(b => b.name.toLowerCase().includes(query.toLowerCase()));
 }
 
@@ -36,7 +29,6 @@ function searchBeings(query) {
 function resolveBeing(being) {
     const library = getUnifiedLibrary();
     const def = library.find(b => b.name === being.type || b.id === being.id || b.name === being.name);
-    
     if (def) return { ...being, name: def.name, icon: def.icon, cat: def.cat, role: def.role };
     return being;
 }
@@ -44,7 +36,7 @@ function resolveBeing(being) {
 const getOrder = (cat) => strataOrder[cat] !== undefined ? strataOrder[cat] : 99;
 
 // ==========================================
-// LÓGICA CLIMÁTICA Y TEMPORAL (NUEVA)
+// LÓGICA CLIMÁTICA Y TEMPORAL
 // ==========================================
 async function updateWeatherAndDate() {
     const lat = 28.1388; // Santa María de Guía
@@ -52,12 +44,10 @@ async function updateWeatherAndDate() {
     const weatherEl = document.querySelector('.weather-compact');
     if (!weatherEl) return;
 
-    // 1. Obtener Fecha y Día actual
     const now = new Date();
     const options = { weekday: 'long', day: 'numeric', month: 'long' };
     const dateStr = now.toLocaleDateString('es-ES', options);
 
-    // 2. Calcular Estación del año
     const month = now.getMonth() + 1;
     let season = "Invierno";
     let sIcon = "❄️";
@@ -65,7 +55,6 @@ async function updateWeatherAndDate() {
     else if (month >= 6 && month <= 8) { season = "Verano"; sIcon = "☀️"; }
     else if (month >= 9 && month <= 11) { season = "Otoño"; sIcon = "🍂"; }
 
-    // 3. Consultar API de Clima Real
     try {
         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
         if (!response.ok) throw new Error();
@@ -80,7 +69,6 @@ async function updateWeatherAndDate() {
             </div>
         `;
     } catch (e) {
-        // Fallback si falla la red o API
         weatherEl.innerHTML = `
             <span class="icon">${sIcon}</span>
             <div class="weather-info">
@@ -96,7 +84,6 @@ async function updateWeatherAndDate() {
 // ==========================================
 function renderAllViews() {
     const beingsArray = Object.values(state.beings).map(resolveBeing);
-    
     const unassigned = beingsArray.filter(b => !b.zoneId).sort((a,b) => getOrder(a.cat) - getOrder(b.cat));
     const grid = document.getElementById('unassignedGrid');
     if (grid) {
@@ -168,10 +155,8 @@ function initDragAndDrop() {
         if (!dropZone) return;
         e.preventDefault();
         dropZone.classList.remove('drag-over');
-
         const beingId = e.dataTransfer.getData('text/plain');
         if (!beingId || !state.beings[beingId]) return;
-
         const zoneId = dropZone.dataset.zoneId || null;
         const nestId = dropZone.dataset.nestId || null;
 
@@ -188,7 +173,6 @@ function initDragAndDrop() {
             state.beings[beingId].zoneId = zoneId;
             state.beings[beingId].nestId = nestId;
         }
-
         saveState();
         renderAllViews();
     });
@@ -200,7 +184,7 @@ function initDragAndDrop() {
 }
 
 // ==========================================
-// MODAL DE CATÁLOGO
+// MODAL DE CATÁLOGO Y ANÁLISIS
 // ==========================================
 window.filterCatalog = (query) => {
     const results = searchBeings(query);
@@ -226,7 +210,6 @@ window.closeAddModal = () => document.getElementById('addModal').classList.remov
 window.selectFromCatalog = (typeName) => {
     const library = getUnifiedLibrary();
     const selected = library.find(b => b.name === typeName);
-    
     if (selected) {
         addToCache(selected); 
         const id = 'ins_' + Date.now();
@@ -237,75 +220,38 @@ window.selectFromCatalog = (typeName) => {
     }
 };
 
-// ==========================================
-// MOTOR ECOLÓGICO INTELIGENTE (Core Local)
-// ==========================================
 window.analyzeEcosystem = () => {
-    const ecosystem = Object.values(state.beings)
-        .filter(b => b.zoneId !== null)
-        .map(resolveBeing);
-
+    const ecosystem = Object.values(state.beings).filter(b => b.zoneId !== null).map(resolveBeing);
     let html = ``;
-
     if (ecosystem.length === 0) {
-        html = `<div style="padding: 15px; background: #F8FAF5; border-radius: 8px;">Aún no hay seres ubicados en las zonas de la Finca. Empieza a integrar vida desde el vivero para iniciar el análisis.</div>`;
-        document.getElementById('analysisResults').innerHTML = html;
-        document.getElementById('analysisModal').classList.add('open');
-        return;
-    }
+        html = `<div style="padding: 15px; background: #F8FAF5; border-radius: 8px;">Aún no hay seres ubicados en las zonas.</div>`;
+    } else {
+        const presentStrata = new Set(ecosystem.map(b => b.cat).filter(Boolean));
+        const essentialStrata = ['Estrato Emergente', 'Estrato Alto', 'Estrato Medio', 'Estrato Bajo', 'Estrato Subterráneo', 'Cobertura / Rastrero', 'Funcionales'];
+        const missingStrata = essentialStrata.filter(s => !presentStrata.has(s));
 
-    const presentStrata = new Set(ecosystem.map(b => b.cat).filter(Boolean));
-    const essentialStrata = ['Estrato Emergente', 'Estrato Alto', 'Estrato Medio', 'Estrato Bajo', 'Estrato Subterráneo', 'Cobertura / Rastrero', 'Funcionales'];
-    const missingStrata = essentialStrata.filter(s => !presentStrata.has(s));
+        if (!presentStrata.has('Cobertura / Rastrero')) {
+            html += `<div style="padding: 12px; background: #FED7D7; border-left: 4px solid #E53E3E; border-radius: 4px; margin-bottom: 15px;"><strong style="color: #9B2C2C;">⚠️ Alerta Hídrica:</strong> Falta cobertura para proteger el suelo.</div>`;
+        }
 
-    if (!presentStrata.has('Cobertura / Rastrero')) {
-        html += `<div style="padding: 12px; background: #FED7D7; border-left: 4px solid #E53E3E; border-radius: 4px; margin-bottom: 15px;">
-            <strong style="color: #9B2C2C;">⚠️ Alerta Hídrica por Clima Seco Subtropical:</strong> 
-            Falta estrato de Cobertura/Rastrero. Con la alta radiación solar de Medianía Baja, el suelo perderá humedad rápidamente por evaporación directa.
-        </div>`;
-    }
+        const diversityScore = presentStrata.size;
+        html += `<div style="padding: 12px; background: #EBF4E5; border-left: 4px solid #48BB78; border-radius: 4px; margin-bottom: 15px;"><strong>🟢 Salud:</strong> ${diversityScore} estratos detectados.</div>`;
 
-    const diversityScore = presentStrata.size;
-    let healthIcon = diversityScore >= 5 ? '🟢' : '🟠';
-    let healthText = diversityScore >= 5 ? 'Ecosistema estructurado. Resiliencia alta.' : 'Baja diversidad estructural. Vulnerable a desequilibrios.';
-    
-    html += `<div style="padding: 12px; background: #EBF4E5; border-left: 4px solid #48BB78; border-radius: 4px; margin-bottom: 15px;">
-        <strong>${healthIcon} Salud Estructural:</strong> ${healthText} (Se detectan ${diversityScore} de ${essentialStrata.length} estratos base).
-    </div>`;
-
-    const names = ecosystem.map(b => b.name);
-    const cats = ecosystem.map(b => b.cat);
-    
-    ecologicalRules.avoid.forEach(rule => {
-        if (names.includes(rule.target)) {
-            const conflictExists = ecosystem.some(b => rule.affects.includes(b.cat));
-            if (conflictExists) {
-                html += `<div style="padding: 10px; border-bottom: 1px dashed #CBD5E0; color: #DD6B20;">
-                    <strong>Conflicto detectado:</strong> ${rule.msg}
-                </div>`;
+        ecologicalRules.avoid.forEach(rule => {
+            if (ecosystem.map(b => b.name).includes(rule.target)) {
+                if (ecosystem.some(b => rule.affects.includes(b.cat))) {
+                    html += `<div style="padding: 10px; border-bottom: 1px dashed #CBD5E0; color: #DD6B20;"><strong>Conflicto:</strong> ${rule.msg}</div>`;
+                }
             }
-        }
-    });
-
-    ecologicalRules.synergy.forEach(rule => {
-        if (cats.includes(rule.catA) && cats.includes(rule.catB)) {
-            html += `<div style="padding: 10px; border-bottom: 1px dashed #CBD5E0; color: #319795;">
-                <strong>Sinergia activa:</strong> ${rule.msg}
-            </div>`;
-        }
-    });
-
-    if (missingStrata.length > 0) {
-        html += `<div style="margin-top: 15px;"><strong>💡 Sugerencias para equilibrar el ecosistema:</strong><ul style="margin-top: 8px; padding-left: 20px; color: #4A5568;">`;
-        const library = getUnifiedLibrary();
-        const suggestions = library.filter(s => missingStrata.includes(s.cat)).slice(0, 5);
-        
-        suggestions.forEach(s => {
-            html += `<li style="margin-bottom: 5px;">Añadir <strong>${s.name}</strong> ${s.icon} para cubrir el hueco de <em>${s.cat}</em>.</li>`;
         });
-        html += `</ul></div>`;
-    }
 
+        if (missingStrata.length > 0) {
+            html += `<div style="margin-top: 15px;"><strong>💡 Sugerencias:</strong><ul style="margin-top: 8px; padding-left: 20px; color: #4A5568;">`;
+            const suggestions = getUnifiedLibrary().filter(s => missingStrata.includes(s.cat)).slice(0, 5);
+            suggestions.forEach(s => { html += `<li>Añadir <strong>${s.name}</strong> ${s.icon}</li>`; });
+            html += `</ul></div>`;
+        }
+    }
     document.getElementById('analysisResults').innerHTML = html;
     document.getElementById('analysisModal').classList.add('open');
 };
@@ -320,12 +266,10 @@ window.openInspectModal = (id) => {
     if (!b) return;
     b = resolveBeing(b);
     appState.currentSelection = id;
-    
     document.getElementById('inspectPhoto').textContent = b.icon;
     document.getElementById('inspectName').textContent = b.name;
     document.getElementById('inspectEstrato').textContent = b.cat;
     document.getElementById('inspectRole').textContent = b.role || 'En desarrollo';
-    
     let loc = b.zoneId ? "UBICADO EN FINCA" : "EN BANDEJA DE VIVERO";
     document.getElementById('inspectLocationBadge').textContent = loc;
     document.getElementById('inspectModal').classList.add('open');
@@ -334,7 +278,7 @@ window.openInspectModal = (id) => {
 window.closeInspectModal = () => document.getElementById('inspectModal').classList.remove('open');
 
 window.deleteCurrentBeing = () => {
-    if (confirm("¿Estás seguro de retirar este ser por completo?")) {
+    if (confirm("¿Retirar ser?")) {
         delete state.beings[appState.currentSelection];
         saveState();
         window.closeInspectModal();
@@ -355,10 +299,8 @@ window.updateNestName = (zoneId, nestId, newName) => {
 };
 
 window.deleteNest = (zoneId, nestId) => {
-    if (confirm("¿Deshacer este nido? Los seres volverán a la bandeja de vivero.")) {
-        Object.values(state.beings).forEach(b => {
-            if (b.nestId === nestId) { b.zoneId = null; b.nestId = null; }
-        });
+    if (confirm("¿Deshacer nido?")) {
+        Object.values(state.beings).forEach(b => { if (b.nestId === nestId) { b.zoneId = null; b.nestId = null; } });
         state.nests[zoneId] = state.nests[zoneId].filter(n => n.id !== nestId);
         saveState();
         renderAllViews();
@@ -378,30 +320,16 @@ window.filterBeings = (term) => {
 // ==========================================
 function initApp() {
     loadState();
-    updateWeatherAndDate(); // Lanzamos clima y fecha real al arrancar
-
+    updateWeatherAndDate();
     if (Object.keys(state.beings).length === 0) {
-        rawBeingsData.forEach(b => { 
-            state.beings[b.id] = { id: b.id, type: b.name, zoneId: null, nestId: null }; 
-        });
-
+        rawBeingsData.forEach(b => { state.beings[b.id] = { id: b.id, type: b.name, zoneId: null, nestId: null }; });
         state.nests['z_bosque'] = [{ id: 'n_ini_1', name: 'Nido Estructural' }];
         state.nests['z_bienvenida'] = [{ id: 'n_ini_2', name: 'Seto Aromático' }];
-
-        if (state.beings['b_aguacatero']) {
-            state.beings['b_aguacatero'].zoneId = 'z_bosque';
-            state.beings['b_aguacatero'].nestId = 'n_ini_1';
-        }
-        if (state.beings['b_lavanda']) {
-            state.beings['b_lavanda'].zoneId = 'z_bienvenida';
-            state.beings['b_lavanda'].nestId = 'n_ini_2';
-        }
-
+        if (state.beings['b_aguacatero']) { state.beings['b_aguacatero'].zoneId = 'z_bosque'; state.beings['b_aguacatero'].nestId = 'n_ini_1'; }
+        if (state.beings['b_lavanda']) { state.beings['b_lavanda'].zoneId = 'z_bienvenida'; state.beings['b_lavanda'].nestId = 'n_ini_2'; }
         saveState();
     }
-    
     renderAllViews();
     initDragAndDrop();
 }
-
 document.addEventListener('DOMContentLoaded', initApp);
