@@ -1,0 +1,215 @@
+/* ==========================================
+   CONFIGURACIÓN Y VARIABLES (Finca Viva)
+   ========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;600;700;800&display=swap');
+
+:root {
+  --bg-morning: linear-gradient(135deg, #F8FAF5 0%, #EBF4E5 50%, #DFEEE0 100%);
+  --surface-nursery: linear-gradient(145deg, #F4F7ED 0%, #E8EFE1 100%);
+  --color-text-main: #2D3748;
+  --color-text-sub: #4A5568;
+  --color-text-muted: #718096;
+  --color-accent: #6BCB77;
+  --color-accent-hover: #55B561;
+  --color-danger: #F87171;
+  --shadow-ambient: 0 10px 30px rgba(74, 115, 85, 0.08);
+  --shadow-card: 0 6px 16px rgba(74, 115, 85, 0.06), 0 2px 4px rgba(74, 115, 85, 0.04);
+  --shadow-tile: 0 4px 10px rgba(74, 115, 85, 0.05);
+  --r-xl: 32px; --r-lg: 20px; --r-md: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+
+body { 
+  font-family: 'Inter', system-ui, sans-serif; 
+  color: var(--color-text-main); 
+  background: var(--bg-morning); 
+  overflow: hidden; 
+}
+
+/* ==========================================
+   ESTRUCTURA GLOBAL (El "Cuerpo")
+   ========================================== */
+.app-overlay { position: fixed; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%); z-index: 0; pointer-events: none; }
+
+.app { 
+  position: relative; z-index: 1; display: flex; flex-direction: column; 
+  height: 100vh; max-width: 1920px; margin: 0 auto; padding: 15px 25px; gap: 20px; 
+}
+
+.topbar { 
+  display: flex; align-items: center; justify-content: space-between; 
+  padding: 12px 25px; background: rgba(255, 255, 255, 0.7); 
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
+  border: 1px solid rgba(255,255,255,0.6); border-radius: var(--r-xl); 
+  flex-shrink: 0; box-shadow: var(--shadow-ambient); 
+}
+
+.brand-title { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 800; color: #22543D; line-height: 1; }
+.brand-subtitle { font-size: 13px; font-weight: 800; color: var(--color-accent); margin-top: 4px; letter-spacing: 1.5px; text-transform: uppercase;}
+.brand-location { font-size: 11px; font-weight: 500; color: var(--color-text-muted); margin-top: 4px; }
+
+.header-actions { display: flex; gap: 15px; align-items: center; }
+
+/* BUSCADOR */
+.search-input {
+  padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.7); color: var(--color-text-main);
+  font-size: 13px; outline: none; transition: all 0.3s ease; width: 180px;
+}
+.search-input:focus { background: #FFF; border-color: var(--color-accent); width: 220px; }
+
+/* ==========================================
+   WIDGET METEOROLÓGICO (Dropdown)
+   ========================================== */
+.weather-widget { position: relative; cursor: default; }
+
+.weather-compact { 
+  display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; 
+  color: #2D3748; background: rgba(255,255,255,0.8); padding: 8px 16px; 
+  border-radius: 999px; border: 1px solid rgba(255,255,255,0.5); box-shadow: var(--shadow-tile); 
+}
+
+.meteo-dropdown {
+  position: absolute; top: calc(100% + 15px); right: 0;
+  background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.9); border-radius: var(--r-lg);
+  padding: 18px 22px; width: 260px; box-shadow: 0 15px 35px rgba(74, 115, 85, 0.15);
+  opacity: 0; transform: translateY(-10px); pointer-events: none; transition: 0.3s; z-index: 50;
+}
+
+.weather-widget:hover .meteo-dropdown { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+.meteo-header { font-size: 11px; font-weight: 800; color: var(--color-text-muted); text-transform: uppercase; border-bottom: 1px solid #E2E8F0; padding-bottom: 8px; margin-bottom: 10px; }
+.meteo-today { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 800; margin-bottom: 10px; }
+.meteo-week { display: flex; justify-content: space-between; background: #F8FAF5; padding: 10px; border-radius: var(--r-md); }
+.m-day { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.m-day-l { font-size: 10px; font-weight: 800; color: var(--color-text-muted); }
+.m-day-t { font-size: 11px; font-weight: 700; }
+
+/* ==========================================
+   BANDEJA DE VIVERO (El Grid de 45 seres)
+   ========================================== */
+.main-content { flex: 1; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; padding-bottom: 20px; }
+
+.nursery-container { 
+  background: var(--surface-nursery); border-radius: var(--r-xl); padding: 25px; 
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.05); position: relative; 
+}
+.nursery-title { font-weight: 800; color: #2F855A; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; }
+
+/* ESTO ASEGURA QUE LA BANDEJA SEA UN GRID HORIZONTAL */
+.drop-grid { 
+  display: grid !important; 
+  grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)) !important; 
+  gap: 15px !important; 
+  width: 100%;
+  padding: 10px 0;
+}
+
+/* ==========================================
+   ZONAS Y NIDOS
+   ========================================== */
+.zones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 25px; }
+
+.zone-card { border: 1px solid rgba(255,255,255,0.5); border-radius: var(--r-xl); padding: 25px; box-shadow: var(--shadow-card); min-height: 250px; }
+.zone-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.zone-header h3 { font-family: 'Playfair Display', serif; font-size: 24px; color: #1A202C; }
+
+/* Colores de Zonas */
+.zone-hogar { background: linear-gradient(145deg, #F8F9EC, #F2F5E1); }
+.zone-bienvenida { background: linear-gradient(145deg, #FEF8ED, #FDF0DB); }
+.zone-bosque { background: linear-gradient(145deg, #EFF6F0, #E4EFE6); }
+.zone-ocio { background: linear-gradient(145deg, #FFF6F0, #FFEDE4); }
+.zone-sala { background: linear-gradient(145deg, #F8F5F9, #F2ECF4); }
+.zone-biopiscina { background: linear-gradient(145deg, #F0F8FA, #E3F1F5); }
+
+.nest-card { 
+  background: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.8); 
+  border-radius: var(--r-lg); padding: 15px; margin-bottom: 15px; 
+}
+.nest-title { font-weight: 800; font-size: 13px; color: var(--color-text-main); outline: none; }
+.nest-drop-area { min-height: 80px; display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; padding-top: 10px; }
+
+/* ==========================================
+   LOS SERES (Tiles)
+   ========================================== */
+.being-tile { 
+  background: #FFF; border-radius: 12px; width: 85px; height: 100px; 
+  display: flex; flex-direction: column; align-items: center; justify-content: center; 
+  box-shadow: var(--shadow-tile); cursor: grab; position: relative; transition: 0.2s;
+}
+.being-tile:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+.being-tile::after { content: ''; position: absolute; bottom: 0; height: 4px; width: 60%; background: var(--strata-color); border-radius: 10px; opacity: 0.6; }
+
+.tile-icon { font-size: 35px; line-height: 1; }
+.tile-name { font-size: 10px; font-weight: 800; margin-top: 5px; text-align: center; color: #4A5568; padding: 0 4px; }
+.hidden { display: none !important; }
+
+/* Drag & Drop Visuals */
+.drop-zone.drag-over { background: rgba(107, 203, 119, 0.1) !important; border: 2px dashed var(--color-accent) !important; }
+.is-dragging { opacity: 0.4; transform: scale(0.8); }
+
+/* ==========================================
+   MODALES Y BOTONES
+   ========================================== */
+.btn-add-main { background: var(--color-accent); color: #FFF; border: none; padding: 10px 20px; border-radius: 999px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+.btn-add-main:hover { background: var(--color-accent-hover); transform: translateY(-2px); }
+
+.btn-add-nest { background: rgba(255,255,255,0.8); border: 1px solid #E2E8F0; padding: 6px 12px; border-radius: 999px; font-size: 11px; font-weight: 800; cursor: pointer; }
+.nest-delete { background: none; border: none; color: var(--color-danger); cursor: pointer; opacity: 0.5; font-size: 14px; }
+
+.modal-overlay, .big-modal-overlay { 
+  position: fixed; inset: 0; background: rgba(0,0,0,0.1); 
+  backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 100; 
+}
+.modal-overlay.open, .big-modal-overlay.open { display: flex; }
+
+.modal-content, .big-modal-content { 
+  background: #FFF; border-radius: var(--r-xl); padding: 40px; 
+  width: 90%; max-width: 500px; box-shadow: var(--shadow-ambient); position: relative;
+}
+
+.close-modal-btn { position: absolute; top: 20px; right: 20px; border: none; background: none; font-size: 20px; cursor: pointer; color: var(--color-text-muted); }
+.bm-photo { font-size: 60px; text-align: center; margin-bottom: 15px; }
+.bm-name { font-family: 'Playfair Display', serif; font-size: 32px; text-align: center; color: #1A202C; }
+.bm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
+.bm-panel { background: #F7FAFC; padding: 15px; border-radius: var(--r-md); }
+.bm-panel strong { display: block; font-size: 10px; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 5px; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb { background: #CBD5E0; border-radius: 10px; }
+/* --- Ajustes para el clima y altitud (Medianía Baja) --- */
+.weather-compact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 8px 15px;
+    border-radius: var(--r-lg);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.weather-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+}
+
+.temp {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--color-text-main);
+}
+
+.altitude-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-accent);
+    white-space: nowrap;
+}
